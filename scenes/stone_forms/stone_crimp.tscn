@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://b6xjfaqwpwo13"]
+
+[ext_resource type="PackedScene" uid="uid://dpj5tyvs7g80a" path="res://scenes/stone_forms/stone.tscn" id="1_bkwa4"]
+[ext_resource type="Script" uid="uid://cgu7hqwq37fiu" path="res://scripts/stone_types/stone_breaking.gd" id="2_vd4xg"]
+[ext_resource type="Texture2D" uid="uid://byd1744hrfygg" path="res://addons/godot-prototype-texture/PNG/checker_512x512/checker_red_512x512.png" id="3_4ot11"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_wwh8l"]
+resource_local_to_scene = true
+size = Vector3(0.3, 0.1, 0.3)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_f4b5a"]
+albedo_texture = ExtResource("3_4ot11")
+uv1_triplanar = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_mrse5"]
+material = SubResource("StandardMaterial3D_f4b5a")
+size = Vector3(0.3, 0.1, 0.3)
+
+[node name="Stone" unique_id=1520981350 instance=ExtResource("1_bkwa4")]
+script = ExtResource("2_vd4xg")
+timer_time = 5
+fling_boost_allowed = null
+
+[node name="Collision" parent="." index="0" unique_id=1313190417]
+shape = SubResource("BoxShape3D_wwh8l")
+
+[node name="Model" parent="." index="1" unique_id=792796001]
+mesh = SubResource("BoxMesh_mrse5")

@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://ctltchlf2j2r4"]
+
+[ext_resource type="Script" uid="uid://ccr6k7gu5xk0i" path="res://addons/xr-simulator/XRSimulator.gd" id="1_uljju"]
+
+[node name="XRSimulator" type="Node" unique_id=1941689755]
+script = ExtResource("1_uljju")
+enabled = true

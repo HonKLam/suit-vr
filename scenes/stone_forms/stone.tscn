@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://dpj5tyvs7g80a"]
+
+[ext_resource type="Script" uid="uid://br6fweac46s1w" path="res://scripts/stone_types/stone_general.gd" id="1_6exxm"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_tuldt"]
+resource_local_to_scene = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_i3s5i"]
+
+[node name="Stone" type="StaticBody3D" unique_id=1520981350]
+collision_layer = 262145
+script = ExtResource("1_6exxm")
+
+[node name="Collision" type="CollisionShape3D" parent="." unique_id=1313190417]
+shape = SubResource("BoxShape3D_tuldt")
+
+[node name="Model" type="MeshInstance3D" parent="." unique_id=792796001]
+mesh = SubResource("BoxMesh_i3s5i")

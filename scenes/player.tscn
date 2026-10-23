@@ -1,0 +1,54 @@
+[gd_scene format=3 uid="uid://gjwejjgwbypt"]
+
+[ext_resource type="PackedScene" uid="uid://bxm1ply47vaan" path="res://addons/godot-xr-tools/functions/movement_climb.tscn" id="1_70d11"]
+[ext_resource type="Script" uid="uid://da1qcm65k63kg" path="res://scripts/player.gd" id="1_fjrip"]
+[ext_resource type="PackedScene" uid="uid://diyu06cw06syv" path="res://addons/godot-xr-tools/player/player_body.tscn" id="2_cw2d6"]
+[ext_resource type="PackedScene" uid="uid://btknduttnmoxf" path="res://addons/godot-xr-tools/misc/vr_common_shader_cache.tscn" id="3_khinc"]
+[ext_resource type="PackedScene" uid="uid://bl2nuu3qhlb5k" path="res://addons/godot-xr-tools/functions/movement_direct.tscn" id="4_bruh7"]
+[ext_resource type="PackedScene" uid="uid://b4ysuy43poobf" path="res://addons/godot-xr-tools/functions/function_pickup.tscn" id="5_6eyey"]
+[ext_resource type="PackedScene" uid="uid://b6bk2pj8vbj28" path="res://addons/godot-xr-tools/functions/movement_turn.tscn" id="6_d3wef"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_g3iwr"]
+albedo_color = Color(0, 1, 1, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_s2d7e"]
+material = SubResource("StandardMaterial3D_g3iwr")
+size = Vector3(0.05, 0.05, 0.05)
+
+[node name="Player" type="XROrigin3D" unique_id=1665458307]
+script = ExtResource("1_fjrip")
+
+[node name="MovementClimb" parent="." unique_id=1159580396 instance=ExtResource("1_70d11")]
+
+[node name="PlayerBody" parent="." unique_id=1488218367 instance=ExtResource("2_cw2d6")]
+player_calibrate_height = false
+player_height_min = 0.4
+
+[node name="XRCamera3D" type="XRCamera3D" parent="." unique_id=845560045]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="VRCommonShaderCache" parent="XRCamera3D" unique_id=332323220 instance=ExtResource("3_khinc")]
+
+[node name="XRController3D_left" type="XRController3D" parent="." unique_id=2052725722]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 1, 0)
+tracker = &"left_hand"
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="XRController3D_left" unique_id=1022898413]
+mesh = SubResource("BoxMesh_s2d7e")
+
+[node name="MovementDirect" parent="XRController3D_left" unique_id=1022307126 instance=ExtResource("4_bruh7")]
+strafe = true
+
+[node name="FunctionPickup" parent="XRController3D_left" unique_id=1161135949 instance=ExtResource("5_6eyey")]
+
+[node name="XRController3D_right" type="XRController3D" parent="." unique_id=563118976]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 1, 0)
+tracker = &"right_hand"
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="XRController3D_right" unique_id=680970752]
+mesh = SubResource("BoxMesh_s2d7e")
+
+[node name="MovementTurn" parent="XRController3D_right" unique_id=738031673 instance=ExtResource("6_d3wef")]
+turn_mode = 2
+
+[node name="FunctionPickup" parent="XRController3D_right" unique_id=2120678121 instance=ExtResource("5_6eyey")]
