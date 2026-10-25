@@ -9,8 +9,8 @@ extends XRToolsSceneBase
 func _ready() -> void:
 	if Engine.is_editor_hint():
 		return
-	player.wall_grabbed.connect(map.on_climb_start)
-	map.fling_boost_active.connect(player.on_both_hands_stone_grabbed)
+	map.fling_boost_active.connect(player.set_fling_boost.bind(1.5))
+	map.fling_boost_inactive.connect(player.set_fling_boost.bind(1.0))
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:

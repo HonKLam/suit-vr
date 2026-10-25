@@ -48,6 +48,7 @@ size = Vector3(1, 30, 5)
 [node name="Stone" parent="Map" parent_id_path=PackedInt32Array(136360365) index="2" unique_id=1520981350 instance=ExtResource("3_18wqi")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.6173155, 1.7514137, -1.7224069)
 timer_time = 10
+fling_boost_allowed = true
 
 [node name="Stone2" parent="Map" parent_id_path=PackedInt32Array(136360365) index="3" unique_id=1540060247 instance=ExtResource("3_18wqi")]
 transform = Transform3D(1, 0, 0, 0, 0.8407829, 0.5413725, 0, -0.5413725, 0.8407829, 2.774959, 2.531523, -0.3072108)
@@ -72,9 +73,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.448285, 5.589643, 1.5219963
 
 [node name="Stone8" parent="Map" parent_id_path=PackedInt32Array(136360365) index="9" unique_id=1268287978 instance=ExtResource("4_iqu1u")]
 transform = Transform3D(1, 0, 0, 0, 0.78064716, 0.6249719, 0, -0.6249719, 0.78064716, 2.5784078, 2.7704546, -1.5826836)
+fling_boost_allowed = false
 
 [node name="Stone9" parent="Map" parent_id_path=PackedInt32Array(136360365) index="10" unique_id=122674379 instance=ExtResource("4_iqu1u")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5461097, 1.388685, 0.9390596)
+fling_boost_allowed = false
 
 [node name="Stone10" parent="Map" parent_id_path=PackedInt32Array(136360365) index="11" unique_id=1408326255 instance=ExtResource("5_o10kr")]
 transform = Transform3D(0.44, 0, 0, 0, 0.44, 0, 0, 0, 0.44, 2.5736403, 4.113622, -0.6919023)
@@ -112,9 +115,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.448285, 10.586704, 1.521996
 
 [node name="Stone20" parent="Map" parent_id_path=PackedInt32Array(136360365) index="21" unique_id=736514724 instance=ExtResource("4_iqu1u")]
 transform = Transform3D(1, 0, 0, 0, 0.7806472, 0.624972, 0, -0.624972, 0.7806472, 2.5784078, 7.767515, -1.5826836)
+fling_boost_allowed = false
 
 [node name="Stone21" parent="Map" parent_id_path=PackedInt32Array(136360365) index="22" unique_id=49191510 instance=ExtResource("4_iqu1u")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5461097, 6.385746, 0.9390596)
+fling_boost_allowed = false
 
 [node name="Stone22" parent="Map" parent_id_path=PackedInt32Array(136360365) index="23" unique_id=1173547625 instance=ExtResource("5_o10kr")]
 transform = Transform3D(0.44, 0, 0, 0, 0.44, 0, 0, 0, 0.44, 2.5736403, 9.110683, -0.6919023)
@@ -127,6 +132,7 @@ transform = Transform3D(0.44, 0, 0, 0, 0.44, 0, 0, 0, 0.44, 2.670377, 10.557627,
 
 [node name="Stone25" parent="Map" parent_id_path=PackedInt32Array(136360365) index="26" unique_id=1091625576 instance=ExtResource("4_iqu1u")]
 transform = Transform3D(1.65, 0, 0, 0, 1.4900569, -0.7086822, 0, 0.7086822, 1.4900569, 2.5250225, 12.095166, 0.7121271)
+fling_boost_allowed = false
 
 [node name="Stone26" parent="Map" parent_id_path=PackedInt32Array(136360365) index="27" unique_id=2137219102 instance=ExtResource("3_18wqi")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.4963524, 12.429253, -1.7868992)

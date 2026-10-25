@@ -11,6 +11,7 @@ func can_pick_up(by: Node3D) -> bool:
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	super()
 	timer.wait_time = timer_time
 	timer.one_shot = true
 	timer.timeout.connect(_on_timer_timeout)
@@ -20,10 +21,10 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	pass
 
-func on_grabbed(hand: String) -> void:
-	super(hand)
-	print("starting timer")
-	timer.start()
+func on_grabbed() -> void:
+	super()
+	if timer.is_stopped():
+		timer.start()
 
 func _on_timer_timeout() -> void:
 	_breaking = true
