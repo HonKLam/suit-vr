@@ -1,6 +1,11 @@
 [gd_scene format=3 uid="uid://blni18x72k8u7"]
 
 [ext_resource type="Shader" uid="uid://30jg354tdtxw" path="res://assets/map/lava.gdshader" id="1_lava"]
+[ext_resource type="Script" path="res://scripts/components/lava_audio.gd" id="2_audio"]
+[ext_resource type="AudioStream" path="res://assets/sounds/lava_base.wav" id="3_base"]
+[ext_resource type="AudioStream" path="res://assets/sounds/lava_blob_1.wav" id="4_blob1"]
+[ext_resource type="AudioStream" path="res://assets/sounds/lava_blob_2.wav" id="5_blob2"]
+[ext_resource type="AudioStream" path="res://assets/sounds/lava_blob_3.wav" id="6_blob3"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_lava"]
 render_priority = 0
@@ -32,3 +37,10 @@ subdivide_depth = 40
 material_override = SubResource("ShaderMaterial_lava")
 cast_shadow = 0
 mesh = SubResource("BoxMesh_lava")
+
+[node name="LavaAudio" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("3_base")
+unit_size = 4.0
+max_distance = 40.0
+script = ExtResource("2_audio")
+blobs = Array[AudioStream]([ExtResource("4_blob1"), ExtResource("5_blob2"), ExtResource("6_blob3")])
