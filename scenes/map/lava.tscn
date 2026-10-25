@@ -1,0 +1,16 @@
+[gd_scene format=3]
+
+[ext_resource type="Shader" path="res://assets/map/lava.gdshader" id="1_lava"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_lava"]
+shader = ExtResource("1_lava")
+
+[sub_resource type="BoxMesh" id="BoxMesh_lava"]
+size = Vector3(26, 0.4, 26)
+subdivide_width = 40
+subdivide_depth = 40
+
+[node name="Lava" type="MeshInstance3D"]
+mesh = SubResource("BoxMesh_lava")
+material_override = SubResource("ShaderMaterial_lava")
+cast_shadow = 0
