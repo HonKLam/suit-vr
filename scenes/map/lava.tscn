@@ -1,15 +1,16 @@
-[gd_scene format=3 uid="uid://blni18x72k8u7"]
+[gd_scene format=3 uid="uid://cj6101qbculi2"]
 
-[ext_resource type="Shader" uid="uid://30jg354tdtxw" path="res://assets/map/lava.gdshader" id="1_lava"]
-[ext_resource type="Script" path="res://scripts/components/lava_audio.gd" id="2_audio"]
-[ext_resource type="AudioStream" path="res://assets/sounds/lava_base.wav" id="3_base"]
-[ext_resource type="AudioStream" path="res://assets/sounds/lava_blob_1.wav" id="4_blob1"]
-[ext_resource type="AudioStream" path="res://assets/sounds/lava_blob_2.wav" id="5_blob2"]
-[ext_resource type="AudioStream" path="res://assets/sounds/lava_blob_3.wav" id="6_blob3"]
+[ext_resource type="Shader" uid="uid://30jg354tdtxw" path="res://assets/map/lava.gdshader" id="1_dn11f"]
+[ext_resource type="Script" uid="uid://bhwqmfd62p336" path="res://scripts/lava.gd" id="1_rel2p"]
+[ext_resource type="AudioStream" uid="uid://dukhnog2kkkug" path="res://assets/sounds/lava_base.wav" id="2_8v6pb"]
+[ext_resource type="Script" uid="uid://dp67gjfhkkbs8" path="res://scripts/components/lava_audio.gd" id="3_i7dah"]
+[ext_resource type="AudioStream" uid="uid://cqcxhq8y604xi" path="res://assets/sounds/lava_blob_1.wav" id="4_t775p"]
+[ext_resource type="AudioStream" uid="uid://yo14vjpj8rvj" path="res://assets/sounds/lava_blob_2.wav" id="5_wd8vj"]
+[ext_resource type="AudioStream" uid="uid://binya52o017gh" path="res://assets/sounds/lava_blob_3.wav" id="6_lw4cc"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_lava"]
 render_priority = 0
-shader = ExtResource("1_lava")
+shader = ExtResource("1_dn11f")
 shader_parameter/crust_color = Color(0.1, 0.035, 0.04, 1)
 shader_parameter/crust_light = Color(0.24, 0.07, 0.06, 1)
 shader_parameter/crust_heat = Color(0.65, 0.12, 0.04, 1)
@@ -18,7 +19,7 @@ shader_parameter/lava_mid = Color(1, 0.42, 0.05, 1)
 shader_parameter/lava_hot = Color(1, 0.88, 0.35, 1)
 shader_parameter/glow = 5.0
 shader_parameter/cell_scale = 0.55
-shader_parameter/crack_width = 0.15100000647398001
+shader_parameter/crack_width = 0.15100000647398
 shader_parameter/pool_amount = 0.238000011305
 shader_parameter/color_steps = 4
 shader_parameter/warp = 3.0
@@ -33,14 +34,39 @@ size = Vector3(26, 0.4, 26)
 subdivide_width = 40
 subdivide_depth = 40
 
-[node name="Lava" type="MeshInstance3D" unique_id=984001352]
+[sub_resource type="BoxShape3D" id="BoxShape3D_04ca8"]
+size = Vector3(26, 0.4, 26)
+
+[node name="Lava" type="Area3D" unique_id=593035579]
+collision_mask = 524288
+script = ExtResource("1_rel2p")
+
+[node name="Mesh" type="MeshInstance3D" parent="." unique_id=984001352]
 material_override = SubResource("ShaderMaterial_lava")
 cast_shadow = 0
 mesh = SubResource("BoxMesh_lava")
 
-[node name="LavaAudio" type="AudioStreamPlayer3D" parent="."]
-stream = ExtResource("3_base")
+[node name="Audio" type="AudioStreamPlayer3D" parent="." unique_id=473861322]
+stream = ExtResource("2_8v6pb")
 unit_size = 4.0
 max_distance = 40.0
-script = ExtResource("2_audio")
-blobs = Array[AudioStream]([ExtResource("4_blob1"), ExtResource("5_blob2"), ExtResource("6_blob3")])
+script = ExtResource("3_i7dah")
+blobs = Array[AudioStream]([ExtResource("4_t775p"), ExtResource("5_wd8vj"), ExtResource("6_lw4cc")])
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=335039584]
+shape = SubResource("BoxShape3D_04ca8")
+
+[node name="LavaGlow" type="OmniLight3D" parent="." unique_id=655719485]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.16443539, 0.34645176, 0.06522083)
+light_color = Color(1, 0.45, 0.15, 1)
+light_energy = 32.0
+light_indirect_energy = 16.0
+light_volumetric_fog_energy = 16.0
+light_size = 3.0
+light_specular = 9.163
+shadow_enabled = true
+shadow_opacity = 0.91
+omni_range = 16.0
+omni_attenuation = 1.5
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

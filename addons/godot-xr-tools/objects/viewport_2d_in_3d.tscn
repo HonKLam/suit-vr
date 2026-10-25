@@ -8,6 +8,8 @@ resource_local_to_scene = true
 size = Vector2(3, 2)
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_ufe4n"]
+resource_local_to_scene = true
+viewport_path = NodePath("Viewport")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fvml0"]
 transparency = 1

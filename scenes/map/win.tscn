@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://b108gcuolv6p7"]
+
+[ext_resource type="Texture2D" uid="uid://b3vevp3pqdcmb" path="res://addons/godot-prototype-texture/PNG/grid_512x512/grid_blue_512x512.png" id="1_kbulr"]
+[ext_resource type="Script" uid="uid://d115rmiwfskhe" path="res://scripts/win.gd" id="1_p8btn"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_04ca8"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_w5fjf"]
+albedo_texture = ExtResource("1_kbulr")
+uv1_scale = Vector3(0.5, 0.5, 0.5)
+uv1_offset = Vector3(0.25, 0.25, 0.25)
+uv1_triplanar = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_04ca8"]
+material = SubResource("StandardMaterial3D_w5fjf")
+
+[node name="WinArea" type="Area3D" unique_id=615644896]
+script = ExtResource("1_p8btn")
+collision_mask = 524288
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=863532589]
+shape = SubResource("BoxShape3D_04ca8")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1357859887]
+mesh = SubResource("BoxMesh_04ca8")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
