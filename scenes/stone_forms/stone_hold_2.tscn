@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://byhrgchga3t80"]
+
+[ext_resource type="PackedScene" uid="uid://dpj5tyvs7g80a" path="res://scenes/stone_forms/stone.tscn" id="1_base"]
+[ext_resource type="Script" uid="uid://cgu7hqwq37fiu" path="res://scripts/stone_types/stone_breaking.gd" id="2_breaking"]
+[ext_resource type="ArrayMesh" path="res://assets/holds/meshes/hold_2.tres" id="3_mesh"]
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_hold2"]
+points = PackedVector3Array(-0.043081, 0.026364, -0.000992, 0.059689, 0.017019, 0.02237, -0.068784, -0.006354, 0.02237, 0.068758, -0.004078, -0.002185, 0.026953, -0.065767, 0.016906, -0.040753, -0.069413, -0.003327, 0.048008, -0.06474, -0.003327, -0.071126, 0.002991, -0.003327, -0.015415, -0.064841, 0.018794, 0.070474, -0.018402, 0.01058, -0.057104, 0.014673, 0.017694, 0.042631, 0.014102, -0.001983, -0.056294, -0.042805, 0.012778, -0.064115, 0.024018, -0.003327, 0.057362, 0.002991, 0.02237, -0.065277, -0.027302, 0.001697, 0.010061, -0.075583, 0.001769, 0.017078, 0.006355, -0.00349, -0.054776, -0.020372, 0.02237, 0.047955, 0.017121, 0.00391, -0.052434, 0.024018, 0.006017, 0.064447, -0.027281, 0.012703, 0.0725, -0.002851, 0.00168, -0.068784, -0.001681, 0.02237, 0.018707, -0.044586, 0.019969, -0.050595, -0.046732, 0.014836, -0.068769, 0.016483, 0.003975, 0.052678, -0.057731, -0.003327, 0.045681, -0.067077, -0.003327, -0.036084, -0.071749, -0.003327, -0.003034, -0.072818, 0.008352, -0.022569, 0.012584, -0.003585)
+
+[node name="Stone" unique_id=1520981350 instance=ExtResource("1_base")]
+script = ExtResource("2_breaking")
+timer_time = 3
+
+[node name="Collision" parent="." index="0" unique_id=1313190417]
+shape = SubResource("ConvexPolygonShape3D_hold2")
+
+[node name="Model" parent="." index="1" unique_id=792796001]
+mesh = ExtResource("3_mesh")
