@@ -15,10 +15,10 @@ extends AudioStreamPlayer3D
 @export_group("Blubb")
 @export var blobs: Array[AudioStream] = []
 ## Zufällige Pause zwischen zwei Blubbs (Sekunden, min/max).
-@export var blob_interval := Vector2(0.4, 1.8)
+@export var blob_interval := Vector2(1.5, 4.0)
 ## In diesem Umkreis (m) um den Punkt unter dem Spieler blubbert es.
 @export_range(1.0, 15.0, 0.5) var blob_radius := 6.0
-@export_range(-30.0, 12.0, 0.5) var blob_volume_db := 0.0
+@export_range(-30.0, 12.0, 0.5) var blob_volume_db := -8.0
 ## Zufällige Tonhöhe (min/max), damit sich die Blubbs nie gleich anhören.
 @export var blob_pitch := Vector2(0.85, 1.2)
 @export_range(1, 8) var blob_voices := 4
