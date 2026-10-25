@@ -5,3 +5,6 @@
 # GDExtension binaries are downloaded by .github/scripts/fetch-addon-binaries.sh
 addons/godotopenxrvendors/.bin/
 addons/godot_meta_toolkit/.bin/
+
+# Claude Code worktrees
+.claude/worktrees/
