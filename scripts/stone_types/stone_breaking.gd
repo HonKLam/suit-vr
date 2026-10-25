@@ -20,8 +20,8 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	pass
 
-func on_grabbed(hand: String) -> void:
-	super(hand)
+func on_grabbed() -> void:
+	super()
 	print("starting timer")
 	timer.start()
 
