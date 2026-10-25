@@ -15,15 +15,8 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	pass
 
-func on_climb_start(climbable: Node3D, hand: String) -> void:
-	if not is_ancestor_of(climbable):
-		return
-	if climbable is Stone:
-		climbable.on_grabbed(hand)
-
 func _on_one_hand_grabbed(by: Stone) -> void:
-	if not by.fling_boost_allowed:
-		fling_boost_inactive.emit()
+	fling_boost_inactive.emit()
 
 func _on_both_hands_grabbed(by: Stone) -> void:
 	if by.fling_boost_allowed:
