@@ -2,20 +2,54 @@
 
 [ext_resource type="PackedScene" uid="uid://chjrlgbxu2o51" path="res://scenes/game_scene_base.tscn" id="1_qqlev"]
 [ext_resource type="Texture2D" uid="uid://be74ni83lxett" path="res://addons/godot-prototype-texture/PNG/grid_1024x1024/grid_black_1024x1024.png" id="2_vqbg7"]
-[ext_resource type="PackedScene" uid="uid://dmirs2gw3pn8h" path="res://scenes/stone_forms/stone_jug.tscn" id="3_ax7os"]
-[ext_resource type="PackedScene" uid="uid://b6xjfaqwpwo13" path="res://scenes/stone_forms/stone_crimp.tscn" id="4_x7iw5"]
+[ext_resource type="PackedScene" uid="uid://cocyr44pmto7t" path="res://assets/map/Kletterwand.fbx" id="5_kwand"]
+[ext_resource type="Shader" uid="uid://bpect6c11t5w4" path="res://assets/sky/stylized_sky.gdshader" id="6_sky"]
+[ext_resource type="Script" uid="uid://b6wcyqb0yacmx" path="res://scripts/tools/hold_aligner.gd" id="7_k6alk"]
+[ext_resource type="PackedScene" uid="uid://c0iibpfbbgn2x" path="res://assets/map/outside.fbx" id="7_outside"]
+[ext_resource type="Material" path="res://assets/map/wall_material.tres" id="9_wallmat"]
+[ext_resource type="PackedScene" uid="uid://bacecjr8nds3k" path="res://scenes/stone_forms/stone_hold_1.tscn" id="h1_hold"]
+[ext_resource type="PackedScene" uid="uid://byhrgchga3t80" path="res://scenes/stone_forms/stone_hold_2.tscn" id="h2_hold"]
+[ext_resource type="PackedScene" uid="uid://b3epd1xwpfbfg" path="res://scenes/stone_forms/stone_hold_3.tscn" id="h3_hold"]
+[ext_resource type="PackedScene" uid="uid://bt7550pngvwa8" path="res://scenes/stone_forms/stone_hold_4.tscn" id="h4_hold"]
+[ext_resource type="PackedScene" uid="uid://ba27ysv6ciapt" path="res://scenes/stone_forms/stone_hold_5.tscn" id="h5_hold"]
 
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_pvovc"]
-sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
-ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_sky"]
+shader = ExtResource("6_sky")
+shader_parameter/top_color = Color(0.27, 0.52, 0.92, 1)
+shader_parameter/horizon_color = Color(1, 0.83, 0.66, 1)
+shader_parameter/ground_color = Color(0.33, 0.4, 0.52, 1)
+shader_parameter/gradient_height = 0.55
+shader_parameter/sun_color = Color(1, 0.95, 0.78, 1)
+shader_parameter/sun_size = 0.012
+shader_parameter/sun_glow = 0.6
+shader_parameter/cloud_color = Color(1, 1, 1, 1)
+shader_parameter/cloud_shadow_color = Color(0.74, 0.79, 0.95, 1)
+shader_parameter/cloud_coverage = 0.52
+shader_parameter/cloud_scale = 1.4
+shader_parameter/cloud_softness = 0.02
+shader_parameter/cloud_offset = Vector2(0, 0)
+shader_parameter/mountain_far_color = Color(0.7, 0.66, 0.84, 1)
+shader_parameter/mountain_near_color = Color(0.47, 0.5, 0.72, 1)
+shader_parameter/mountain_far_height = 0.16
+shader_parameter/mountain_near_height = 0.09
 
 [sub_resource type="Sky" id="Sky_xrcqr"]
-sky_material = SubResource("ProceduralSkyMaterial_pvovc")
+sky_material = SubResource("ShaderMaterial_sky")
 
 [sub_resource type="Environment" id="Environment_30f0p"]
 background_mode = 2
 sky = SubResource("Sky_xrcqr")
+ambient_light_source = 3
+ambient_light_energy = 0.35
+tonemap_mode = 2
 glow_enabled = true
+glow_hdr_threshold = 1.5
+fog_enabled = true
+fog_light_color = Color(0.55, 0.3, 0.24, 1)
+fog_density = 0.002
+fog_sky_affect = 0.0
+fog_height = 4.0
+fog_height_density = 0.12
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xrcqr"]
 albedo_texture = ExtResource("2_vqbg7")
@@ -28,23 +62,476 @@ uv1_world_triplanar = true
 environment = SubResource("Environment_30f0p")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." index="1" unique_id=1005240997]
-transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+transform = Transform3D(0.766044, -0.567548, 0.301771, 0, 0.469472, 0.882948, -0.642788, -0.676377, 0.359636, 0, 0, 0)
+light_color = Color(0.8158823, 0.80590105, 0.6968321, 1)
+light_energy = 0.027
+light_indirect_energy = 1.404
+light_volumetric_fog_energy = 6.333
+light_specular = 0.677
 shadow_enabled = true
+directional_shadow_max_distance = 60.0
 
 [node name="XROrigin3D" parent="." index="2" unique_id=1665458307]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6722656, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1.6722656, 4)
 
 [node name="Floor" type="CSGBox3D" parent="Map" parent_id_path=PackedInt32Array(136360365) index="0" unique_id=1608074209]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.02166748, -0.66360164, -0.013201714)
 use_collision = true
-size = Vector3(10, 1, 10)
+size = Vector3(2, 1, 10)
 material = SubResource("StandardMaterial3D_xrcqr")
 
-[node name="Stone" parent="Map" parent_id_path=PackedInt32Array(136360365) index="1" unique_id=1520981350 instance=ExtResource("3_ax7os")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6943029, 0.65, 0.6975825)
+[node name="Kletterwand" parent="Map" parent_id_path=PackedInt32Array(136360365) index="1" unique_id=1873402215 instance=ExtResource("5_kwand")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3.6379642)
 
-[node name="Stone2" parent="Map" parent_id_path=PackedInt32Array(136360365) index="2" unique_id=1056844769 instance=ExtResource("4_x7iw5")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.40834808, 0.5499998, 2.2899263)
-fling_boost_allowed = false
+[node name="Cube_017" parent="Map/Kletterwand" index="0" unique_id=919342386]
+material_override = ExtResource("9_wallmat")
 
-[node name="Stone3" parent="Map" parent_id_path=PackedInt32Array(136360365) index="3" unique_id=1082504628 instance=ExtResource("3_ax7os")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.0670367, 0.65, 1.8995898)
+[node name="CollisionShape3D" parent="Map/Kletterwand/Cube_017/StaticBody3D" parent_id_path=PackedInt32Array(1873402215, 311547558) index="0" unique_id=2034757684]
+transform = Transform3D(1.0000001, 0, 0, 0, 1, 0, 0, 0, 1, -4.3809414e-05, -8.814037e-06, 4.582107e-07)
+
+[node name="Cube_019" parent="Map/Kletterwand" index="1" unique_id=1569913424]
+material_override = ExtResource("9_wallmat")
+
+[node name="Cube_021" parent="Map/Kletterwand" index="2" unique_id=760945143]
+material_override = ExtResource("9_wallmat")
+
+[node name="Outside" parent="Map" parent_id_path=PackedInt32Array(136360365) index="2" unique_id=1934410273 instance=ExtResource("7_outside")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.02443552, -0.012374878, -3.6385415)
+
+[node name="Strecke" type="Node3D" parent="Map" parent_id_path=PackedInt32Array(136360365) index="3" unique_id=1473158606]
+script = ExtResource("7_k6alk")
+
+[node name="Hold_001" parent="Map/Strecke" index="0" unique_id=339081663 instance=ExtResource("h1_hold")]
+transform = Transform3D(0.79213, 0.40601, -0.45573, -0.47294, 0.88028, -0.0378, 0.38582, 0.24548, 0.88932, 1.88196, 1.56361, -2.97667)
+
+[node name="Hold_071" parent="Map/Strecke" index="1" unique_id=1520981350 instance=ExtResource("h1_hold")]
+transform = Transform3D(0.43040553, 0.074679576, -0.899545, -0.12258626, 0.9921732, 0.023716073, 0.89427245, 0.1000638, 0.43619412, 1.6342876, 0.70247, -2.7757056)
+
+[node name="Hold_061" parent="Map/Strecke" index="2" unique_id=1770873560 instance=ExtResource("h1_hold")]
+transform = Transform3D(0.2850432, 0.9569004, -0.055583335, -0.24593617, 0.016965965, -0.96914184, -0.926426, 0.28991568, 0.24017395, 1.2960968, 2.409752, -3.4433026)
+
+[node name="Hold_002" parent="Map/Strecke" index="3" unique_id=153710184 instance=ExtResource("h5_hold")]
+transform = Transform3D(-0.12969135, 0.99155277, -1.2814983e-06, -0.99155086, -0.1296916, 0, -1.6619943e-07, 1.2706746e-06, 0.9999988, -0.78476524, 1.0374658, -3.0588636)
+
+[node name="Hold_065" parent="Map/Strecke" index="4" unique_id=319993870 instance=ExtResource("h5_hold")]
+transform = Transform3D(0.9961218, 0.087943554, -1.2814983e-06, -0.08794338, 0.9961238, 0, 1.2765298e-06, 1.12699645e-07, 0.9999988, -1.2033882, 0.43462455, -3.0588646)
+
+[node name="Hold_064" parent="Map/Strecke" index="5" unique_id=907931549 instance=ExtResource("h5_hold")]
+transform = Transform3D(0.99454033, 0.08718283, -0.057284288, -0.07870278, 0.98750526, 0.13651402, 0.06847015, -0.1312607, 0.98897934, 0.83805877, 1.1153554, -3.3727193)
+
+[node name="Hold_073" parent="Map/Strecke" index="6" unique_id=1150171156 instance=ExtResource("h5_hold")]
+transform = Transform3D(-0.059929512, 0.9965559, -0.057284296, -0.9892875, -0.051645514, 0.13651405, 0.13308527, 0.06485206, 0.9889795, 0.65869206, 0.591623, -3.310816)
+
+[node name="Hold_062" parent="Map/Strecke" index="7" unique_id=1418360265 instance=ExtResource("h5_hold")]
+transform = Transform3D(0.94999003, 0.09251123, 0.2982509, -0.15512666, 0.96873075, 0.19363225, -0.27101138, -0.23021616, 0.9346392, 2.4952352, 2.2537296, -2.9465203)
+
+[node name="Hold_074" parent="Map/Strecke" index="8" unique_id=1936488553 instance=ExtResource("h5_hold")]
+transform = Transform3D(-0.9956146, 0.006031453, -0.09331568, 0.09316374, -0.021838117, -0.9954101, -0.008041601, -0.9997418, 0.021180522, 2.88378, 2.8185542, -2.6426287)
+
+[node name="Hold_077" parent="Map/Strecke" index="9" unique_id=425930605 instance=ExtResource("h5_hold")]
+transform = Transform3D(-0.9956147, 0.006031453, -0.09331546, 0.093163535, -0.021838117, -0.9954101, -0.008041597, -0.9997418, 0.021180522, 2.8697824, 4.1677256, -2.2224112)
+
+[node name="Hold_068" parent="Map/Strecke" index="10" unique_id=1826340674 instance=ExtResource("h5_hold")]
+transform = Transform3D(0.98197067, 0.1134266, 0.15119717, -0.12703592, 0.9883679, 0.08359223, -0.13995671, -0.10129295, 0.98496145, 2.5326202, 1.0235971, -2.7220426)
+
+[node name="Hold_069" parent="Map/Strecke" index="11" unique_id=1429466750 instance=ExtResource("h5_hold")]
+transform = Transform3D(0.32069832, -0.0445394, -0.9461318, -0.066226356, 0.9953932, -0.06930642, 0.9448592, 0.084885634, 0.31627253, 1.4679968, 0.67837363, -3.1398404)
+
+[node name="Hold_070" parent="Map/Strecke" index="12" unique_id=94979434 instance=ExtResource("h5_hold")]
+transform = Transform3D(0.27184996, 0.13663748, -0.9525884, -0.06968701, 0.9900636, 0.122125484, 0.95980924, 0.033183344, 0.27867174, 1.5238419, 1.9718864, -3.205825)
+
+[node name="Hold_075" parent="Map/Strecke" index="13" unique_id=702996977 instance=ExtResource("h5_hold")]
+transform = Transform3D(0.79288685, 0.15842211, -0.5884108, -0.1293833, 0.9873633, 0.091489635, 0.5954688, 0.003589604, 0.8033677, 1.4862032, 2.794302, -3.1830897)
+
+[node name="Hold_003" parent="Map/Strecke" index="14" unique_id=1692467581 instance=ExtResource("h1_hold")]
+transform = Transform3D(0.2503, 0.06807, -0.96577, 0.10489, 0.98975, 0.09694, 0.96247, -0.12557, 0.24059, 2.376443, 2.9499166, -2.5945418)
+
+[node name="Hold_066" parent="Map/Strecke" index="15" unique_id=527090898 instance=ExtResource("h1_hold")]
+transform = Transform3D(-0.9981303, -0.06112729, -1.2814951e-06, 0.061127108, -0.9981333, 0, -1.2791038e-06, -7.833461e-08, 0.99999636, -1.09024, 2.457608, -3.0588644)
+
+[node name="Hold_063" parent="Map/Strecke" index="16" unique_id=1387801088 instance=ExtResource("h1_hold")]
+transform = Transform3D(1.0000002, -1.1908788e-06, -1.2814951e-06, 1.1908752e-06, 1.0000032, 0, 1.2815001e-06, -1.5261109e-12, 0.99999636, -0.20268947, 1.3277972, -3.0588622)
+
+[node name="Hold_004" parent="Map/Strecke" index="17" unique_id=690620971 instance=ExtResource("h1_hold")]
+transform = Transform3D(0.9443315, 0.23549095, 0.22974868, -0.2417769, 0.97033, -0.00081718474, -0.22312461, -0.05477594, 0.9732521, 2.6645718, 3.657659, -2.4043744)
+
+[node name="Hold_076" parent="Map/Strecke" index="18" unique_id=193327823 instance=ExtResource("h1_hold")]
+transform = Transform3D(0.22640684, 0.10111968, -0.9687721, -0.034870215, 0.99479884, 0.09568783, 0.97340983, 0.012116851, 0.22875594, 2.2969184, 3.5083358, -2.9205654)
+
+[node name="Hold_005" parent="Map/Strecke" index="19" unique_id=625901256 instance=ExtResource("h4_hold")]
+transform = Transform3D(9.731934e-07, -2.9570302e-07, 0.9999975, -0.20059909, 0.97967654, 4.850404e-07, -0.9796714, -0.20060013, 8.9406745e-07, 0.3034573, 1.8080753, -3.2402363)
+
+[node name="Hold_072" parent="Map/Strecke" index="20" unique_id=921706429 instance=ExtResource("h4_hold")]
+transform = Transform3D(0.9999981, -5.643742e-07, -1.2814966e-06, 5.643713e-07, 1.0000032, 0, 1.2814974e-06, -7.232454e-13, 0.9999975, -0.026254479, 0.6406876, -3.0588624)
+
+[node name="Hold_067" parent="Map/Strecke" index="21" unique_id=1299498982 instance=ExtResource("h4_hold")]
+transform = Transform3D(0.48085845, -0.010670542, -0.87673056, 0.18986855, 0.97747004, 0.09224021, 0.8559912, -0.2108197, 0.472049, 2.5466516, 4.780742, -2.5944858)
+
+[node name="Hold_079" parent="Map/Strecke" index="22" unique_id=924478123 instance=ExtResource("h4_hold")]
+transform = Transform3D(0.24415688, 0.04330042, -0.968766, 0.20699607, 0.9736542, 0.09568732, 0.9473837, -0.2238952, 0.22876051, 2.7692904, 5.5085125, -2.2523105)
+
+[node name="Hold_006" parent="Map/Strecke" index="23" unique_id=579341423 instance=ExtResource("h2_hold")]
+transform = Transform3D(0.91598, 0.32893, 0.22974, -0.33779, 0.94122, -0.00082, -0.21651, -0.07686, 0.97325, 2.78696, 5.11792, -2.0141)
+
+[node name="Hold_078" parent="Map/Strecke" index="24" unique_id=286535561 instance=ExtResource("h2_hold")]
+transform = Transform3D(-0.53753847, -0.45941693, -0.7070968, 0.6497058, -0.76018435, 0, -0.53752494, -0.45940542, 0.70711464, 3.361461, 5.091638, -1.8717736)
+
+[node name="Hold_091" parent="Map/Strecke" index="25" unique_id=284646926 instance=ExtResource("h2_hold")]
+transform = Transform3D(-0.076634526, 0.22096202, -0.9722654, 0.5492157, -0.80450433, -0.22612515, -0.8321583, -0.55131304, -0.059703052, 4.234001, 4.4067593, 0.679653)
+
+[node name="Hold_007" parent="Map/Strecke" index="26" unique_id=399655412 instance=ExtResource("h1_hold")]
+transform = Transform3D(0.2007, 0.14564, -0.96877, -0.23926, 0.96623, 0.09569, 0.94999, 0.21258, 0.22877, 2.87911, 6.10088, -2.03503)
+
+[node name="Hold_088" parent="Map/Strecke" index="27" unique_id=1052656254 instance=ExtResource("h1_hold")]
+transform = Transform3D(-0.91367507, -0.035030127, -0.4049413, -0.063376494, 0.99637264, 0.056804087, 0.401482, 0.077563755, -0.91258067, 4.3262916, 6.60328, 0.2683488)
+
+[node name="Hold_008" parent="Map/Strecke" index="28" unique_id=1681559892 instance=ExtResource("h2_hold")]
+transform = Transform3D(-0.05539, -0.02317, -0.9982, -0.25082, 0.968, -0.00855, 0.96645, 0.24989, -0.05943, 3.56757, 6.55049, -1.73122)
+
+[node name="Hold_083" parent="Map/Strecke" index="29" unique_id=1041437032 instance=ExtResource("h2_hold")]
+transform = Transform3D(-0.9957298, -0.09233919, 7.450611e-09, 7.418765e-09, 0, 1.000004, -0.09233913, 0.9957305, 0, 3.6725094, 7.8954206, -1.7371633)
+
+[node name="Hold_081" parent="Map/Strecke" index="30" unique_id=898153792 instance=ExtResource("h2_hold")]
+transform = Transform3D(-0.01678957, -0.15707052, -0.98744863, 0.9760729, 0.21156843, -0.050249856, 0.2168048, -0.964662, 0.14976, 4.486313, 5.693843, -0.042221185)
+
+[node name="Hold_085" parent="Map/Strecke" index="31" unique_id=494856255 instance=ExtResource("h2_hold")]
+transform = Transform3D(0.55523854, 0.1667064, -0.81481665, -0.21960498, 0.9743251, 0.049695943, 0.8021773, 0.15134415, 0.57759184, 4.170858, 6.554141, -0.788997)
+
+[node name="Hold_086" parent="Map/Strecke" index="32" unique_id=1229187502 instance=ExtResource("h2_hold")]
+transform = Transform3D(-0.056369387, 0.14756581, -0.9874485, -0.7735652, -0.63172543, -0.050246455, -0.63120836, 0.76102066, 0.14976162, 4.4058895, 5.096467, -0.7729353)
+
+[node name="Hold_009" parent="Map/Strecke" index="33" unique_id=320106707 instance=ExtResource("h3_hold")]
+transform = Transform3D(-0.00676, 0.02445, -0.99968, -0.26643, 0.96352, 0.02537, 0.96383, 0.26651, 0, 3.57631, 7.7215, -2.0402)
+
+[node name="Hold_082" parent="Map/Strecke" index="34" unique_id=779887997 instance=ExtResource("h3_hold")]
+transform = Transform3D(0.9996959, 0.0246372, 1.966957e-06, -0.024364261, 0.9886299, -0.1483692, -0.0036573447, 0.14832352, 0.9889339, 3.7070332, 7.724037, -1.1126741)
+
+[node name="Hold_010" parent="Map/Strecke" index="35" unique_id=1553201078 instance=ExtResource("h2_hold")]
+transform = Transform3D(0.51835, 0.2596, -0.81481, -0.3837, 0.92212, 0.0497, 0.76426, 0.28688, 0.57759, 4.16988, 7.89715, -0.90593)
+
+[node name="Hold_084" parent="Map/Strecke" index="36" unique_id=1524333434 instance=ExtResource("h2_hold")]
+transform = Transform3D(-0.05517213, 0.14801903, -0.98744226, -0.77864635, -0.62544954, -0.05025019, -0.6250373, 0.7660942, 0.14976133, 4.3393703, 7.8958616, -0.27223372)
+
+[node name="Hold_095" parent="Map/Strecke" index="37" unique_id=1996594428 instance=ExtResource("h2_hold")]
+transform = Transform3D(-0.14277555, 0.016733432, -0.9896114, -0.11640504, -0.9932003, 0, -0.9828889, 0.11519553, 0.14375208, 4.203717, 7.7580404, 2.9313617)
+
+[node name="Hold_097" parent="Map/Strecke" index="38" unique_id=117917067 instance=ExtResource("h2_hold")]
+transform = Transform3D(0.9731193, 0.23031324, 1.3321609e-05, 0.23031424, -0.9731151, -9.4073897e-07, 1.27468775e-05, 3.983599e-06, -0.9999978, 4.291262, 7.8908367, 1.3654517)
+
+[node name="Hold_080" parent="Map/Strecke" index="39" unique_id=65599632 instance=ExtResource("h2_hold")]
+transform = Transform3D(0.9049926, 0.3093924, -0.29200846, -0.3359712, 0.94082433, -0.044399396, 0.26099348, 0.13828729, 0.9553824, 3.7861245, 6.66333, -1.2222596)
+
+[node name="Hold_087" parent="Map/Strecke" index="40" unique_id=168039557 instance=ExtResource("h2_hold")]
+transform = Transform3D(0.6893614, 0.16941145, -0.7043303, -0.32207498, 0.94256634, -0.08851324, 0.648887, 0.28786418, 0.7043295, 3.8207293, 4.733095, -1.2428621)
+
+[node name="Hold_011" parent="Map/Strecke" index="41" unique_id=1690571865 instance=ExtResource("h3_hold")]
+transform = Transform3D(-0.99417, -0.09295, -0.05465, -0.05677, 0.02026, 0.99818, -0.09167, 0.99546, -0.02542, 4.21133, 8.82973, -0.8031)
+
+[node name="Hold_012" parent="Map/Strecke" index="42" unique_id=2015941032 instance=ExtResource("h4_hold")]
+transform = Transform3D(-0.11458, 0.10874, -0.98744, -0.42477, -0.9039, -0.05025, -0.89802, 0.41368, 0.14976, 4.39408, 8.7152, 0.36338)
+
+[node name="Hold_093" parent="Map/Strecke" index="43" unique_id=1560259298 instance=ExtResource("h4_hold")]
+transform = Transform3D(0.43190172, 0.06420849, -0.8996281, 0.0006461212, 0.99743587, 0.071499474, 0.9019195, -0.031462036, 0.43075323, 4.8179765, 9.1127615, 1.897373)
+
+[node name="Hold_099" parent="Map/Strecke" index="44" unique_id=305897804 instance=ExtResource("h4_hold")]
+transform = Transform3D(-0.18366468, -0.03766503, -0.9822628, 0.029427, 0.99860245, -0.043793857, 0.98254734, -0.036948457, -0.18229987, 4.444594, 9.397092, 5.7133355)
+
+[node name="Hold_090" parent="Map/Strecke" index="45" unique_id=1874600564 instance=ExtResource("h4_hold")]
+transform = Transform3D(0.14958067, -0.050784282, -0.98744, 0.0073587736, 0.9987048, -0.05024894, 0.98872113, 0.00024992315, 0.14976083, 4.557483, 4.244474, -0.059267085)
+
+[node name="Hold_013" parent="Map/Strecke" index="46" unique_id=1271165722 instance=ExtResource("h5_hold")]
+transform = Transform3D(-0.05531, 0.31431, -0.94771, -0.99193, 0.09113, 0.08811, 0.11406, 0.94494, 0.30674, 4.41323, 8.71265, 1.07161)
+
+[node name="Hold_094" parent="Map/Strecke" index="47" unique_id=1093305667 instance=ExtResource("h5_hold")]
+transform = Transform3D(0.29505464, -0.32187244, -0.89963675, 0.82673806, 0.558023, 0.07149981, 0.47899947, -0.7648629, 0.43075284, 4.5421314, 9.248741, 1.2986985)
+
+[node name="Hold_100" parent="Map/Strecke" index="48" unique_id=1108182230 instance=ExtResource("h5_hold")]
+transform = Transform3D(-0.16401029, 0.02033109, -0.98625225, 0.25438708, 0.9668466, -0.022373173, 0.9530905, -0.25456005, -0.16374527, 4.294422, 10.216481, 6.455667)
+
+[node name="Hold_116" parent="Map/Strecke" index="49" unique_id=1622434679 instance=ExtResource("h5_hold")]
+transform = Transform3D(-0.34779745, -0.34879136, -0.87027955, 0.24554817, 0.86194354, -0.44358224, 0.90484077, -0.36797348, -0.21413735, 3.5018663, 11.542364, 8.841908)
+
+[node name="Hold_118" parent="Map/Strecke" index="50" unique_id=2044585916 instance=ExtResource("h5_hold")]
+transform = Transform3D(-0.3477975, -0.34879136, -0.87027955, 0.2455482, 0.86194354, -0.44358224, 0.9048409, -0.36797348, -0.21413735, 3.2217731, 11.945265, 9.145636)
+
+[node name="Hold_119" parent="Map/Strecke" index="51" unique_id=1688704751 instance=ExtResource("h5_hold")]
+transform = Transform3D(0.35758308, -0.33875173, -0.87027955, -0.8679448, 0.22339174, -0.44358224, 0.34467435, 0.91397464, -0.21413735, 3.022237, 12.193216, 9.442945)
+
+[node name="Hold_122" parent="Map/Strecke" index="52" unique_id=283375164 instance=ExtResource("h5_hold")]
+transform = Transform3D(0.8702749, -0.48730382, 0.07178833, 0.4435789, 0.7120086, -0.5443212, 0.21413384, 0.5055544, 0.83580345, 3.1299655, 11.964216, 9.600291)
+
+[node name="Hold_113" parent="Map/Strecke" index="53" unique_id=1348719295 instance=ExtResource("h5_hold")]
+transform = Transform3D(4.6281834e-10, 0.5851619, -0.8109205, 0.99999666, -7.909313e-10, 0, -6.413761e-10, -0.8109205, -0.5851619, 4.1801996, 13.142531, 6.446115)
+
+[node name="Hold_124" parent="Map/Strecke" index="54" unique_id=724638794 instance=ExtResource("h5_hold")]
+transform = Transform3D(0.8109152, 0.5851619, 7.450605e-09, -6.041789e-09, -4.359796e-09, 1.0000032, 0.58515805, -0.8109205, 0, 2.3936186, 13.208964, 9.157856)
+
+[node name="Hold_126" parent="Map/Strecke" index="55" unique_id=631830059 instance=ExtResource("h5_hold")]
+transform = Transform3D(4.6281834e-10, 0.5851619, -0.8109205, 0.99999666, -7.909313e-10, 0, -6.413761e-10, -0.8109205, -0.5851619, 2.2499366, 12.908375, 9.12259)
+
+[node name="Hold_089" parent="Map/Strecke" index="56" unique_id=242196027 instance=ExtResource("h5_hold")]
+transform = Transform3D(-0.09148953, 0.04011912, -0.9950009, -0.0016478404, 0.99918395, 0.0404393, 0.9958016, 0.0053393915, -0.09134904, 4.1289735, 6.9269776, 0.6490772)
+
+[node name="Hold_092" parent="Map/Strecke" index="57" unique_id=1389166109 instance=ExtResource("h5_hold")]
+transform = Transform3D(0.43659955, -0.006539399, -0.89963454, 0.16207351, 0.98418784, 0.07150251, 0.8849333, -0.17702541, 0.4307572, 4.3514786, 5.0905685, 1.5907159)
+
+[node name="Hold_014" parent="Map/Strecke" index="58" unique_id=286699713 instance=ExtResource("h3_hold")]
+transform = Transform3D(-0.13572, -0.43544, -0.88993, -0.9907, 0.06836, 0.11764, 0.00961, 0.89762, -0.44066, 4.6333, 8.24512, 3.70173)
+
+[node name="Hold_101" parent="Map/Strecke" index="59" unique_id=1795452823 instance=ExtResource("h3_hold")]
+transform = Transform3D(-0.17432284, -0.42146733, -0.88992935, -0.9805407, 0.15715937, 0.11764203, 0.09027846, 0.8931231, -0.44066122, 4.5475674, 10.105654, 4.3715677)
+
+[node name="Hold_096" parent="Map/Strecke" index="60" unique_id=1687746049 instance=ExtResource("h3_hold")]
+transform = Transform3D(-0.037797242, 0.007847283, -0.9992526, -0.9783987, 0.20308787, 0.0386032, 0.20323902, 0.9791304, 1.609322e-06, 4.093962, 7.971936, 2.0074959)
+
+[node name="Hold_015" parent="Map/Strecke" index="61" unique_id=1368073012 instance=ExtResource("h2_hold")]
+transform = Transform3D(-0.39471, -0.22854, -0.88993, -0.68278, 0.72109, 0.11764, 0.61484, 0.65406, -0.44066, 4.67824, 9.20891, 3.86827)
+
+[node name="Hold_098" parent="Map/Strecke" index="62" unique_id=322604308 instance=ExtResource("h2_hold")]
+transform = Transform3D(-0.39470825, -0.22854611, -0.8899274, -0.6827826, 0.7210908, 0.11764213, 0.6148381, 0.654057, -0.44066507, 4.803772, 10.797015, 4.038729)
+
+[node name="Hold_016" parent="Map/Strecke" index="63" unique_id=1006070220 instance=ExtResource("h1_hold")]
+transform = Transform3D(0.80451, -0.38046, -0.45609, 0.31074, 0.92404, -0.22269, 0.50617, 0.03744, 0.86162, 4.3149, 9.45151, 4.66682)
+
+[node name="Hold_017" parent="Map/Strecke" index="64" unique_id=168252793 instance=ExtResource("h1_hold")]
+transform = Transform3D(0.83653, 0.30363, -0.45609, -0.43761, 0.87115, -0.22269, 0.32971, 0.38588, 0.86162, 4.5227, 10.44697, 5.0341)
+
+[node name="Hold_102" parent="Map/Strecke" index="65" unique_id=1678982525 instance=ExtResource("h1_hold")]
+transform = Transform3D(-0.35293713, 0.5238408, -0.775257, -0.85159653, 0.16337298, 0.4980837, 0.38757232, 0.8360006, 0.38844207, 4.7310143, 10.956374, 4.8696294)
+
+[node name="Hold_108" parent="Map/Strecke" index="66" unique_id=2032267379 instance=ExtResource("h1_hold")]
+transform = Transform3D(0.8477156, 0.53044575, -7.450573e-09, -6.3159735e-09, -3.952129e-09, -0.999999, -0.53044486, 0.84771705, 0, 2.373014, 12.401623, 9.058401)
+
+[node name="Hold_123" parent="Map/Strecke" index="67" unique_id=1890738782 instance=ExtResource("h1_hold")]
+transform = Transform3D(0.8477156, 0.53044575, -7.450573e-09, -6.3159735e-09, -3.952129e-09, -0.999999, -0.53044486, 0.84771705, 0, 4.5963497, 12.401623, 6.6075916)
+
+[node name="Hold_112" parent="Map/Strecke" index="68" unique_id=721801795 instance=ExtResource("h1_hold")]
+transform = Transform3D(6.133731e-09, -0.5851591, -0.810917, -0.9999968, -1.048216e-08, 0, -8.500156e-09, 0.81091666, -0.5851594, 4.328973, 12.636833, 6.239945)
+
+[node name="Hold_125" parent="Map/Strecke" index="69" unique_id=1966770125 instance=ExtResource("h1_hold")]
+transform = Transform3D(6.133731e-09, -0.5851591, -0.810917, -0.9999968, -1.048216e-08, 0, -8.500156e-09, 0.81091666, -0.5851594, 2.5241086, 13.014515, 8.7426405)
+
+[node name="Hold_018" parent="Map/Strecke" index="70" unique_id=163989047 instance=ExtResource("h4_hold")]
+transform = Transform3D(-0.05135, -0.15709, -0.98625, -0.90027, 0.43475, -0.02237, 0.43229, 0.88675, -0.16374, 4.11943, 10.2341, 7.50727)
+
+[node name="Hold_103" parent="Map/Strecke" index="71" unique_id=1877349891 instance=ExtResource("h4_hold")]
+transform = Transform3D(-0.32679522, -0.8605097, -0.39081365, -0.9409174, 0.33506623, 0.04903411, 0.08875355, 0.38374978, -0.919163, 5.562528, 11.410669, 7.0890536)
+
+[node name="Hold_019" parent="Map/Strecke" index="72" unique_id=301209005 instance=ExtResource("h3_hold")]
+transform = Transform3D(-0.4699643, -0.87976426, -0.07179685, -0.75757444, 0.36027685, 0.5443148, -0.45299807, 0.31020275, -0.83580273, 3.9393058, 11.298643, 8.413623)
+
+[node name="Hold_115" parent="Map/Strecke" index="73" unique_id=1556128345 instance=ExtResource("h3_hold")]
+transform = Transform3D(-0.98518026, -0.15575029, -0.07179628, -0.16954999, 0.82157207, 0.5443152, -0.025791205, 0.5484268, -0.8358025, 4.0774403, 10.892154, 8.137032)
+
+[node name="Hold_104" parent="Map/Strecke" index="74" unique_id=1272863737 instance=ExtResource("h3_hold")]
+transform = Transform3D(-0.5576845, -0.7322951, -0.39081353, -0.8070437, 0.5884515, 0.049034096, 0.1940657, 0.34275216, -0.9191627, 5.2465363, 11.937567, 7.2515163)
+
+[node name="Hold_110" parent="Map/Strecke" index="75" unique_id=311014805 instance=ExtResource("h3_hold")]
+transform = Transform3D(0.423914, -0.9057064, -7.4505793e-09, -3.1584053e-09, 6.7480386e-09, -0.9999998, 0.9056986, 0.42391765, 0, 4.72986, 12.397242, 6.174902)
+
+[node name="Hold_107" parent="Map/Strecke" index="76" unique_id=1052893706 instance=ExtResource("h3_hold")]
+transform = Transform3D(-0.20161992, -0.3873144, -0.8996319, 0.8070186, -0.5861808, 0.07149816, -0.5550346, -0.7116107, 0.4307553, 5.260902, 11.927725, 7.648982)
+
+[node name="Hold_120" parent="Map/Strecke" index="77" unique_id=618484942 instance=ExtResource("h3_hold")]
+transform = Transform3D(0.34142655, -0.93991286, -7.4505793e-09, -2.543826e-09, 7.0028965e-09, -0.9999998, 0.93990475, 0.3414295, 0, 4.639235, 12.401623, 7.1497955)
+
+[node name="Hold_109" parent="Map/Strecke" index="78" unique_id=365617408 instance=ExtResource("h3_hold")]
+transform = Transform3D(0.34142655, -0.93991286, -7.4505793e-09, -2.543826e-09, 7.0028965e-09, -0.9999998, 0.93990475, 0.3414295, 0, 4.0441318, 12.397242, 6.810307)
+
+[node name="Hold_111" parent="Map/Strecke" index="79" unique_id=496564521 instance=ExtResource("h3_hold")]
+transform = Transform3D(-4.955794e-09, -0.58516306, -0.81091774, -0.9999965, 8.4692e-09, 0, 6.867766e-09, 0.810922, -0.5851599, 3.8780181, 12.635986, 6.864879)
+
+[node name="Hold_114" parent="Map/Strecke" index="80" unique_id=902048223 instance=ExtResource("h3_hold")]
+transform = Transform3D(-0.810915, -0.58516306, 7.4505793e-09, 6.0417875e-09, 4.3598045e-09, 0.9999998, -0.585158, 0.810922, 0, 4.0066094, 13.204583, 6.8306503)
+
+[node name="Hold_020" parent="Map/Strecke" index="81" unique_id=569521477 instance=ExtResource("h2_hold")]
+transform = Transform3D(0.48092, -0.87382, 0.07179, 0.75301, 0.36971, -0.54432, 0.4491, 0.31583, 0.8358, 3.85301, 10.85794, 8.82003)
+
+[node name="Hold_021" parent="Map/Strecke" index="82" unique_id=599635468 instance=ExtResource("h4_hold")]
+transform = Transform3D(-0.200126, -0.45007956, -0.8702759, -0.07879539, 0.89276034, -0.44358906, 0.9766012, -0.020199878, -0.21412794, 3.3580067, 11.647392, 9.209006)
+
+[node name="Hold_117" parent="Map/Strecke" index="83" unique_id=1182677669 instance=ExtResource("h4_hold")]
+transform = Transform3D(-0.20013382, -0.45007268, -0.8702777, -0.078799374, 0.8927639, -0.44358128, 0.9765993, -0.020198185, -0.21413688, 3.723236, 11.228223, 8.59297)
+
+[node name="Hold_022" parent="Map/Strecke" index="84" unique_id=1185242216 instance=ExtResource("h4_hold")]
+transform = Transform3D(-0.51477, -0.85733, 0, 0, 0, -1, 0.85733, -0.51477, 0, 2.71001, 12.39724, 9.47897)
+
+[node name="Hold_023" parent="Map/Strecke" index="85" unique_id=1392825378 instance=ExtResource("h4_hold")]
+transform = Transform3D(-0.58174866, -0.06309453, -0.8109192, -0.10782442, 0.99417, 0, 0.8061904, 0.08743673, -0.585161, 2.5766096, 12.561138, 8.668378)
+
+[node name="Hold_106" parent="Map/Strecke" index="86" unique_id=1629205734 instance=ExtResource("h4_hold")]
+transform = Transform3D(0.007958086, 0.99996835, -7.450593e-09, -5.929236e-11, -7.450345e-09, -1.0000017, -0.9999686, 0.007958084, 0, 2.87218, 12.401623, 8.82772)
+
+[node name="Hold_121" parent="Map/Strecke" index="87" unique_id=41232795 instance=ExtResource("h4_hold")]
+transform = Transform3D(0.81091803, -0.5851601, -7.450593e-09, -6.04181e-09, 4.3597823e-09, -1.0000017, 0.5851602, 0.81091785, 0, 5.097567, 12.401623, 6.961746)
+
+[node name="Hold_105" parent="Map/Strecke" index="88" unique_id=1240221166 instance=ExtResource("h4_hold")]
+transform = Transform3D(-0.58174866, -0.06309453, -0.8109192, -0.10782442, 0.99417, 0, 0.8061904, 0.08743673, -0.585161, 9.979424, 10.949669, 8.668378)
+
+[node name="Hold_024" parent="Map/Strecke" index="89" unique_id=156985561 instance=ExtResource("h5_hold")]
+transform = Transform3D(0.25446317, -0.9563606, -0.14361693, -0.3369739, 0.051515345, -0.9401008, 0.9064713, 0.28761843, -0.30915946, 2.5334759, 15.445509, 10.770827)
+
+[node name="Hold_128" parent="Map/Strecke" index="90" unique_id=708576534 instance=ExtResource("h5_hold")]
+transform = Transform3D(0.2544632, -0.9563606, -0.14361691, -0.3369739, 0.051515337, -0.9401007, 0.9064714, 0.28761843, -0.30915943, 2.9372816, 15.211928, 11.293521)
+
+[node name="Hold_025" parent="Map/Strecke" index="91" unique_id=1305264595 instance=ExtResource("h1_hold")]
+transform = Transform3D(0.06859, -0.31211, -0.94757, 0.9946, 0.09559, 0.04051, 0.07794, -0.94522, 0.31698, 2.19081, 15.35318, 11.21076)
+
+[node name="Hold_129" parent="Map/Strecke" index="92" unique_id=1390428061 instance=ExtResource("h1_hold")]
+transform = Transform3D(0.06859558, -0.3121121, -0.9475682, 0.9946002, 0.09559009, 0.04051397, 0.07793367, -0.94521934, 0.31698486, 2.1546798, 15.792877, 11.04657)
+
+[node name="Hold_026" parent="Map/Strecke" index="93" unique_id=527000596 instance=ExtResource("h2_hold")]
+transform = Transform3D(-0.66762, -0.73052, -0.14362, -0.13857, 0.31146, -0.9401, 0.7315, -0.60773, -0.30916, 1.96989, 15.61512, 10.51688)
+
+[node name="Hold_130" parent="Map/Strecke" index="94" unique_id=2067117714 instance=ExtResource("h2_hold")]
+transform = Transform3D(0.14361747, -0.28547254, -0.94756275, 0.9401081, 0.3384747, 0.040513735, 0.3091625, -0.89662856, 0.31698304, 1.9119251, 16.141552, 10.276336)
+
+[node name="Hold_127" parent="Map/Strecke" index="95" unique_id=1696493583 instance=ExtResource("h2_hold")]
+transform = Transform3D(-0.6676225, -0.7305204, -0.14361693, -0.13856776, 0.3114569, -0.9401008, 0.73149806, -0.6077309, -0.30915946, 1.8643013, 15.895781, 9.71249)
+
+[node name="Hold_027" parent="Map/Strecke" index="96" unique_id=1637640408 instance=ExtResource("h1_hold")]
+transform = Transform3D(-0.22385, -0.97261, 0.06265, 0.89237, -0.23038, -0.38807, 0.39188, -0.03096, 0.9195, 1.4315, 16.09715, 9.63052)
+
+[node name="Hold_028" parent="Map/Strecke" index="97" unique_id=1495616196 instance=ExtResource("h3_hold")]
+transform = Transform3D(0.16805, -0.27181, -0.94757, 0.90687, 0.41945, 0.04051, 0.38644, -0.86613, 0.31698, 1.48463, 16.3547, 8.97178)
+
+[node name="Hold_029" parent="Map/Strecke" index="98" unique_id=1606083910 instance=ExtResource("h4_hold")]
+transform = Transform3D(-0.89199, -0.41389, -0.18178, -0.0065, 0.41383, -0.91033, 0.452, -0.81083, -0.37182, 0.91194, 16.51771, 8.85487)
+
+[node name="Hold_030" parent="Map/Strecke" index="99" unique_id=1270252923 instance=ExtResource("h4_hold")]
+transform = Transform3D(-0.94767, -0.3071, 0.08728, -0.18123, 0.29241, -0.93896, 0.26284, -0.90564, -0.33276, 0.92719, 16.67323, 8.02311)
+
+[node name="Hold_031" parent="Map/Strecke" index="100" unique_id=1000911954 instance=ExtResource("h5_hold")]
+transform = Transform3D(-0.92067, -0.38046, 0.08728, -0.20361, 0.2773, -0.93896, 0.33304, -0.88224, -0.33277, 0.25215, 16.80777, 7.46643)
+
+[node name="Hold_032" parent="Map/Strecke" index="101" unique_id=573392624 instance=ExtResource("h2_hold")]
+transform = Transform3D(0.1317, -0.23432, 0.9632, -0.97803, 0.12765, 0.16479, -0.16157, -0.96374, -0.21236, 0.65298, 17.12659, 6.67194)
+
+[node name="Hold_033" parent="Map/Strecke" index="102" unique_id=1064669077 instance=ExtResource("h2_hold")]
+transform = Transform3D(-0.28974, -0.95312, 0.08728, -0.34352, 0.01845, -0.93896, 0.89333, -0.30204, -0.33276, -0.04395, 17.19636, 6.29228)
+
+[node name="Hold_034" parent="Map/Strecke" index="103" unique_id=1365438422 instance=ExtResource("h3_hold")]
+transform = Transform3D(-0.9142, -0.39576, 0.08728, -0.2082, 0.27386, -0.93896, 0.3477, -0.87657, -0.33276, -0.60493, 17.45955, 5.4025)
+
+[node name="Hold_035" parent="Map/Strecke" index="104" unique_id=697409992 instance=ExtResource("h1_hold")]
+transform = Transform3D(-0.6394, 0.0192, 0.76863, -0.74949, 0.20747, -0.62866, -0.17153, -0.97805, -0.11827, -1.32113, 17.42936, 4.83923)
+
+[node name="Hold_036" parent="Map/Strecke" index="105" unique_id=1838238661 instance=ExtResource("h5_hold")]
+transform = Transform3D(-0.82392, -0.42169, 0.3786, -0.43606, 0.04505, -0.89879, 0.36195, -0.90562, -0.22101, -0.93646, 17.77919, 4.11838)
+
+[node name="Hold_037" parent="Map/Strecke" index="106" unique_id=1966808229 instance=ExtResource("h3_hold")]
+transform = Transform3D(-0.64374, -0.2048, 0.73733, -0.73572, -0.09942, -0.66995, 0.21051, -0.97374, -0.08667, -1.82923, 17.36325, 3.52643)
+
+[node name="Hold_038" parent="Map/Strecke" index="107" unique_id=113955983 instance=ExtResource("h2_hold")]
+transform = Transform3D(-0.41616, -0.81865, 0.39577, -0.42752, -0.20798, -0.87976, 0.80252, -0.53532, -0.26344, -1.70211, 17.7402, 2.37841)
+
+[node name="Hold_039" parent="Map/Strecke" index="108" unique_id=1729526405 instance=ExtResource("h5_hold")]
+transform = Transform3D(-0.87361, -0.28314, 0.39577, -0.44911, 0.156, -0.87976, 0.18735, -0.94631, -0.26344, -2.43134, 17.46263, 2.20982)
+
+[node name="Hold_040" parent="Map/Strecke" index="109" unique_id=1830483678 instance=ExtResource("h1_hold")]
+transform = Transform3D(-0.72723, -0.56081, 0.39577, -0.47541, -0.00436, -0.87976, 0.4951, -0.82794, -0.26344, -2.38152, 17.70044, 1.49049)
+
+[node name="Hold_041" parent="Map/Strecke" index="110" unique_id=442865762 instance=ExtResource("h5_hold")]
+transform = Transform3D(-0.29849, -0.33427, -0.89396, 0.75194, 0.49448, -0.43597, 0.58778, -0.80234, 0.10376, -3.08227, 17.56186, 0.90155)
+
+[node name="Hold_140" parent="Map/Strecke" index="111" unique_id=1279741353 instance=ExtResource("h5_hold")]
+transform = Transform3D(-0.89472604, -0.20695567, 0.39576617, -0.43402514, 0.19404162, -0.8797553, 0.10527516, -0.9589127, -0.26343924, -2.8173711, 17.86201, 0.29616082)
+
+[node name="Hold_139" parent="Map/Strecke" index="112" unique_id=1715632613 instance=ExtResource("h5_hold")]
+transform = Transform3D(-0.89472604, -0.20695567, 0.39576617, -0.43402514, 0.19404162, -0.8797553, 0.10527516, -0.9589127, -0.26343924, -3.1340714, 17.712204, 0.3206511)
+
+[node name="Hold_042" parent="Map/Strecke" index="113" unique_id=1599242941 instance=ExtResource("h5_hold")]
+transform = Transform3D(0.58, -0.81462, -0.00062, 0.80807, 0.57544, -0.12606, 0.10304, 0.07262, 0.99202, -3.76741, 16.03755, -4.3352)
+
+[node name="Hold_135" parent="Map/Strecke" index="114" unique_id=2061435472 instance=ExtResource("h5_hold")]
+transform = Transform3D(0.5799991, -0.81462, -0.0006164594, 0.8080701, 0.57544047, -0.1260578, 0.10304336, 0.07261604, 0.99202025, -3.0604842, 14.502433, -4.529831)
+
+[node name="Hold_136" parent="Map/Strecke" index="115" unique_id=1698864084 instance=ExtResource("h5_hold")]
+transform = Transform3D(0.5799991, -0.81462, -0.0006164594, 0.8080701, 0.57544047, -0.1260578, 0.10304336, 0.07261604, 0.99202025, -2.2837675, 14.31942, -4.552604)
+
+[node name="Hold_137" parent="Map/Strecke" index="116" unique_id=166035688 instance=ExtResource("h5_hold")]
+transform = Transform3D(0.5799991, -0.81462, -0.0006164594, 0.8080701, 0.57544047, -0.1260578, 0.10304336, 0.07261604, 0.99202025, -1.1171273, 14.474844, -4.532129)
+
+[node name="Hold_138" parent="Map/Strecke" index="117" unique_id=2030591388 instance=ExtResource("h5_hold")]
+transform = Transform3D(0.5799991, -0.81462, -0.0006164594, 0.8080701, 0.57544047, -0.1260578, 0.10304336, 0.07261604, 0.99202025, -1.7259175, 13.691197, -4.6320868)
+
+[node name="Hold_043" parent="Map/Strecke" index="118" unique_id=1007557512 instance=ExtResource("h4_hold")]
+transform = Transform3D(-0.04021, -0.93616, 0.34926, 0.14104, 0.34073, 0.92952, -0.98919, 0.08663, 0.11833, -4.34331, 16.62044, -4.26149)
+
+[node name="Hold_044" parent="Map/Strecke" index="119" unique_id=830682427 instance=ExtResource("h5_hold")]
+transform = Transform3D(0.6084, -0.11619, 0.78508, 0.39673, 0.90128, -0.17406, -0.68735, 0.41736, 0.59444, -4.88613, 16.79577, -3.83503)
+
+[node name="Hold_045" parent="Map/Strecke" index="120" unique_id=696724164 instance=ExtResource("h4_hold")]
+transform = Transform3D(0.53162, -0.82326, -0.19906, 0.83244, 0.55122, -0.05655, 0.15628, -0.13564, 0.97836, -5.87401, 16.99518, -4.05772)
+
+[node name="Hold_046" parent="Map/Strecke" index="121" unique_id=433889688 instance=ExtResource("h3_hold")]
+transform = Transform3D(0.17448, -0.95533, -0.23853, 0.97913, 0.19398, -0.06069, 0.10425, -0.22296, 0.96924, -6.49172, 16.82304, -4.19543)
+
+[node name="Hold_047" parent="Map/Strecke" index="122" unique_id=562382781 instance=ExtResource("h2_hold")]
+transform = Transform3D(-0.49625, -0.21721, 0.84057, 0.43183, -0.90169, 0.02193, 0.75317, 0.37387, 0.54126, -8.30779, 16.53912, -3.44758)
+
+[node name="Hold_131" parent="Map/Strecke" index="123" unique_id=682350103 instance=ExtResource("h2_hold")]
+transform = Transform3D(-0.96876496, -0.24799132, -0.0006164613, 0.2460886, -0.961017, -0.12605819, 0.030668912, -0.122272275, 0.9920233, -4.363309, 15.5414095, -4.3986154)
+
+[node name="Hold_134" parent="Map/Strecke" index="124" unique_id=516457407 instance=ExtResource("h2_hold")]
+transform = Transform3D(0.56699675, -0.82372254, -0.0006164614, 0.81710863, 0.5625372, -0.1260582, 0.10418381, 0.07097113, 0.9920234, -2.7236156, 14.968244, -4.47043)
+
+[node name="Hold_132" parent="Map/Strecke" index="125" unique_id=592396749 instance=ExtResource("h2_hold")]
+transform = Transform3D(0.9250086, -0.37995303, -0.00061646145, 0.37685066, 0.91765845, -0.12605822, 0.04846191, 0.11637242, 0.9920235, -3.2104378, 15.273354, -4.431962)
+
+[node name="Hold_133" parent="Map/Strecke" index="126" unique_id=1807445394 instance=ExtResource("h2_hold")]
+transform = Transform3D(0.9267771, 0.3756185, -0.0006164614, -0.37269455, 0.91935426, -0.1260582, -0.046783056, 0.11705743, 0.9920234, -3.8749402, 15.197256, -4.4420447)
+
+[node name="Hold_048" parent="Map/Strecke" index="127" unique_id=1739591159 instance=ExtResource("h3_hold")]
+transform = Transform3D(0.94283, -0.17903, -0.2811, -0.14926, 0.5273, -0.83646, 0.29798, 0.8306, 0.47044, -8.47948, 15.67928, -3.14611)
+
+[node name="Hold_049" parent="Map/Strecke" index="128" unique_id=822831292 instance=ExtResource("h5_hold")]
+transform = Transform3D(0.34509, -0.30819, 0.88653, 0.29561, 0.93217, 0.20899, -0.8908, 0.18995, 0.41278, -9.31419, 15.78536, -3.45627)
+
+[node name="Hold_050" parent="Map/Strecke" index="129" unique_id=319494902 instance=ExtResource("h4_hold")]
+transform = Transform3D(0.25527, -0.38588, 0.88653, 0.52316, 0.82621, 0.20899, -0.81311, 0.41045, 0.41278, -9.66163, 15.98646, -2.81189)
+
+[node name="Hold_051" parent="Map/Strecke" index="130" unique_id=299170184 instance=ExtResource("h3_hold")]
+transform = Transform3D(0.45068, -0.10466, 0.88653, -0.18825, 0.95963, 0.20899, -0.87261, -0.26107, 0.41278, -9.55239, 16.80899, -3.46295)
+
+[node name="Hold_052" parent="Map/Strecke" index="131" unique_id=915887678 instance=ExtResource("h1_hold")]
+transform = Transform3D(0.87755, -0.14966, -0.45554, 0.28216, 0.92931, 0.23826, 0.38768, -0.33762, 0.85774, -9.83535, 17.65488, -3.28351)
+
+[node name="Hold_053" parent="Map/Strecke" index="132" unique_id=307696843 instance=ExtResource("h2_hold")]
+transform = Transform3D(0.4005, -0.23166, 0.88653, 0.10009, 0.97278, 0.20899, -0.91081, 0.00503, 0.41278, -9.76395, 18.52425, -3.87699)
+
+[node name="Hold_054" parent="Map/Strecke" index="133" unique_id=870902343 instance=ExtResource("h4_hold")]
+transform = Transform3D(0.08689, -0.81273, 0.57612, 0.98786, 0.14506, 0.05565, -0.1288, 0.56429, 0.81547, -10.73335, 18.46255, -3.28694)
+
+[node name="Hold_055" parent="Map/Strecke" index="134" unique_id=1919980297 instance=ExtResource("h1_hold")]
+transform = Transform3D(0.46768, -0.67034, 0.57612, 0.79578, 0.60302, 0.05565, -0.38472, 0.43244, 0.81547, -10.94549, 19.28814, -3.1934)
+
+[node name="Hold_056" parent="Map/Strecke" index="135" unique_id=838639288 instance=ExtResource("h3_hold")]
+transform = Transform3D(0.11664, -0.25409, 0.96012, 0.95958, 0.27812, -0.04298, -0.25611, 0.92633, 0.27626, -11.20684, 19.31593, -2.39086)
+
+[node name="Hold_057" parent="Map/Strecke" index="136" unique_id=1396491777 instance=ExtResource("h1_hold")]
+transform = Transform3D(0.18104, -0.21305, 0.96012, 0.84854, 0.52739, -0.04298, -0.4972, 0.82248, 0.27626, -11.31659, 20.22429, -1.86813)
+
+[node name="Hold_058" parent="Map/Strecke" index="137" unique_id=668054227 instance=ExtResource("h1_hold")]
+transform = Transform3D(0.14324, -0.2401, 0.96012, 0.92418, 0.37952, -0.04298, -0.35407, 0.89349, 0.27626, -11.59381, 19.96108, -0.9456)
+
+[node name="Hold_059" parent="Map/Strecke" index="138" unique_id=1833294783 instance=ExtResource("h1_hold")]
+transform = Transform3D(0.25723, -0.10954, 0.96012, 0.52295, 0.85128, -0.04298, -0.81263, 0.51315, 0.27626, -11.59104, 21.20385, -0.76189)
+
+[node name="Hold_060" parent="Map/Strecke" index="139" unique_id=193309105 instance=ExtResource("h4_hold")]
+transform = Transform3D(0.20431, -0.03749, 0.97819, 0.40392, 0.91346, -0.04936, -0.89169, 0.40519, 0.20178, -12.96529, 21.84228, 0.19776)
+
+[node name="LavaGlow" type="OmniLight3D" parent="." index="4" unique_id=1402958173]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.418206, -0.6314583, 4.1423674)
+light_color = Color(1, 0.45, 0.15, 1)
+light_energy = 32.0
+light_indirect_energy = 16.0
+light_volumetric_fog_energy = 16.0
+light_size = 3.0
+light_specular = 9.163
+shadow_enabled = true
+shadow_opacity = 0.91
+omni_range = 16.0
+omni_attenuation = 1.5
+
+[editable path="Map/Kletterwand"]

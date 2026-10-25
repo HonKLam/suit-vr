@@ -1,4 +1,4 @@
-[gd_resource type="ArrayMesh" load_steps=3 format=4]
+[gd_resource type="ArrayMesh" format=4 uid="uid://b63pkg2cwup4t"]
 
 [ext_resource type="Material" path="res://assets/holds/materials/hold_5.tres" id="1_5cmct"]
 

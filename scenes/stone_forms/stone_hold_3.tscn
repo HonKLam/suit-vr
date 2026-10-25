@@ -10,6 +10,7 @@ points = PackedVector3Array(0.036574, -0.028374, 0.015705, -0.042606, 0.003229, 
 [node name="Stone" unique_id=1520981350 instance=ExtResource("1_base")]
 script = ExtResource("2_breaking")
 timer_time = 3
+two_hands_allowed = true
 
 [node name="Collision" parent="." index="0" unique_id=1313190417]
 shape = SubResource("ConvexPolygonShape3D_hold3")
