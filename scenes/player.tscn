@@ -7,6 +7,9 @@
 [ext_resource type="PackedScene" uid="uid://bl2nuu3qhlb5k" path="res://addons/godot-xr-tools/functions/movement_direct.tscn" id="4_bruh7"]
 [ext_resource type="PackedScene" uid="uid://b4ysuy43poobf" path="res://addons/godot-xr-tools/functions/function_pickup.tscn" id="5_6eyey"]
 [ext_resource type="PackedScene" uid="uid://b6bk2pj8vbj28" path="res://addons/godot-xr-tools/functions/movement_turn.tscn" id="6_d3wef"]
+[ext_resource type="PackedScene" uid="uid://clujaf3u776a3" path="res://addons/godot-xr-tools/objects/viewport_2d_in_3d.tscn" id="7_wrist"]
+[ext_resource type="PackedScene" path="res://scenes/ui/wrist_menu.tscn" id="8_menu"]
+[ext_resource type="PackedScene" uid="uid://bjcxf427un2wp" path="res://addons/godot-xr-tools/player/poke/poke.tscn" id="9_poke"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_g3iwr"]
 albedo_color = Color(0, 1, 1, 1)
@@ -40,6 +43,17 @@ mesh = SubResource("BoxMesh_s2d7e")
 strafe = true
 
 [node name="FunctionPickup" parent="XRController3D_left" unique_id=1161135949 instance=ExtResource("5_6eyey")]
+grab_distance = 0.1
+ranged_enable = false
+
+[node name="WristMenu" parent="XRController3D_left" unique_id=1842514598 instance=ExtResource("7_wrist")]
+transform = Transform3D(1.9106855e-15, 4.371139e-08, -1, 1, -4.371139e-08, 0, -4.371139e-08, -1, -4.371139e-08, 0, -0.0020178556, 0.12)
+screen_size = Vector2(0.07, 0.07)
+collision_layer = 5242880
+scene = ExtResource("8_menu")
+viewport_size = Vector2(400, 400)
+transparent = 1
+scene_properties_keys = PackedStringArray("wrist_menu.gd")
 
 [node name="XRController3D_right" type="XRController3D" parent="." unique_id=563118976]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 1, 0)
@@ -52,3 +66,11 @@ mesh = SubResource("BoxMesh_s2d7e")
 turn_mode = 2
 
 [node name="FunctionPickup" parent="XRController3D_right" unique_id=2120678121 instance=ExtResource("5_6eyey")]
+grab_distance = 0.1
+ranged_enable = false
+
+[node name="Poke" parent="XRController3D_right" unique_id=1169083826 instance=ExtResource("9_poke")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.08)
+radius = 0.01
+mask = 4194304
+push_bodies = false

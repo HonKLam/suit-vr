@@ -11,3 +11,6 @@ func _process(delta: float) -> void:
 
 func set_fling_boost(val: float) -> void:
 	$MovementClimb.fling_multiplier = val
+
+func set_frozen(frozen: bool) -> void:
+	$PlayerBody.enabled = not frozen
