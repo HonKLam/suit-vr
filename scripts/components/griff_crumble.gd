@@ -1,45 +1,24 @@
 ## Komponente für Klettergriffe, die nach dem Greifen zerfallen.
 ##
-## Benutzung: als Kind-Node an einen Griff hängen (z.B. unter die Griff_Textured-Instanz).
+## Benutzung: als Kind-Node "GriffCrumble" unter einen Stone hängen (siehe stone_breaking.tscn).
 ## Die Komponente übernimmt automatisch das vorhandene Material (Texturen, Farben, Emission)
 ## und ersetzt es durch den Zerfalls-Shader.
 ##
-## Von außen (später VR-Hand) nur zwei Aufrufe nötig:
-##     griff.grab()     # Hand greift zu  -> Timer startet
-##     griff.release()  # Hand lässt los
-## Den passenden Griff zu einem getroffenen Collider findet man mit:
-##     var griff := GriffCrumble.find_for(collider)
+## Der Stone ruft grab() beim ersten Greifen auf. Nach crumble_time Sekunden zerbricht der Griff:
+## crumbled (Kollision aus) -> Plopp-Animation -> finished (Stone löscht sich dann selbst).
 class_name GriffCrumble
 extends Node
 
-signal grab_started
-signal grab_released
-signal progress_changed(value: float)
-## Wird bei jedem Vibrations-Puls gesendet (z.B. zum Debuggen oder für Sound).
-signal haptic_pulse(amplitude: float, duration: float)
-## Griff ist "weg" (Kollision aus). In VR hier die Hand zwangsweise loslassen.
+## Griff ist "weg" (Kollision aus).
 signal crumbled
-## Auflösen-Animation fertig, Griff unsichtbar / gelöscht.
+## Plopp-Animation fertig.
 signal finished
 
-enum State { IDLE, CRUMBLING, DISSOLVING, GONE }
-enum EndEffect { ZERFALLEN, VERBRENNEN }
+enum State { IDLE, CRUMBLING, BROKEN }
 
 const SHADER := preload("res://assets/holds/griff_crumble.gdshader")
-const META_KEY := &"griff_crumble"
 
 @export_group("Timing")
-## Sekunden vom Greifen bis der Stein verschwindet.
-@export var crumble_time := 3.0
-## Nur beim Ende-Effekt "Verbrennen": Dauer der Auflös-Animation (0 = sofort weg).
-@export var dissolve_time := 0.5
-## true: Zerbricht von selbst, wenn crumble_time um ist.
-## false: Bleibt bei 100 % stehen, bis break_now() aufgerufen wird (z.B. von stone_breaking.gd).
-@export var auto_break := true
-## true: Loslassen lässt den Griff sich wieder erholen. false: einmal angefasst, zerfällt er sicher.
-@export var recover_on_release := false
-## Sekunden, die das komplette Erholen von 100 % auf 0 % dauert.
-@export var recover_time := 1.5
 ## Verlauf des Textur-Wechsels über die Zeit. 1 = gleichmäßig (linear).
 ## Größer als 1 = am Anfang schnell, zum Schluss langsamer (z.B. 2 oder 3).
 ## Kleiner als 1 = am Anfang langsam, zum Schluss schnell.
@@ -71,6 +50,8 @@ const META_KEY := &"griff_crumble"
 @export var invert_mask := false
 ## Weichheit der Übergangskante (0.01 = hart, 0.5 = sehr weich).
 @export_range(0.01, 0.5) var spread_softness := 0.15
+## Größe des Noise-Musters (nur ohne Maske bzw. bei mask_strength < 1).
+@export var noise_scale := 3.0
 
 @export_group("Vorwarnung")
 ## Sekunden vor dem Verschwinden, ab denen der Stein zu wackeln beginnt (0 = aus).
@@ -101,8 +82,6 @@ const META_KEY := &"griff_crumble"
 @export_range(0.01, 0.5, 0.01) var haptic_break_time := 0.15
 
 @export_group("Ende")
-## Zerfallen = Stein ploppt weg, Brocken fliegen (Comic). Verbrennen = löst sich mit Glutkante auf.
-@export var end_effect := EndEffect.ZERFALLEN
 ## Anzahl der Brocken.
 @export_range(0, 64) var chunk_count := 14
 ## Farbe der Brocken (zufällig etwas heller/dunkler).
@@ -117,180 +96,67 @@ const META_KEY := &"griff_crumble"
 ## Der Stein bläht sich kurz auf, bevor er verschwindet (Sekunden, 0 = aus).
 @export_range(0.0, 0.5) var pop_time := 0.12
 
-@export_group("Aussehen")
-## Nur beim Ende-Effekt "Verbrennen": Farbe der Glutkante.
-@export var edge_color := Color(1.0, 0.4, 0.0)
-## Größe des Noise-Musters (nur ohne Maske bzw. bei mask_strength < 1).
-@export var noise_scale := 3.0
-
-@export_group("Setup")
-## Der Griff, der zerfällt. Leer = Eltern-Node.
-@export var target: Node3D
-## Legt automatisch eine StaticBody3D-Kollision (konvex) an, falls der Griff keine hat.
-@export var auto_create_collision := true
-## true: Griff wird nach dem Zerfall gelöscht. false: nur versteckt (reset() möglich).
-@export var free_when_finished := false
-
+## Sekunden vom Greifen bis zum Zerbrechen. Setzt der Stone aus seinem timer_time.
+var crumble_time := 3.0
 var state := State.IDLE
 var progress := 0.0
 
-var _dissolve := 0.0
-var _grab_count := 0 # zwei Hände können gleichzeitig greifen
+@onready var target := get_parent() as Stone
+
 var _materials: Array[ShaderMaterial] = []
-var _orig_scale := Vector3.ONE
 var _crumb_accum := 0.0
 var _haptic_time := 0.0
 var _haptic_quiet_until := 0.0
 var _crumb_mesh: SphereMesh
 var _surface_points: Array = [] # [MeshInstance3D, PackedVector3Array]
-var _pop_tween: Tween
-
-
-## Sucht ausgehend von einem Node (z.B. Collider) die zugehörige GriffCrumble-Komponente.
-static func find_for(node: Node) -> GriffCrumble:
-	while node:
-		if node.has_meta(META_KEY):
-			return node.get_meta(META_KEY) as GriffCrumble
-		node = node.get_parent()
-	return null
 
 
 func _ready() -> void:
-	if target == null:
-		target = get_parent() as Node3D
-	if target == null:
-		push_error("GriffCrumble: kein target gefunden (Eltern-Node muss ein Node3D sein).")
-		return
-	target.set_meta(META_KEY, self)
-	_orig_scale = target.scale
-	add_to_group(&"griffe")
+	assert(target != null, "GriffCrumble muss direkt unter einem Stone hängen.")
 	_setup_materials()
-	if auto_create_collision and _find_collision_objects(target).is_empty():
-		_create_collision()
 	set_process(false)
 
 
-# --------------------------------------------------------------------------- API
-
 func grab() -> void:
-	if state == State.DISSOLVING or state == State.GONE:
+	if state != State.IDLE:
 		return
-	_grab_count += 1
-	if _grab_count == 1:
-		grab_started.emit()
+	state = State.CRUMBLING
 	_pulse(_holding_controllers(), haptic_grab, haptic_grab_time)
 	_haptic_quiet_until = _haptic_time + haptic_grab_time
-	if state == State.IDLE:
-		state = State.CRUMBLING
 	set_process(true)
 
 
-func release() -> void:
-	if _grab_count == 0:
-		return
-	_grab_count -= 1
-	if _grab_count == 0:
-		grab_released.emit()
-
-
-func is_held() -> bool:
-	return _grab_count > 0
-
-
-## Setzt den Griff komplett zurück (nur wenn free_when_finished = false).
-func reset() -> void:
-	state = State.IDLE
-	progress = 0.0
-	_dissolve = 0.0
-	_grab_count = 0
-	_set_shader("progress", 0.0)
-	_set_shader("dissolve", 0.0)
-	_set_shader("shake", 0.0)
-	_crumb_accum = 0.0
-	if _pop_tween:
-		_pop_tween.kill()
-	target.scale = _orig_scale
-	target.visible = true
-	_set_collision_enabled(true)
-	set_process(false)
-	progress_changed.emit(progress)
-
-
-# --------------------------------------------------------------------------- Ablauf
-
 func _process(delta: float) -> void:
-	match state:
-		State.CRUMBLING:
-			if is_held() or not recover_on_release:
-				progress = minf(progress + delta / maxf(crumble_time, 0.001), 1.0)
-			else:
-				progress = maxf(progress - delta / maxf(recover_time, 0.001), 0.0)
-			_set_shader("progress", _shaped(progress))
-			_update_warning(delta)
-			_update_haptics(delta)
-			progress_changed.emit(progress)
-			if progress >= 1.0:
-				if auto_break:
-					_start_dissolve()
-				# sonst: bleibt bei 100 % und wackelt, bis break_now() kommt
-			elif progress <= 0.0 and not is_held():
-				state = State.IDLE
-				set_process(false)
-		State.DISSOLVING:
-			_dissolve = minf(_dissolve + delta / maxf(dissolve_time, 0.001), 1.0)
-			_set_shader("dissolve", _dissolve)
-			if _dissolve >= 1.0:
-				_finish()
-		_:
-			set_process(false)
+	progress = minf(progress + delta / maxf(crumble_time, 0.001), 1.0)
+	_set_shader("progress", _shaped(progress))
+	_update_warning(delta)
+	_update_haptics(delta)
+	if progress >= 1.0:
+		_break()
 
 
-## Sofort zerbrechen (von außen, z.B. vom Timer in stone_breaking.gd):
-## Kollision aus, Brocken + Staub fliegen los, Griff unsichtbar. Ohne Plopp-Animation,
-## damit der Besitzer den Griff direkt danach löschen kann.
-func break_now() -> void:
-	if state == State.DISSOLVING or state == State.GONE:
-		return
-	progress = 1.0
-	_set_shader("progress", 1.0)
-	_set_shader("shake", 0.0)
+func _break() -> void:
 	_pulse(_holding_controllers(), haptic_break, haptic_break_time)
-	state = State.DISSOLVING
-	_grab_count = 0
-	_set_collision_enabled(false)
-	crumbled.emit()
-	if end_effect == EndEffect.ZERFALLEN:
-		var box := _world_aabb()
-		var size := maxf(box.get_longest_axis_size(), 0.01)
-		_spawn_chunks(box.get_center(), box.size, size)
-		if puff_enabled:
-			_spawn_puff(box.get_center(), size)
-	free_when_finished = false
-	_finish()
-
-
-func _start_dissolve() -> void:
-	_pulse(_holding_controllers(), haptic_break, haptic_break_time)
-	state = State.DISSOLVING
-	_grab_count = 0
-	_set_collision_enabled(false)
-	_set_shader("shake", 0.0)
-	crumbled.emit()
-	if end_effect == EndEffect.ZERFALLEN:
-		set_process(false)
-		_break_apart()
-	elif dissolve_time <= 0.0:
-		_finish()
-
-
-func _finish() -> void:
-	state = State.GONE
+	state = State.BROKEN
 	set_process(false)
-	finished.emit()
-	if free_when_finished:
-		target.queue_free()
-	else:
-		target.visible = false
+	_set_collision_enabled(false)
+	_set_shader("shake", 0.0)
+	crumbled.emit()
+	var box := _world_aabb()
+	var size := maxf(box.get_longest_axis_size(), 0.01)
+	_spawn_chunks(box.get_center(), box.size, size)
+	if puff_enabled:
+		_spawn_puff(box.get_center(), size)
+	if pop_time <= 0.0:
+		finished.emit()
+		return
+	var orig := target.scale
+	var tw := create_tween()
+	tw.tween_property(target, "scale", orig * 1.18, pop_time * 0.4) \
+		.set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	tw.tween_property(target, "scale", orig * 0.01, pop_time * 0.6) \
+		.set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN)
+	tw.tween_callback(finished.emit)
 
 
 ## Wandelt die lineare Zeit (0..1) in den sichtbaren Textur-Wechsel um.
@@ -312,8 +178,8 @@ func _update_warning(delta: float) -> void:
 		s = clampf(1.0 - remaining / shake_time, 0.0, 1.0)
 	_set_shader("shake", s * s)
 
-	# Krümel: Rate wächst mit dem Fortschritt, nur solange der Zerfall voranschreitet
-	if crumbs_enabled and crumb_rate > 0.0 and (is_held() or not recover_on_release):
+	# Krümel: Rate wächst mit dem Fortschritt
+	if crumbs_enabled and crumb_rate > 0.0:
 		_crumb_accum += delta * crumb_rate * progress
 		while _crumb_accum >= 1.0:
 			_crumb_accum -= 1.0
@@ -405,18 +271,12 @@ func _pulse(ctrls: Array, amplitude: float, duration: float) -> void:
 		scale = us.haptics_scale
 	for c in ctrls:
 		c.trigger_haptic_pulse(haptic_action, 0.0, clampf(amplitude * scale, 0.0, 1.0), duration, 0.0)
-	haptic_pulse.emit(amplitude * scale, duration)
 
 
-## Controller der Hände, die den Griff gerade halten (liest _holders vom Stone).
+## Controller der Hände, die den Griff gerade halten.
 func _holding_controllers() -> Array:
 	var out := []
-	if target == null or not is_instance_valid(target):
-		return out
-	var hs = target.get("_holders")
-	if not (hs is Array):
-		return out
-	for h in hs:
+	for h in target.holders:
 		var n: Node = h
 		while n and not (n is XRController3D):
 			n = n.get_parent()
@@ -426,30 +286,6 @@ func _holding_controllers() -> Array:
 
 
 # --------------------------------------------------------------------------- Zerfallen (Comic)
-
-func _break_apart() -> void:
-	var box := _world_aabb()
-	var center := box.get_center()
-	var size := maxf(box.get_longest_axis_size(), 0.01)
-	_spawn_chunks(center, box.size, size)
-	if puff_enabled:
-		_spawn_puff(center, size)
-	if pop_time > 0.0:
-		_pop_tween = create_tween()
-		_pop_tween.tween_property(target, "scale", _orig_scale * 1.18, pop_time * 0.4) \
-			.set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
-		_pop_tween.tween_property(target, "scale", _orig_scale * 0.01, pop_time * 0.6) \
-			.set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN)
-		_pop_tween.tween_callback(_finish_pop)
-	else:
-		_finish_pop()
-
-
-func _finish_pop() -> void:
-	if not free_when_finished:
-		target.scale = _orig_scale
-	_finish()
-
 
 func _spawn_chunks(center: Vector3, extents: Vector3, size: float) -> void:
 	if chunk_count <= 0:
@@ -623,7 +459,6 @@ func _make_shader_material(src: Material) -> ShaderMaterial:
 	sm.set_shader_parameter("effect_mask", effect_mask)
 	sm.set_shader_parameter("mask_strength", mask_strength)
 	sm.set_shader_parameter("invert_mask", invert_mask)
-	sm.set_shader_parameter("edge_color", edge_color)
 	sm.set_shader_parameter("noise_scale", noise_scale)
 	sm.set_shader_parameter("spread_softness", spread_softness)
 	sm.set_shader_parameter("progress", 0.0)
@@ -638,26 +473,9 @@ func _set_shader(param: StringName, value: Variant) -> void:
 
 # --------------------------------------------------------------------------- Kollision
 
-func _create_collision() -> void:
-	for mi in _find_meshes(target):
-		if mi.mesh == null:
-			continue
-		var body := StaticBody3D.new()
-		body.name = "GriffCollision"
-		var shape := CollisionShape3D.new()
-		shape.shape = mi.mesh.create_convex_shape()
-		body.add_child(shape)
-		mi.add_child(body) # übernimmt automatisch die Transform des Meshes
-		body.set_meta(META_KEY, self)
-
-
 func _set_collision_enabled(enabled: bool) -> void:
 	for n in _find_nodes(target, func(x): return x is CollisionShape3D or x is CollisionPolygon3D):
 		n.set_deferred("disabled", not enabled)
-
-
-func _find_collision_objects(root: Node) -> Array:
-	return _find_nodes(root, func(x): return x is CollisionObject3D)
 
 
 func _find_meshes(root: Node) -> Array:
