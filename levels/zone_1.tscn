@@ -1,0 +1,49 @@
+[gd_scene format=3 uid="uid://ju07sksyem85"]
+
+[ext_resource type="PackedScene" uid="uid://chjrlgbxu2o51" path="res://scenes/game_scene_base.tscn" id="1_qqlev"]
+[ext_resource type="Texture2D" uid="uid://be74ni83lxett" path="res://addons/godot-prototype-texture/PNG/grid_1024x1024/grid_black_1024x1024.png" id="2_vqbg7"]
+[ext_resource type="PackedScene" uid="uid://dmirs2gw3pn8h" path="res://scenes/stone_forms/stone_jug.tscn" id="3_ax7os"]
+[ext_resource type="PackedScene" uid="uid://b6xjfaqwpwo13" path="res://scenes/stone_forms/stone_crimp.tscn" id="4_x7iw5"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_pvovc"]
+sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+
+[sub_resource type="Sky" id="Sky_xrcqr"]
+sky_material = SubResource("ProceduralSkyMaterial_pvovc")
+
+[sub_resource type="Environment" id="Environment_30f0p"]
+background_mode = 2
+sky = SubResource("Sky_xrcqr")
+glow_enabled = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xrcqr"]
+albedo_texture = ExtResource("2_vqbg7")
+uv1_triplanar = true
+uv1_world_triplanar = true
+
+[node name="Zone1" unique_id=933885685 instance=ExtResource("1_qqlev")]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." index="0" unique_id=840686269]
+environment = SubResource("Environment_30f0p")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." index="1" unique_id=1005240997]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+shadow_enabled = true
+
+[node name="XROrigin3D" parent="." index="2" unique_id=1665458307]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6722656, 0)
+
+[node name="Floor" type="CSGBox3D" parent="Map" parent_id_path=PackedInt32Array(136360365) index="0" unique_id=1608074209]
+use_collision = true
+size = Vector3(10, 1, 10)
+material = SubResource("StandardMaterial3D_xrcqr")
+
+[node name="Stone" parent="Map" parent_id_path=PackedInt32Array(136360365) index="1" unique_id=1520981350 instance=ExtResource("3_ax7os")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6943029, 0.65, 0.6975825)
+
+[node name="Stone2" parent="Map" parent_id_path=PackedInt32Array(136360365) index="2" unique_id=1056844769 instance=ExtResource("4_x7iw5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.40834808, 0.5499998, 2.2899263)
+
+[node name="Stone3" parent="Map" parent_id_path=PackedInt32Array(136360365) index="3" unique_id=1082504628 instance=ExtResource("3_ax7os")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.0670367, 0.65, 1.8995898)

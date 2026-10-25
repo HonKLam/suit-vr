@@ -5,7 +5,6 @@ extends XRToolsClimbable
 signal both_hands_grabbed(by: Stone)
 
 @export var two_hands_allowed: bool = false
-@export var fling_boost_allowed: bool = false
 
 var _holders: Array[Node3D] = []
 

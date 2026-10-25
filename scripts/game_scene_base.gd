@@ -1,11 +1,14 @@
-extends Node3D
+@tool
+class_name GameSceneBase
+extends XRToolsSceneBase
 
 @onready var map: Map = $Map
-@onready var player: Player = $Player
-@onready var movement_climb: XRToolsMovementClimb = $Player/MovementClimb
+@onready var player: Player = $XROrigin3D
+@onready var movement_climb: XRToolsMovementClimb = $XROrigin3D/MovementClimb
 
-# Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	if Engine.is_editor_hint():
+		return
 	player.wall_grabbed.connect(map.on_climb_start)
 	map.fling_boost_active.connect(player.on_both_hands_stone_grabbed)
 

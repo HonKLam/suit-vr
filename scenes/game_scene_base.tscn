@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://chjrlgbxu2o51"]
+
+[ext_resource type="Script" uid="uid://dtnj4o455u5ee" path="res://scripts/game_scene_base.gd" id="1_qanuy"]
+[ext_resource type="PackedScene" uid="uid://gjwejjgwbypt" path="res://scenes/player.tscn" id="2_qanuy"]
+[ext_resource type="Script" uid="uid://b4we2mia28w0o" path="res://scripts/map.gd" id="3_gloen"]
+
+[node name="GameSceneBase" type="Node3D" unique_id=933885685]
+script = ExtResource("1_qanuy")
+
+[node name="XROrigin3D" parent="." unique_id=1665458307 instance=ExtResource("2_qanuy")]
+
+[node name="Map" type="Node3D" parent="." unique_id=136360365]
+script = ExtResource("3_gloen")
+metadata/_custom_type_script = "uid://b4we2mia28w0o"

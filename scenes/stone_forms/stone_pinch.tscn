@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://cwdowx65k8eb"]
+
+[ext_resource type="PackedScene" uid="uid://dpj5tyvs7g80a" path="res://scenes/stone_forms/stone.tscn" id="1_nmo5y"]
+[ext_resource type="Texture2D" uid="uid://2rq5ry2moitq" path="res://addons/godot-prototype-texture/PNG/checker_512x512/checker_pink_512x512.png" id="2_ryp81"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_yv8ix"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4hvag"]
+albedo_texture = ExtResource("2_ryp81")
+uv1_triplanar = true
+
+[sub_resource type="PrismMesh" id="PrismMesh_nxvri"]
+material = SubResource("StandardMaterial3D_4hvag")
+
+[node name="Stone" unique_id=1520981350 instance=ExtResource("1_nmo5y")]
+
+[node name="Collision" parent="." index="0" unique_id=1313190417]
+shape = SubResource("BoxShape3D_yv8ix")
+
+[node name="Model" parent="." index="1" unique_id=792796001]
+mesh = SubResource("PrismMesh_nxvri")

@@ -22,6 +22,7 @@ func _process(delta: float) -> void:
 
 func on_grabbed(hand: String) -> void:
 	super(hand)
+	print("starting timer")
 	timer.start()
 
 func _on_timer_timeout() -> void:

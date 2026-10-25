@@ -10,8 +10,8 @@ config_version=5
 
 [application]
 
-config/name="godot-vr"
-run/main_scene="res://scenes/xr_main.tscn"
+config/name="suit-vr-climb"
+run/main_scene="uid://dam3o6pbwcth0"
 config/features=PackedStringArray("4.7", "Mobile")
 config/icon="res://icon.svg"
 
