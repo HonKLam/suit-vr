@@ -3,6 +3,11 @@
 [ext_resource type="PackedScene" uid="uid://dpj5tyvs7g80a" path="res://scenes/stone_forms/stone.tscn" id="1_base"]
 [ext_resource type="Script" uid="uid://cgu7hqwq37fiu" path="res://scripts/stone_types/stone_breaking.gd" id="2_breaking"]
 [ext_resource type="ArrayMesh" path="res://assets/holds/meshes/hold_5.tres" id="3_mesh"]
+[ext_resource type="Script" path="res://scripts/components/griff_crumble.gd" id="4_crumble"]
+[ext_resource type="Texture2D" path="res://assets/holds/textures_dead/M_hold_5_baseColor_1001.png" id="5_dead_albedo"]
+[ext_resource type="Texture2D" path="res://assets/holds/textures_dead/M_hold_5_occlusionRoughnessMetallic_1001.png" id="6_dead_orm"]
+[ext_resource type="Texture2D" path="res://assets/holds/textures_dead/M_hold_5_normal_1001.png" id="7_dead_normal"]
+[ext_resource type="Texture2D" path="res://assets/holds/textures_dead/M_hold_5_emissive_1001.png" id="8_dead_emission"]
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_hold5"]
 points = PackedVector3Array(0.016588, -0.017528, 0.017703, -0.03997, -0.015529, -0.001855, -0.038408, -0.029038, -0.001768, 0.034685, -0.002895, -0.003835, -0.031308, 0.034475, -0.00063, -0.037895, -0.007985, 0.020307, -0.004956, 0.021873, 0.015274, -0.010097, -0.0459, 0.001821, -0.027362, -0.03036, 0.018044, -0.015134, 0.032235, -0.004476, -0.034385, -0.046724, -0.002504, 0.033358, -0.01617, -0.003835, 0.010524, -0.000794, 0.020039, 0.005879, -0.030916, 0.017785, 0.026759, -0.019553, 0.014488, 0.029709, 0.006857, -0.001805, -0.038257, -0.032337, 0.010671, 0.027514, -0.00555, 0.011877, -0.040929, -0.00555, 0.013239, -0.03104, 0.013022, 0.014314, -0.033294, 0.034186, -0.002133, 0.005816, -0.019945, 0.02012, 0.016457, -0.030882, -0.000743, -0.040485, 0.002025, -0.000729, -0.012094, 0.003964, 0.020023, 0.004907, -0.032901, 0.016822, -0.037195, -0.004368, 0.020062, -0.038283, -0.040021, 0.000464, -0.01838, 0.02364, 0.01177, -0.008541, -0.043743, -0.00023, -0.036429, -0.044457, 0.000593, -0.024145, -0.028323, 0.018909)
@@ -17,3 +22,13 @@ shape = SubResource("ConvexPolygonShape3D_hold5")
 
 [node name="Model" parent="." index="1" unique_id=792796001]
 mesh = ExtResource("3_mesh")
+
+[node name="GriffCrumble" type="Node" parent="." unique_id=1700000005]
+script = ExtResource("4_crumble")
+crumble_texture = ExtResource("5_dead_albedo")
+crumble_orm_texture = ExtResource("6_dead_orm")
+crumble_normal_texture = ExtResource("7_dead_normal")
+crumble_emission_texture = ExtResource("8_dead_emission")
+spread_softness = 0.1
+auto_create_collision = false
+chunk_color = Color(0.13, 0.13, 0.17, 1)
