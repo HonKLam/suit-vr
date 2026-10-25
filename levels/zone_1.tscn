@@ -7,11 +7,11 @@
 [ext_resource type="Script" uid="uid://b6wcyqb0yacmx" path="res://scripts/tools/hold_aligner.gd" id="7_k6alk"]
 [ext_resource type="PackedScene" uid="uid://c0iibpfbbgn2x" path="res://assets/map/outside.fbx" id="7_outside"]
 [ext_resource type="Material" path="res://assets/map/wall_material.tres" id="9_wallmat"]
-[ext_resource type="PackedScene" uid="uid://bacecjr8nds3k" path="res://scenes/stone_forms/stone_hold_1.tscn" id="h1_hold"]
-[ext_resource type="PackedScene" uid="uid://byhrgchga3t80" path="res://scenes/stone_forms/stone_hold_2.tscn" id="h2_hold"]
-[ext_resource type="PackedScene" uid="uid://b3epd1xwpfbfg" path="res://scenes/stone_forms/stone_hold_3.tscn" id="h3_hold"]
-[ext_resource type="PackedScene" uid="uid://bt7550pngvwa8" path="res://scenes/stone_forms/stone_hold_4.tscn" id="h4_hold"]
-[ext_resource type="PackedScene" uid="uid://ba27ysv6ciapt" path="res://scenes/stone_forms/stone_hold_5.tscn" id="h5_hold"]
+[ext_resource type="PackedScene" uid="uid://bacecjr8nds3k" path="res://scenes/stone_forms/stone_breaking/stone_hold_1.tscn" id="h1_hold"]
+[ext_resource type="PackedScene" uid="uid://byhrgchga3t80" path="res://scenes/stone_forms/stone_breaking/stone_hold_2.tscn" id="h2_hold"]
+[ext_resource type="PackedScene" uid="uid://b3epd1xwpfbfg" path="res://scenes/stone_forms/stone_breaking/stone_hold_3.tscn" id="h3_hold"]
+[ext_resource type="PackedScene" uid="uid://bt7550pngvwa8" path="res://scenes/stone_forms/stone_breaking/stone_hold_4.tscn" id="h4_hold"]
+[ext_resource type="PackedScene" uid="uid://ba27ysv6ciapt" path="res://scenes/stone_forms/stone_breaking/stone_hold_5.tscn" id="h5_hold"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_sky"]
 shader = ExtResource("6_sky")

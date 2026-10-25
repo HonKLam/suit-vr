@@ -29,10 +29,9 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	pass
 
-func on_grabbed(hand: String) -> void:
-	super(hand)
+func on_grabbed() -> void:
+	super()
 	if timer.is_stopped() and not _breaking: # zweite Hand startet den Timer nicht neu
-		print("starting timer")
 		timer.start()
 	if _crumble:
 		_crumble.grab()
