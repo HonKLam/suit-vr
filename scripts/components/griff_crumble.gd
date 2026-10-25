@@ -71,8 +71,10 @@ const SHADER := preload("res://assets/holds/griff_crumble.gdshader")
 ## Kurzer Ruck beim Greifen.
 @export_range(0.0, 1.0, 0.05) var haptic_grab := 0.6
 @export_range(0.01, 0.5, 0.01) var haptic_grab_time := 0.08
+## Ruhe nach dem Greifen (Sekunden), erst danach setzt das Dauer-Vibrieren ein.
+@export_range(0.0, 3.0, 0.05) var haptic_quiet_time := 1.0
 ## Dauer-Vibration während des Zerfalls: von leicht (Start) bis stark (Beginn der Warnphase).
-@export_range(0.0, 1.0, 0.05) var haptic_min := 0.08
+@export_range(0.0, 1.0, 0.05) var haptic_min := 0.1
 @export_range(0.0, 1.0, 0.05) var haptic_max := 0.5
 ## Blinkendes Vibrieren in der Warnphase (gleiche Dauer wie shake_time).
 @export_range(0.0, 1.0, 0.05) var haptic_blink := 0.9
@@ -122,7 +124,7 @@ func grab() -> void:
 		return
 	state = State.CRUMBLING
 	_pulse(_holding_controllers(), haptic_grab, haptic_grab_time)
-	_haptic_quiet_until = _haptic_time + haptic_grab_time
+	_haptic_quiet_until = _haptic_time + maxf(haptic_grab_time, haptic_quiet_time)
 	set_process(true)
 
 
@@ -254,9 +256,10 @@ func _update_haptics(delta: float) -> void:
 		if fmod(_haptic_time * haptic_blink_hz, 1.0) < 0.5:
 			amp = haptic_blink
 	else:
-		# von leicht bis stark bis zum Beginn der Warnphase
-		var warn_start := 1.0 - shake_time / maxf(crumble_time, 0.001)
-		var t := clampf(progress / maxf(warn_start, 0.001), 0.0, 1.0)
+		# nach der Ruhephase von leicht bis stark bis zum Beginn der Warnphase
+		var elapsed := progress * crumble_time
+		var ramp_len := maxf(crumble_time - shake_time - haptic_quiet_time, 0.001)
+		var t := clampf((elapsed - haptic_quiet_time) / ramp_len, 0.0, 1.0)
 		amp = lerpf(haptic_min, haptic_max, t * t)
 	if amp > 0.0:
 		_pulse(ctrls, amp, 0.05) # kurz, wird jedes Frame erneuert -> Pausen beim Blinken bleiben spürbar
