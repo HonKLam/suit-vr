@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://bacecjr8nds3k"]
+
+[ext_resource type="PackedScene" uid="uid://c1rmbaw2hugql" path="res://scenes/stone_forms/stone_breaking/stone_breaking.tscn" id="1_5wpt1"]
+[ext_resource type="ArrayMesh" uid="uid://bljebdc8i05l1" path="res://assets/holds/meshes/hold_1.tres" id="2_5uc2b"]
+[ext_resource type="Texture2D" uid="uid://b8d8x6puf5vlv" path="res://assets/holds/textures_dead/M_hold_1_baseColor_1001.png" id="4_dead_albedo"]
+[ext_resource type="Texture2D" uid="uid://ckxgdp3w5c1tu" path="res://assets/holds/textures_dead/M_hold_1_occlusionRoughnessMetallic_1001.png" id="5_dead_orm"]
+[ext_resource type="Texture2D" uid="uid://ttnlchuhi25q" path="res://assets/holds/textures_dead/M_hold_1_normal_1001.png" id="6_dead_normal"]
+[ext_resource type="Texture2D" uid="uid://nhfgkoovkmc3" path="res://assets/holds/textures_dead/M_hold_1_emissive_1001.png" id="7_dead_emission"]
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_hold1"]
+points = PackedVector3Array(0.025061, -0.040061, 0.013882, -0.066478, 0.021862, -0.000648, -0.066877, 0.022002, 0.00352, 0.043375, 0.065421, -0.003383, 0.025569, 0.069882, 0.018865, -0.030044, -0.056957, -0.003383, -0.05765, 0.006872, 0.019731, 0.032249, -0.045832, -0.003383, -0.023364, 0.05431, -0.005613, -0.001473, -0.053353, 0.018172, 0.045161, 0.060151, 0.020438, 0.053657, 0.032643, 0.005626, -0.049172, 0.034059, 0.013955, 0.002751, -0.06627, 0.003546, -0.036725, -0.054726, -0.003383, -0.016044, -0.051162, 0.018152, 0.018902, 0.065421, -0.005613, 0.014752, -0.052213, 0.017953, 0.04767, 0.019343, 0.013892, 0.054101, 0.045691, -0.000789, 0.011624, -0.037663, 0.01931, -0.043384, 0.04494, -0.000646, -0.058145, 0.015009, 0.019848, -0.057926, -0.009555, 0.001471, -0.044467, -0.025651, 0.013865, 0.028222, -0.051992, 0.001397, -0.003528, -0.06674, 0.001403, -0.064366, 0.030263, 0.00145, 0.034472, -0.04137, -0.003383, -0.062993, 0.013626, 0.016239, -0.056297, -0.002988, -0.001984, 0.017518, -0.053828, 0.016159)
+
+[node name="Stone" unique_id=1520981350 instance=ExtResource("1_5wpt1")]
+two_hands_allowed = true
+
+[node name="Collision" parent="." index="0" unique_id=1313190417]
+shape = SubResource("ConvexPolygonShape3D_hold1")
+
+[node name="Model" parent="." index="1" unique_id=792796001]
+mesh = ExtResource("2_5uc2b")
+
+[node name="GriffCrumble" parent="." index="2" unique_id=2136669943]
+crumble_texture = ExtResource("4_dead_albedo")
+crumble_orm_texture = ExtResource("5_dead_orm")
+crumble_normal_texture = ExtResource("6_dead_normal")
+crumble_emission_texture = ExtResource("7_dead_emission")

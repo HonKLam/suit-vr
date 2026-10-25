@@ -1,0 +1,23 @@
+[gd_resource type="StandardMaterial3D" load_steps=5 format=3]
+
+[ext_resource type="Texture2D" path="res://assets/holds/textures/M_hold_1_baseColor_1001.png" id="1_t3jjm"]
+[ext_resource type="Texture2D" path="res://assets/holds/textures/M_hold_1_occlusionRoughnessMetallic_1001.png" id="2_ct6xj"]
+[ext_resource type="Texture2D" path="res://assets/holds/textures/M_hold_1_emissive_1001.png" id="3_pc5qy"]
+[ext_resource type="Texture2D" path="res://assets/holds/textures/M_hold_1_normal_1001.png" id="4_06r3f"]
+
+[resource]
+resource_name = "hold_1"
+albedo_texture = ExtResource("1_t3jjm")
+metallic = 1.0
+metallic_texture = ExtResource("2_ct6xj")
+metallic_texture_channel = 2
+roughness_texture = ExtResource("2_ct6xj")
+roughness_texture_channel = 1
+emission_enabled = true
+emission = Color(1, 1, 1, 1)
+emission_operator = 1
+emission_texture = ExtResource("3_pc5qy")
+normal_enabled = true
+normal_texture = ExtResource("4_06r3f")
+ao_enabled = true
+ao_texture = ExtResource("2_ct6xj")

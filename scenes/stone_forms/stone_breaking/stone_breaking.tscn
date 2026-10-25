@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://c1rmbaw2hugql"]
+
+[ext_resource type="PackedScene" uid="uid://dpj5tyvs7g80a" path="res://scenes/stone_forms/stone.tscn" id="1_yiyra"]
+[ext_resource type="Script" uid="uid://cgu7hqwq37fiu" path="res://scripts/stone_types/stone_breaking.gd" id="2_nptsb"]
+[ext_resource type="Script" uid="uid://c2cf00mh21soa" path="res://scripts/components/griff_crumble.gd" id="3_wo0ge"]
+[ext_resource type="Texture2D" uid="uid://c7bhrjtevkj6" path="res://assets/holds/transition_mask.png" id="8_3pean"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_bi08t"]
+resource_local_to_scene = true
+
+[node name="Stone" unique_id=1520981350 instance=ExtResource("1_yiyra")]
+script = ExtResource("2_nptsb")
+timer_time = 5
+
+[node name="Collision" parent="." index="0" unique_id=1313190417]
+shape = SubResource("BoxShape3D_bi08t")
+
+[node name="GriffCrumble" type="Node" parent="." index="2" unique_id=2136669943]
+script = ExtResource("3_wo0ge")
+effect_mask = ExtResource("8_3pean")
+spread_softness = 0.1
+chunk_color = Color(0.13, 0.13, 0.17, 1)
