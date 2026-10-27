@@ -3,7 +3,9 @@ extends Node3D
 ## Logik des Metalldetektors. Als Kind eines XRToolsPickable einhängen.
 ## Solange er gehalten wird, misst er an der Spule (coil) das stärkste Metall-Signal
 ## (alle MetalObject in der Gruppe "metal") und zeigt es an:
-## - Piepen: je näher, desto schneller und höher
+## - Piepen: ohne Metall ruhiger Grund-Takt, je näher am Metall desto schneller und höher.
+##   Der Takt läuft durchgehend (nie mehr Pieps als der aktuelle Takt erlaubt),
+##   das Signal ist geglättet -> schnelles Drüberwischen erzeugt kein Dauerpiepen.
 ## - Leuchte am Gerät: von grün (nichts) bis rot (stark), blitzt bei jedem Piep
 ## - Vibration in der haltenden Hand, im Takt des Piepens
 
@@ -17,14 +19,23 @@ extends Node3D
 ## Unter diesem Signal bleibt der Detektor still.
 @export_range(0.0, 1.0, 0.01) var threshold := 0.05
 @export_group("Piepen")
+## Grund-Takt ohne Metall (s zwischen zwei Pieps) und dessen Tonhöhe.
+@export var interval_idle := 1.2
+@export var pitch_idle := 0.7
 ## Pause zwischen zwei Pieps bei schwachem / starkem Signal (s).
-@export var interval_weak := 0.9
-@export var interval_strong := 0.07
-@export var pitch_weak := 0.85
+@export var interval_weak := 0.5
+@export var interval_strong := 0.06
+@export var pitch_weak := 0.9
 @export var pitch_strong := 1.7
+## Wie schnell das angezeigte Signal steigt / fällt (pro Sekunde). Kleiner = träger,
+## kurzes Drüberwischen wirkt dann weniger.
+@export_range(0.5, 30.0, 0.5) var signal_rise := 4.0
+@export_range(0.5, 30.0, 0.5) var signal_fall := 3.0
 @export_group("Haptik")
 @export var haptics_enabled := true
 @export var haptic_action := "haptic"
+## Vibration beim Grund-Piep ohne Metall (0 = aus).
+@export_range(0.0, 1.0, 0.05) var haptic_idle := 0.0
 @export_range(0.0, 1.0, 0.05) var haptic_weak := 0.1
 @export_range(0.0, 1.0, 0.05) var haptic_strong := 0.7
 @export_range(0.01, 0.2, 0.005) var haptic_time := 0.035
@@ -33,11 +44,13 @@ extends Node3D
 @export var led_alarm := Color(1.0, 0.1, 0.05)
 @export_range(0.0, 8.0, 0.1) var led_energy := 3.0
 
-## Aktuelles Signal 0..1 (zum Debuggen oder für UI).
+## Aktuelles Signal 0..1 (roh, zum Debuggen oder für UI).
 var signal_strength := 0.0
+## Geglättetes Signal, danach richten sich Piepen, Leuchte und Vibration.
+var smoothed_signal := 0.0
 
 var _held := false
-var _timer := 0.0
+var _phase := 0.0
 var _flash := 0.0
 var _pickable: Node
 var _led_mat: StandardMaterial3D
@@ -60,20 +73,23 @@ func _process(delta: float) -> void:
 	if not _held:
 		return
 	signal_strength = measure()
+	var rate := signal_rise if signal_strength > smoothed_signal else signal_fall
+	smoothed_signal = lerpf(smoothed_signal, signal_strength, 1.0 - exp(-rate * delta))
 	_flash = maxf(_flash - delta * 8.0, 0.0)
-	if signal_strength < threshold:
-		_timer = 0.0
-	else:
-		_timer -= delta
-		if _timer <= 0.0:
-			var s := clampf((signal_strength - threshold) / (1.0 - threshold), 0.0, 1.0)
-			_timer = lerpf(interval_weak, interval_strong, sqrt(s))
-			if beep:
-				beep.pitch_scale = lerpf(pitch_weak, pitch_strong, s)
-				beep.play()
-			_pulse(lerpf(haptic_weak, haptic_strong, s))
-			_flash = 1.0
-	_update_led(signal_strength, _flash)
+
+	var active := smoothed_signal >= threshold
+	var s := clampf((smoothed_signal - threshold) / (1.0 - threshold), 0.0, 1.0)
+	var interval := lerpf(interval_weak, interval_strong, sqrt(s)) if active else interval_idle
+	# Takt läuft durchgehend weiter -> höchstens ein Piep pro Takt, kein Nachholen
+	_phase += delta / maxf(interval, 0.01)
+	if _phase >= 1.0:
+		_phase = fmod(_phase, 1.0)
+		if beep:
+			beep.pitch_scale = lerpf(pitch_weak, pitch_strong, s) if active else pitch_idle
+			beep.play()
+		_pulse(lerpf(haptic_weak, haptic_strong, s) if active else haptic_idle)
+		_flash = 1.0
+	_update_led(smoothed_signal, _flash)
 
 
 ## Signal an der Spule: stärkstes Metall, abgeschwächt mit dem Abstand.
@@ -90,12 +106,14 @@ func measure() -> float:
 
 func _on_picked_up(_p) -> void:
 	_held = true
-	_timer = 0.0
+	smoothed_signal = 0.0
+	_phase = 0.8 # erster Piep kurz nach dem Greifen
 
 
 func _on_dropped(_p) -> void:
 	_held = false
 	signal_strength = 0.0
+	smoothed_signal = 0.0
 	_update_led(0.0, 0.0)
 
 
@@ -111,7 +129,7 @@ func _update_led(s: float, flash: float) -> void:
 
 
 func _pulse(amplitude: float) -> void:
-	if not haptics_enabled or _pickable == null or not _pickable.has_method("get_picked_up_by_controller"):
+	if not haptics_enabled or amplitude <= 0.0 or _pickable == null or not _pickable.has_method("get_picked_up_by_controller"):
 		return
 	var ctrl: XRController3D = _pickable.get_picked_up_by_controller()
 	if ctrl == null:
