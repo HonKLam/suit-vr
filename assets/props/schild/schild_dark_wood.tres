@@ -1,0 +1,13 @@
+[gd_resource type="StandardMaterial3D" format=3]
+
+[ext_resource type="Texture2D" path="res://assets/props/schild/schild_dark_wood_basecolor.png" id="1"]
+[ext_resource type="Texture2D" path="res://assets/props/schild/schild_dark_wood_normal.png" id="2"]
+[ext_resource type="Texture2D" path="res://assets/props/schild/schild_dark_wood_roughness.png" id="3"]
+
+[resource]
+resource_name = "schild_dark_wood"
+albedo_texture = ExtResource("1")
+roughness_texture = ExtResource("3")
+roughness_texture_channel = 4
+normal_enabled = true
+normal_texture = ExtResource("2")
