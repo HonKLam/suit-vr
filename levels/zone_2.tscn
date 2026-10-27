@@ -32,6 +32,8 @@
 [ext_resource type="PackedScene" path="res://scenes/props/schild.tscn" id="90_schild"]
 [ext_resource type="PackedScene" path="res://scenes/dig/metal_detector.tscn" id="91_detector"]
 [ext_resource type="Script" path="res://scripts/dig/metal_object.gd" id="92_metal"]
+[ext_resource type="Script" path="res://scripts/components/heavy_hold.gd" id="93_heavy"]
+[ext_resource type="Script" path="res://scripts/components/hold_ground_block.gd" id="94_ground"]
 
 [sub_resource type="ProceduralSkyMaterial" id="Sky_mat"]
 sky_top_color = Color(0.3, 0.55, 0.92, 1)
@@ -126,6 +128,30 @@ strength = 0.5
 
 [node name="MetalDetector" parent="." instance=ExtResource("91_detector")]
 transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 1.4, 0, 9)
+
+[node name="HeavyHold" type="Node" parent="MetalDetector"]
+script = ExtResource("93_heavy")
+
+[node name="BodenPruefpunkte" type="Node3D" parent="MetalDetector"]
+
+[node name="Vorne" type="Marker3D" parent="MetalDetector/BodenPruefpunkte"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.01, 1.36)
+
+[node name="Hinten" type="Marker3D" parent="MetalDetector/BodenPruefpunkte"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.01, 1.0)
+
+[node name="Links" type="Marker3D" parent="MetalDetector/BodenPruefpunkte"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.2, 0.01, 1.18)
+
+[node name="Rechts" type="Marker3D" parent="MetalDetector/BodenPruefpunkte"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.2, 0.01, 1.18)
+
+[node name="Mitte" type="Marker3D" parent="MetalDetector/BodenPruefpunkte"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.01, 1.18)
+
+[node name="HoldGroundBlock" type="Node" parent="MetalDetector" node_paths=PackedStringArray("probes")]
+script = ExtResource("94_ground")
+probes = [NodePath("../BodenPruefpunkte/Vorne"), NodePath("../BodenPruefpunkte/Hinten"), NodePath("../BodenPruefpunkte/Links"), NodePath("../BodenPruefpunkte/Rechts"), NodePath("../BodenPruefpunkte/Mitte")]
 
 [node name="SchildPlatz" type="Marker3D" parent="." unique_id=1528649053]
 transform = Transform3D(0.98823, 0, -0.15299, 0, 1, 0, 0.15299, 0, 0.98823, 1.2, 0, 2.1)
