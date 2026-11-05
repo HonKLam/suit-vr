@@ -9,7 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://b6bk2pj8vbj28" path="res://addons/godot-xr-tools/functions/movement_turn.tscn" id="6_d3wef"]
 [ext_resource type="PackedScene" uid="uid://clujaf3u776a3" path="res://addons/godot-xr-tools/objects/viewport_2d_in_3d.tscn" id="7_wrist"]
 [ext_resource type="PackedScene" uid="uid://db32b2aisswlp" path="res://shared/ui/wrist_menu.tscn" id="8_menu"]
-[ext_resource type="PackedScene" uid="uid://bjcxf427un2wp" path="res://addons/godot-xr-tools/player/poke/poke.tscn" id="9_poke"]
+[ext_resource type="PackedScene" uid="uid://cqhw276realc" path="res://addons/godot-xr-tools/functions/function_pointer.tscn" id="9_pointer"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_g3iwr"]
 albedo_color = Color(0, 1, 1, 1)
@@ -17,6 +17,21 @@ albedo_color = Color(0, 1, 1, 1)
 [sub_resource type="BoxMesh" id="BoxMesh_s2d7e"]
 material = SubResource("StandardMaterial3D_g3iwr")
 size = Vector3(0.05, 0.05, 0.05)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_screen"]
+transparency = 1
+no_depth_test = true
+shading_mode = 0
+cull_mode = 2
+texture_filter = 1
+render_priority = 10
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_laser"]
+transparency = 1
+no_depth_test = true
+shading_mode = 0
+albedo_color = Color(1, 0.15625, 0.15625, 0.74)
+render_priority = 11
 
 [node name="XROrigin3D" type="XROrigin3D" unique_id=1665458307]
 script = ExtResource("1_fjrip")
@@ -52,6 +67,7 @@ screen_size = Vector2(0.07, 0.07)
 collision_layer = 5242880
 scene = ExtResource("8_menu")
 viewport_size = Vector2(400, 400)
+material = SubResource("StandardMaterial3D_screen")
 scene_properties_keys = PackedStringArray("wrist_menu.gd")
 
 [node name="XRController3D_right" type="XRController3D" parent="." unique_id=563118976]
@@ -68,8 +84,12 @@ turn_mode = 2
 grab_distance = 0.1
 ranged_enable = false
 
-[node name="Poke" parent="XRController3D_right" unique_id=1169083826 instance=ExtResource("9_poke")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.08)
-radius = 0.01
-mask = 4194304
-push_bodies = false
+[node name="FunctionPointer" parent="XRController3D_right" unique_id=1169083826 instance=ExtResource("9_pointer")]
+visible = false
+enabled = false
+laser_length = 1
+laser_material = SubResource("StandardMaterial3D_laser")
+show_target = true
+target_radius = 0.01
+target_material = SubResource("StandardMaterial3D_laser")
+suppress_mask = 0

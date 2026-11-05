@@ -59,12 +59,12 @@ func _start_round() -> void:
 		return
 	status_label.text = "GO!"
 	await get_tree().create_timer(1.0).timeout
-	if state == State.PLAYING:
-		status_label.text = ""
+	status_label.text = ""
 
 func _set_paused(paused: bool) -> void:
 	state = State.PAUSED if paused else State.PLAYING
 	player.set_frozen(paused)
+	player.set_menu_open(paused)
 	map.set_paused(paused)
 	if paused:
 		wrist_menu.show_menu("Paused", true)
@@ -75,9 +75,7 @@ func _end_round(new_state: State, text: String) -> void:
 	state = new_state
 	map.stop()
 	player.set_frozen(true)
-	var camera = player.get_node("XRCamera3D")
-	status_label.global_position = camera.global_position - camera.global_basis.z * 5
-	status_label.text = text
+	player.set_menu_open(true)
 	wrist_menu.show_menu(text, false)
 
 func _show_status() -> void:
