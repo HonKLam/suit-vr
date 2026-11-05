@@ -1,0 +1,15 @@
+# File produced by Open Asset Import Library (http://www.assimp.sf.net)
+# (assimp v3.1.223738405)
+
+newmtl Light Wood
+kd 0.439657 0.212231 0.0722719
+illum 1
+
+newmtl Dark Wood
+kd 0.208637 0.0865004 0.0221739
+illum 1
+
+newmtl Herbs
+kd 0.174647 0.351533 0.0528607
+illum 1
+

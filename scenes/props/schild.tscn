@@ -1,0 +1,25 @@
+[gd_scene format=3]
+
+[ext_resource type="ArrayMesh" path="res://assets/props/schild/Schild.obj" id="1_mesh"]
+[ext_resource type="Material" path="res://assets/props/schild/schild_light_wood.tres" id="2_light"]
+[ext_resource type="Material" path="res://assets/props/schild/schild_dark_wood.tres" id="3_dark"]
+[ext_resource type="Material" path="res://assets/props/schild/schild_herbs.tres" id="4_herbs"]
+
+[sub_resource type="CylinderShape3D" id="Post"]
+height = 1.1
+radius = 0.045
+
+[node name="Schild" type="Node3D"]
+
+[node name="Mesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.0055, 0, 0, 0, 0.0055, 0, 0, 0, 0.0055, 0, 0, 0)
+mesh = ExtResource("1_mesh")
+surface_material_override/0 = ExtResource("2_light")
+surface_material_override/1 = ExtResource("3_dark")
+surface_material_override/2 = ExtResource("4_herbs")
+
+[node name="Body" type="StaticBody3D" parent="."]
+
+[node name="Post" type="CollisionShape3D" parent="Body"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.55, 0)
+shape = SubResource("Post")
