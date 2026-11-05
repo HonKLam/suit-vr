@@ -1,0 +1,119 @@
+[gd_scene format=3 uid="uid://bdqc54mh5t12t"]
+
+[ext_resource type="Script" uid="uid://bfrlpbsqg5lqr" path="res://addons/godot-xr-tools/objects/pickable.gd" id="1_pick"]
+[ext_resource type="ArrayMesh" uid="uid://bijiev7ivnrlr" path="res://zones/zone_2/props/metal_detector/assets/metal_detector.obj" id="2_mesh"]
+[ext_resource type="Script" uid="uid://c7yuct4p7jr02" path="res://zones/zone_2/props/metal_detector/metal_detector.gd" id="3_logic"]
+[ext_resource type="AudioStream" uid="uid://524527t3keu0" path="res://zones/zone_2/props/metal_detector/detector_beep.wav" id="4_beep"]
+[ext_resource type="PackedScene" uid="uid://ctw7nbntd5pcj" path="res://addons/godot-xr-tools/objects/grab_points/grab_point_hand_right.tscn" id="5_gr"]
+[ext_resource type="PackedScene" uid="uid://c25yxb0vt53vc" path="res://addons/godot-xr-tools/objects/grab_points/grab_point_hand_left.tscn" id="6_gl"]
+[ext_resource type="Script" uid="uid://bbr0eavc06u6n" path="res://zones/zone_2/props/metal_detector/heavy_hold.gd" id="7_heavy"]
+[ext_resource type="Script" uid="uid://c7caxjr8y10yu" path="res://zones/zone_2/props/metal_detector/hold_ground_block.gd" id="8_ground"]
+[ext_resource type="Material" uid="uid://cdtatpwsukqax" path="res://zones/zone_2/props/metal_detector/assets/md_ringhold.tres" id="10_m"]
+[ext_resource type="Material" uid="uid://c85tco1456ata" path="res://zones/zone_2/props/metal_detector/assets/md_hold.tres" id="11_m"]
+[ext_resource type="Material" uid="uid://bba32vcr7pr2c" path="res://zones/zone_2/props/metal_detector/assets/md_ring.tres" id="12_m"]
+[ext_resource type="Material" uid="uid://b6uitj51i0w5d" path="res://zones/zone_2/props/metal_detector/assets/md_box.tres" id="13_m"]
+[ext_resource type="Material" uid="uid://d3wycdn6lpc82" path="res://zones/zone_2/props/metal_detector/assets/md_arm_grip.tres" id="14_m"]
+
+[sub_resource type="CapsuleShape3D" id="Shaft"]
+radius = 0.03
+height = 1.1
+
+[sub_resource type="CylinderShape3D" id="Coil"]
+height = 0.08
+radius = 0.2
+
+[sub_resource type="BoxShape3D" id="Box"]
+size = Vector3(0.16, 0.145, 0.25)
+
+[sub_resource type="BoxShape3D" id="Cuff"]
+size = Vector3(0.23, 0.14, 0.1)
+
+[sub_resource type="SphereMesh" id="Led"]
+radius = 0.015
+height = 0.03
+radial_segments = 12
+rings = 6
+
+[node name="MetalDetector" type="RigidBody3D" unique_id=519537038]
+collision_layer = 4
+collision_mask = 196615
+mass = 1.5
+freeze = true
+freeze_mode = 1
+script = ExtResource("1_pick")
+release_mode = 0
+
+[node name="Mesh" type="MeshInstance3D" parent="." unique_id=2105379492]
+transform = Transform3D(0.01, 0, 0, 0, 0.01, 0, 0, 0, 0.01, 0, 0, 0)
+mesh = ExtResource("2_mesh")
+surface_material_override/0 = ExtResource("10_m")
+surface_material_override/1 = ExtResource("11_m")
+surface_material_override/2 = ExtResource("12_m")
+surface_material_override/3 = ExtResource("13_m")
+surface_material_override/4 = ExtResource("14_m")
+
+[node name="ShaftShape" type="CollisionShape3D" parent="." unique_id=1533859310]
+transform = Transform3D(1, 0, 0, 0, -0.642, -0.767, 0, 0.767, -0.642, 0, 0.4075, 0.5975)
+shape = SubResource("Shaft")
+
+[node name="CoilShape" type="CollisionShape3D" parent="." unique_id=460873411]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.046, 1.179)
+shape = SubResource("Coil")
+
+[node name="BoxShape" type="CollisionShape3D" parent="." unique_id=777494551]
+transform = Transform3D(1, 0, 0, 0, 0.767, -0.642, 0, 0.642, 0.767, 0, 0.429, 0.591)
+shape = SubResource("Box")
+
+[node name="CuffShape" type="CollisionShape3D" parent="." unique_id=572233806]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.766, 0.22)
+shape = SubResource("Cuff")
+
+[node name="GrabPointHandRight" parent="." unique_id=1673810364 instance=ExtResource("5_gr")]
+transform = Transform3D(-1, 5.5842854e-08, -6.726304e-08, 0, 0.7693995, 0.6387678, 8.742278e-08, 0.6387678, -0.7693995, 0.02, 0.559, 0.498)
+
+[node name="GrabPointHandLeft" parent="." unique_id=1692705107 instance=ExtResource("6_gl")]
+transform = Transform3D(-1, 5.5842854e-08, -6.726304e-08, 0, 0.7693995, 0.6387678, 8.742278e-08, 0.6387678, -0.7693995, -0.02, 0.559, 0.498)
+
+[node name="Coil" type="Marker3D" parent="." unique_id=574795170]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.046, 1.179)
+
+[node name="Led" type="MeshInstance3D" parent="." unique_id=1136784975]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.519, 0.604)
+mesh = SubResource("Led")
+
+[node name="Beep" type="AudioStreamPlayer3D" parent="." unique_id=375210399]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.43, 0.59)
+stream = ExtResource("4_beep")
+volume_db = -30.0
+unit_size = 2.0
+max_db = 1.0
+
+[node name="Detector" type="Node3D" parent="." unique_id=760092364 node_paths=PackedStringArray("coil", "led", "beep")]
+script = ExtResource("3_logic")
+coil = NodePath("../Coil")
+led = NodePath("../Led")
+beep = NodePath("../Beep")
+
+[node name="HeavyHold" type="Node" parent="." unique_id=2020955832]
+script = ExtResource("7_heavy")
+
+[node name="GroundProbes" type="Node3D" parent="." unique_id=629997778]
+
+[node name="Front" type="Marker3D" parent="GroundProbes" unique_id=119541484]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.01, 1.36)
+
+[node name="Back" type="Marker3D" parent="GroundProbes" unique_id=102013793]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.01, 1)
+
+[node name="Left" type="Marker3D" parent="GroundProbes" unique_id=457892574]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.2, 0.01, 1.18)
+
+[node name="Right" type="Marker3D" parent="GroundProbes" unique_id=197281766]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.2, 0.01, 1.18)
+
+[node name="Center" type="Marker3D" parent="GroundProbes" unique_id=326377758]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.01, 1.18)
+
+[node name="HoldGroundBlock" type="Node" parent="." unique_id=2088806559 node_paths=PackedStringArray("probes")]
+script = ExtResource("8_ground")
+probes = [NodePath("../GroundProbes/Front"), NodePath("../GroundProbes/Back"), NodePath("../GroundProbes/Left"), NodePath("../GroundProbes/Right"), NodePath("../GroundProbes/Center")]

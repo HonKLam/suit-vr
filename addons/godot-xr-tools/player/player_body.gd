@@ -571,7 +571,9 @@ func _estimate_body_forward_dir() -> Vector3:
 		var dot = forward.dot(hands_forward)
 		var cross = forward.cross(hands_forward).normalized()
 		var angle = clamp(acos(dot) * body_forward_mix, 0.0, 0.33 * PI)
-		forward = forward.rotated(cross, angle)
+		# Parallel directions have no rotation axis: leave forward as it is
+		if cross.is_normalized():
+			forward = forward.rotated(cross, angle)
 
 	return forward
 

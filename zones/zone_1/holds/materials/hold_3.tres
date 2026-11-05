@@ -1,0 +1,23 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://chtj8ujivdmyx"]
+
+[ext_resource type="Texture2D" uid="uid://cus27xburw41a" path="res://zones/zone_1/holds/textures/M_hold_3_baseColor_1001.png" id="1_dn4sl"]
+[ext_resource type="Texture2D" uid="uid://dwx7wkd06ys0y" path="res://zones/zone_1/holds/textures/M_hold_3_occlusionRoughnessMetallic_1001.png" id="2_74d1y"]
+[ext_resource type="Texture2D" uid="uid://bixrnruk1otmx" path="res://zones/zone_1/holds/textures/M_hold_3_emissive_1001.png" id="3_eq0pt"]
+[ext_resource type="Texture2D" uid="uid://cpd7goyhmwa0o" path="res://zones/zone_1/holds/textures/M_hold_3_normal_1001.png" id="4_q8n0n"]
+
+[resource]
+resource_name = "hold_3"
+albedo_texture = ExtResource("1_dn4sl")
+metallic = 1.0
+metallic_texture = ExtResource("2_74d1y")
+metallic_texture_channel = 2
+roughness_texture = ExtResource("2_74d1y")
+roughness_texture_channel = 1
+emission_enabled = true
+emission = Color(1, 1, 1, 1)
+emission_operator = 1
+emission_texture = ExtResource("3_eq0pt")
+normal_enabled = true
+normal_texture = ExtResource("4_q8n0n")
+ao_enabled = true
+ao_texture = ExtResource("2_74d1y")

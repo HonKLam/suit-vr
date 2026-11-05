@@ -3,8 +3,8 @@ on:
   pull_request:
 
 jobs:
-  check-levels:
-    name: Load all levels
+  check-zones:
+    name: Load all zones
     runs-on: ubuntu-24.04
     container:
       image: barichello/godot-ci:4.7.2
@@ -13,5 +13,5 @@ jobs:
         uses: actions/checkout@v4
       - name: Fetch Addon Binaries
         run: .github/scripts/fetch-addon-binaries.sh
-      - name: Check Levels
-        run: .github/scripts/check-levels.sh
+      - name: Check Zones
+        run: .github/scripts/check-zones.sh

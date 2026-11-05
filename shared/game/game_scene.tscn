@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://chjrlgbxu2o51"]
+
+[ext_resource type="Script" uid="uid://dtnj4o455u5ee" path="res://shared/game/game_scene.gd" id="1_qanuy"]
+[ext_resource type="PackedScene" uid="uid://gjwejjgwbypt" path="res://shared/player/player.tscn" id="2_qanuy"]
+
+[node name="GameScene" type="Node3D" unique_id=933885685]
+script = ExtResource("1_qanuy")
+
+[node name="XROrigin3D" parent="." unique_id=1665458307 instance=ExtResource("2_qanuy")]
+
+[node name="StatusLabel" type="Label3D" parent="." unique_id=701626973]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -1)
+billboard = 1
+no_depth_test = true
+render_priority = 10
+outline_render_priority = 9
+font_size = 128

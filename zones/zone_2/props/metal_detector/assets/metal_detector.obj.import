@@ -1,0 +1,25 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://bijiev7ivnrlr"
+path="res://.godot/imported/metal_detector.obj-61b26f0e6fadbf561265c622b5c3bc4f.mesh"
+
+[deps]
+
+files=["res://.godot/imported/metal_detector.obj-61b26f0e6fadbf561265c622b5c3bc4f.mesh"]
+
+source_file="res://zones/zone_2/props/metal_detector/assets/metal_detector.obj"
+dest_files=["res://.godot/imported/metal_detector.obj-61b26f0e6fadbf561265c622b5c3bc4f.mesh", "res://.godot/imported/metal_detector.obj-61b26f0e6fadbf561265c622b5c3bc4f.mesh"]
+
+[params]
+
+generate_tangents=true
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false

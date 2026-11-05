@@ -10,7 +10,7 @@ config_version=5
 
 [application]
 
-config/name="suit-vr-climb"
+config/name="SUIT-VR-S3"
 run/main_scene="uid://dam3o6pbwcth0"
 config/features=PackedStringArray("4.7", "Mobile")
 config/icon="res://icon.svg"

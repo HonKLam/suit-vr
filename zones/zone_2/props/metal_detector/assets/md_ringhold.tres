@@ -1,0 +1,12 @@
+[gd_resource type="ORMMaterial3D" format=3 uid="uid://cdtatpwsukqax"]
+
+[ext_resource type="Texture2D" uid="uid://baoifi05pe8md" path="res://zones/zone_2/props/metal_detector/assets/md_ringhold_basecolor.png" id="1"]
+[ext_resource type="Texture2D" uid="uid://bu5npaqbdoiot" path="res://zones/zone_2/props/metal_detector/assets/md_ringhold_normal.png" id="2"]
+[ext_resource type="Texture2D" uid="uid://42kurr3x7f0o" path="res://zones/zone_2/props/metal_detector/assets/md_ringhold_orm.png" id="3"]
+
+[resource]
+resource_name = "md_ringhold"
+albedo_texture = ExtResource("1")
+orm_texture = ExtResource("3")
+normal_enabled = true
+normal_texture = ExtResource("2")

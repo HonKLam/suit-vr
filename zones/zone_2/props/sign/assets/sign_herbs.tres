@@ -1,0 +1,13 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://x8fo8gal5odn"]
+
+[ext_resource type="Texture2D" uid="uid://ckot3q7xrr2qf" path="res://zones/zone_2/props/sign/assets/sign_herbs_basecolor.png" id="1"]
+[ext_resource type="Texture2D" uid="uid://bumh1k6o322oa" path="res://zones/zone_2/props/sign/assets/sign_herbs_normal.png" id="2"]
+[ext_resource type="Texture2D" uid="uid://b65nc1gaq0f0c" path="res://zones/zone_2/props/sign/assets/sign_herbs_roughness.png" id="3"]
+
+[resource]
+resource_name = "sign_herbs"
+albedo_texture = ExtResource("1")
+roughness_texture = ExtResource("3")
+roughness_texture_channel = 4
+normal_enabled = true
+normal_texture = ExtResource("2")

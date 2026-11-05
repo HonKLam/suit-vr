@@ -1,0 +1,44 @@
+[gd_scene format=3 uid="uid://dh7h8extmccup"]
+
+[ext_resource type="PackedScene" uid="uid://chjrlgbxu2o51" path="res://shared/game/game_scene.tscn" id="game_scene"]
+[ext_resource type="PackedScene" uid="uid://dnih82iesuh5h" path="res://zones/zone_2/zone_2_map.tscn" id="map_scene"]
+
+[sub_resource type="ProceduralSkyMaterial" id="Sky_mat"]
+sky_top_color = Color(0.3, 0.55, 0.92, 1)
+sky_horizon_color = Color(0.74, 0.84, 0.9, 1)
+ground_bottom_color = Color(0.74, 0.84, 0.9, 1)
+ground_horizon_color = Color(0.74, 0.84, 0.9, 1)
+sun_angle_max = 20.0
+
+[sub_resource type="Sky" id="Sky_z2"]
+sky_material = SubResource("Sky_mat")
+
+[sub_resource type="Environment" id="Environment_z2"]
+background_mode = 2
+sky = SubResource("Sky_z2")
+ambient_light_source = 3
+tonemap_mode = 2
+fog_enabled = true
+fog_mode = 1
+fog_light_color = Color(0.74, 0.84, 0.9, 1)
+fog_density = 1.0
+fog_sky_affect = 0.0
+fog_depth_begin = 7.0
+fog_depth_end = 26.0
+
+[node name="Zone2" unique_id=1081860193 instance=ExtResource("game_scene")]
+countdown_seconds = 0
+
+[node name="XROrigin3D" parent="." index="0" unique_id=1665458307]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.3, 0, 10.6)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." index="2" unique_id=1782769117]
+environment = SubResource("Environment_z2")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." index="3" unique_id=1769015557]
+transform = Transform3D(0.847998, -0.436172, 0.301086, 0, 0.568088, 0.822968, -0.529999, -0.697875, 0.481737, 0, 8, 0)
+light_color = Color(1, 0.96, 0.88, 1)
+shadow_enabled = true
+directional_shadow_max_distance = 25.0
+
+[node name="Map" parent="." index="4" unique_id=2042539260 instance=ExtResource("map_scene")]

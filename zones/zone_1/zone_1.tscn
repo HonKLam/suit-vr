@@ -1,0 +1,63 @@
+[gd_scene format=3 uid="uid://ju07sksyem85"]
+
+[ext_resource type="PackedScene" uid="uid://chjrlgbxu2o51" path="res://shared/game/game_scene.tscn" id="1_qqlev"]
+[ext_resource type="Shader" uid="uid://bpect6c11t5w4" path="res://zones/zone_1/assets/stylized_sky.gdshader" id="6_sky"]
+[ext_resource type="PackedScene" uid="uid://c67jgxxx22mmp" path="res://zones/zone_1/zone_1_map.tscn" id="map_scene"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_sky"]
+shader = ExtResource("6_sky")
+shader_parameter/top_color = Color(0.27, 0.52, 0.92, 1)
+shader_parameter/horizon_color = Color(1, 0.83, 0.66, 1)
+shader_parameter/ground_color = Color(0.33, 0.4, 0.52, 1)
+shader_parameter/gradient_height = 0.55
+shader_parameter/sun_color = Color(1, 0.95, 0.78, 1)
+shader_parameter/sun_size = 0.012
+shader_parameter/sun_glow = 0.6
+shader_parameter/cloud_color = Color(1, 1, 1, 1)
+shader_parameter/cloud_shadow_color = Color(0.74, 0.79, 0.95, 1)
+shader_parameter/cloud_coverage = 0.52
+shader_parameter/cloud_scale = 1.4
+shader_parameter/cloud_softness = 0.02
+shader_parameter/cloud_offset = Vector2(0, 0)
+shader_parameter/mountain_far_color = Color(0.7, 0.66, 0.84, 1)
+shader_parameter/mountain_near_color = Color(0.47, 0.5, 0.72, 1)
+shader_parameter/mountain_far_height = 0.16
+shader_parameter/mountain_near_height = 0.09
+
+[sub_resource type="Sky" id="Sky_xrcqr"]
+sky_material = SubResource("ShaderMaterial_sky")
+
+[sub_resource type="Environment" id="Environment_30f0p"]
+background_mode = 2
+sky = SubResource("Sky_xrcqr")
+ambient_light_source = 3
+ambient_light_energy = 0.35
+tonemap_mode = 2
+glow_enabled = true
+glow_hdr_threshold = 1.5
+fog_enabled = true
+fog_light_color = Color(0.55, 0.3, 0.24, 1)
+fog_density = 0.002
+fog_sky_affect = 0.0
+fog_height = 4.0
+fog_height_density = 0.12
+
+[node name="Zone1" unique_id=933885685 instance=ExtResource("1_qqlev")]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." index="0" unique_id=840686269]
+environment = SubResource("Environment_30f0p")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." index="1" unique_id=1005240997]
+transform = Transform3D(0.766044, -0.567548, 0.301771, 0, 0.469472, 0.882948, -0.642788, -0.676377, 0.359636, 0, 0, 0)
+light_color = Color(0.8158823, 0.80590105, 0.6968321, 1)
+light_energy = 0.027
+light_indirect_energy = 1.404
+light_volumetric_fog_energy = 6.333
+light_specular = 0.677
+shadow_enabled = true
+directional_shadow_max_distance = 60.0
+
+[node name="XROrigin3D" parent="." index="2" unique_id=1665458307]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0051937103, 0.6651281, 0.72032857)
+
+[node name="Map" parent="." index="4" unique_id=1890535778 instance=ExtResource("map_scene")]
