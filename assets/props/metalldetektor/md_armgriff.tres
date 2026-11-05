@@ -1,8 +1,8 @@
-[gd_resource type="ORMMaterial3D" format=3]
+[gd_resource type="ORMMaterial3D" format=3 uid="uid://d3wycdn6lpc82"]
 
-[ext_resource type="Texture2D" path="res://assets/props/metalldetektor/md_armgriff_basecolor.png" id="1"]
-[ext_resource type="Texture2D" path="res://assets/props/metalldetektor/md_armgriff_normal.png" id="2"]
-[ext_resource type="Texture2D" path="res://assets/props/metalldetektor/md_armgriff_orm.png" id="3"]
+[ext_resource type="Texture2D" uid="uid://dib043nyjx4lj" path="res://assets/props/metalldetektor/md_armgriff_basecolor.png" id="1"]
+[ext_resource type="Texture2D" uid="uid://86fcs5wc7ilt" path="res://assets/props/metalldetektor/md_armgriff_normal.png" id="2"]
+[ext_resource type="Texture2D" uid="uid://bxyspht66bopf" path="res://assets/props/metalldetektor/md_armgriff_orm.png" id="3"]
 
 [resource]
 resource_name = "md_armgriff"

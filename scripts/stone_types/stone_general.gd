@@ -20,10 +20,8 @@ func _validate_property(property: Dictionary) -> void:
 var holders: Array[Node3D] = []
 
 func _ready() -> void:
+	super()
 	add_to_group("stones")
-
-func _update() -> void:
-	pass
 
 func pick_up(by: Node3D) -> void:
 	super(by)

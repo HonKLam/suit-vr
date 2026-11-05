@@ -6,7 +6,7 @@
 [ext_resource type="Shader" uid="uid://bpect6c11t5w4" path="res://assets/sky/stylized_sky.gdshader" id="6_sky"]
 [ext_resource type="Script" uid="uid://b6wcyqb0yacmx" path="res://scripts/tools/hold_aligner.gd" id="7_k6alk"]
 [ext_resource type="PackedScene" uid="uid://c0iibpfbbgn2x" path="res://assets/map/outside.fbx" id="7_outside"]
-[ext_resource type="Material" path="res://assets/map/wall_material.tres" id="9_wallmat"]
+[ext_resource type="Material" uid="uid://dn17wuod72w1c" path="res://assets/map/wall_material.tres" id="9_wallmat"]
 [ext_resource type="PackedScene" uid="uid://cj6101qbculi2" path="res://scenes/map/lava.tscn" id="13_gyx8u"]
 [ext_resource type="PackedScene" uid="uid://b108gcuolv6p7" path="res://scenes/map/win.tscn" id="14_w5fjf"]
 [ext_resource type="PackedScene" uid="uid://bacecjr8nds3k" path="res://scenes/stone_forms/stone_breaking/stone_hold_1.tscn" id="h1_hold"]

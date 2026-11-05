@@ -1,9 +1,9 @@
-[gd_resource type="StandardMaterial3D" load_steps=5 format=3]
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://b2f4hv2na7ak8"]
 
-[ext_resource type="Texture2D" path="res://assets/holds/textures/M_hold_5_baseColor_1001.png" id="1_0i5q0"]
-[ext_resource type="Texture2D" path="res://assets/holds/textures/M_hold_5_occlusionRoughnessMetallic_1001.png" id="2_h3yrv"]
-[ext_resource type="Texture2D" path="res://assets/holds/textures/M_hold_5_emissive_1001.png" id="3_3m5jx"]
-[ext_resource type="Texture2D" path="res://assets/holds/textures/M_hold_5_normal_1001.png" id="4_j33if"]
+[ext_resource type="Texture2D" uid="uid://b1m6747dobveh" path="res://assets/holds/textures/M_hold_5_baseColor_1001.png" id="1_0i5q0"]
+[ext_resource type="Texture2D" uid="uid://b5pb8gsyoa2cw" path="res://assets/holds/textures/M_hold_5_occlusionRoughnessMetallic_1001.png" id="2_h3yrv"]
+[ext_resource type="Texture2D" uid="uid://dkdgwix65as6i" path="res://assets/holds/textures/M_hold_5_emissive_1001.png" id="3_3m5jx"]
+[ext_resource type="Texture2D" uid="uid://c25oexpjweuyw" path="res://assets/holds/textures/M_hold_5_normal_1001.png" id="4_j33if"]
 
 [resource]
 resource_name = "hold_5"

@@ -32,8 +32,6 @@ extends Node3D
 @export_range(0.5, 30.0, 0.5) var signal_rise := 4.0
 @export_range(0.5, 30.0, 0.5) var signal_fall := 3.0
 @export_group("Haptik")
-@export var haptics_enabled := true
-@export var haptic_action := "haptic"
 ## Vibration beim Grund-Piep ohne Metall (0 = aus).
 @export_range(0.0, 1.0, 0.05) var haptic_idle := 0.0
 @export_range(0.0, 1.0, 0.05) var haptic_weak := 0.1
@@ -129,13 +127,8 @@ func _update_led(s: float, flash: float) -> void:
 
 
 func _pulse(amplitude: float) -> void:
-	if not haptics_enabled or amplitude <= 0.0 or _pickable == null or not _pickable.has_method("get_picked_up_by_controller"):
+	if amplitude <= 0.0:
 		return
 	var ctrl: XRController3D = _pickable.get_picked_up_by_controller()
-	if ctrl == null:
-		return
-	var scale := 1.0
-	var us := get_node_or_null("/root/XRToolsUserSettings")
-	if us and "haptics_scale" in us:
-		scale = us.haptics_scale
-	ctrl.trigger_haptic_pulse(haptic_action, 0.0, clampf(amplitude * scale, 0.0, 1.0), haptic_time, 0.0)
+	if ctrl:
+		Haptics.pulse(ctrl, amplitude, haptic_time)

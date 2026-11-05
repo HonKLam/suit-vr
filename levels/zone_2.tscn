@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://177gygw2xqqu" path="res://addons/godot-xr-tools/staging/scene_base.gd" id="1_r"]
 [ext_resource type="PackedScene" uid="uid://gjwejjgwbypt" path="res://scenes/player.tscn" id="2_r"]
-[ext_resource type="PackedScene" path="res://scenes/dig/sandbox.tscn" id="3_r"]
+[ext_resource type="PackedScene" uid="uid://b6dwo6m83x2op" path="res://scenes/dig/sandbox.tscn" id="3_r"]
 [ext_resource type="Shader" uid="uid://duy6l0amftl14" path="res://assets/dig/dig_ground.gdshader" id="4_r"]
 [ext_resource type="Script" uid="uid://dgxygvmcnquwi" path="res://scripts/nature/nature_batcher.gd" id="5_r"]
 [ext_resource type="Script" uid="uid://xjj6n3e7ixw8" path="res://scripts/nature/grass_scatter.gd" id="6_r"]
@@ -29,11 +29,9 @@
 [ext_resource type="PackedScene" uid="uid://cbjq1ef8nbcro" path="res://assets/nature/Rock_Medium_2.fbx" id="27_r"]
 [ext_resource type="PackedScene" uid="uid://cjhphxq1b7knw" path="res://assets/nature/Grass_Common_Short.fbx" id="28_r"]
 [ext_resource type="PackedScene" uid="uid://chf27yfaegns5" path="res://assets/nature/Grass_Common_Tall.fbx" id="29_r"]
-[ext_resource type="PackedScene" path="res://scenes/props/schild.tscn" id="90_schild"]
-[ext_resource type="PackedScene" path="res://scenes/dig/metal_detector.tscn" id="91_detector"]
-[ext_resource type="Script" path="res://scripts/dig/metal_object.gd" id="92_metal"]
-[ext_resource type="Script" path="res://scripts/components/heavy_hold.gd" id="93_heavy"]
-[ext_resource type="Script" path="res://scripts/components/hold_ground_block.gd" id="94_ground"]
+[ext_resource type="PackedScene" uid="uid://d1ql8kynvt13w" path="res://scenes/props/schild.tscn" id="90_schild"]
+[ext_resource type="PackedScene" uid="uid://bdqc54mh5t12t" path="res://scenes/dig/metal_detector.tscn" id="91_detector"]
+[ext_resource type="Script" uid="uid://cp36l1kkfjjoh" path="res://scripts/dig/metal_object.gd" id="92_metal"]
 
 [sub_resource type="ProceduralSkyMaterial" id="Sky_mat"]
 sky_top_color = Color(0.3, 0.55, 0.92, 1)
@@ -103,64 +101,41 @@ operation = 2
 size = Vector3(3, 1.2, 3)
 
 [node name="Sandbox" parent="." unique_id=1786866374 instance=ExtResource("3_r")]
-layer_colors = PackedColorArray(0.64, 0.38, 0.25, 1, 0.55, 0.31, 0.2, 1, 0.45, 0.25, 0.16, 1, 0.35, 0.19, 0.12, 1)
 
-[node name="MetallTest_Platzhalter" type="Node3D" parent="Sandbox"]
+[node name="MetallTest_Platzhalter" type="Node3D" parent="Sandbox" unique_id=465384536]
 
-[node name="Bombe" type="Node3D" parent="Sandbox/MetallTest_Platzhalter"]
+[node name="Bombe" type="Node3D" parent="Sandbox/MetallTest_Platzhalter" unique_id=1707264183]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6, -0.5, -0.4)
 script = ExtResource("92_metal")
 
-[node name="Dose" type="Node3D" parent="Sandbox/MetallTest_Platzhalter"]
+[node name="Dose" type="Node3D" parent="Sandbox/MetallTest_Platzhalter" unique_id=887402717]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.8, -0.25, 0.5)
 script = ExtResource("92_metal")
 strength = 0.8
 
-[node name="Muenze1" type="Node3D" parent="Sandbox/MetallTest_Platzhalter"]
+[node name="Muenze1" type="Node3D" parent="Sandbox/MetallTest_Platzhalter" unique_id=1893665757]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.9, -0.15, 0.9)
 script = ExtResource("92_metal")
 strength = 0.5
 
-[node name="Muenze2" type="Node3D" parent="Sandbox/MetallTest_Platzhalter"]
+[node name="Muenze2" type="Node3D" parent="Sandbox/MetallTest_Platzhalter" unique_id=1094815136]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, -0.4, -0.9)
 script = ExtResource("92_metal")
 strength = 0.5
 
-[node name="MetalDetector" parent="." instance=ExtResource("91_detector")]
+[node name="MetalDetector" parent="." unique_id=1538982907 instance=ExtResource("91_detector")]
 transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 1.4, 0, 9)
-
-[node name="HeavyHold" type="Node" parent="MetalDetector"]
-script = ExtResource("93_heavy")
-
-[node name="BodenPruefpunkte" type="Node3D" parent="MetalDetector"]
-
-[node name="Vorne" type="Marker3D" parent="MetalDetector/BodenPruefpunkte"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.01, 1.36)
-
-[node name="Hinten" type="Marker3D" parent="MetalDetector/BodenPruefpunkte"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.01, 1.0)
-
-[node name="Links" type="Marker3D" parent="MetalDetector/BodenPruefpunkte"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.2, 0.01, 1.18)
-
-[node name="Rechts" type="Marker3D" parent="MetalDetector/BodenPruefpunkte"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.2, 0.01, 1.18)
-
-[node name="Mitte" type="Marker3D" parent="MetalDetector/BodenPruefpunkte"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.01, 1.18)
-
-[node name="HoldGroundBlock" type="Node" parent="MetalDetector" node_paths=PackedStringArray("probes")]
-script = ExtResource("94_ground")
-probes = [NodePath("../BodenPruefpunkte/Vorne"), NodePath("../BodenPruefpunkte/Hinten"), NodePath("../BodenPruefpunkte/Links"), NodePath("../BodenPruefpunkte/Rechts"), NodePath("../BodenPruefpunkte/Mitte")]
 
 [node name="SchildPlatz" type="Marker3D" parent="." unique_id=1528649053]
 transform = Transform3D(0.98823, 0, -0.15299, 0, 1, 0, 0.15299, 0, 0.98823, 1.2, 0, 2.1)
 
-[node name="Schild" parent="SchildPlatz" instance=ExtResource("90_schild")]
+[node name="Schild" parent="SchildPlatz" unique_id=254991523 instance=ExtResource("90_schild")]
 
 [node name="Path" type="Node3D" parent="." unique_id=1002267201]
 script = ExtResource("5_r")
 trunk_keywords = PackedStringArray()
+tree_keywords = PackedStringArray("Tree", "Pine")
+plant_keywords = PackedStringArray("Bush", "Fern", "Flower", "Plant", "Clover", "Grass")
 
 [node name="RockPath_Round_Small_1_1" parent="Path" unique_id=53380365 instance=ExtResource("23_r")]
 transform = Transform3D(0.1078, 0, 0.4718, 0, 0.4839, 0, -0.4718, 0, 0.1078, 0.419, 0, 10.4)
@@ -210,6 +185,8 @@ transform = Transform3D(-0.3682, 0, 0.3691, 0, 0.5213, 0, -0.3691, 0, -0.3682, -
 [node name="Nature" type="Node3D" parent="." unique_id=1171048139]
 script = ExtResource("5_r")
 trunk_keywords = PackedStringArray("Tree", "Pine")
+tree_keywords = PackedStringArray("Tree", "Pine")
+plant_keywords = PackedStringArray("Bush", "Fern", "Flower", "Plant", "Clover", "Grass")
 
 [node name="CommonTree_3_1" parent="Nature" unique_id=131770981 instance=ExtResource("12_r")]
 transform = Transform3D(-0.0042, 0, -0.9211, 0, 0.9211, 0, 0.9211, 0, -0.0042, 4.604, 0, 10.328)

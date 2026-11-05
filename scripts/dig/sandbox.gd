@@ -41,7 +41,6 @@ signal dug(world_pos: Vector3, removed: float)
 	Color(0.64, 0.38, 0.25), Color(0.55, 0.31, 0.2), Color(0.45, 0.25, 0.16), Color(0.35, 0.19, 0.12)])
 ## Dicke einer Erdschicht (m).
 @export_range(0.05, 1.0, 0.01) var layer_thickness := 0.35
-@export var material_override: Material
 @export_group("Debug")
 ## Taste G gräbt dort, wo die Kamera hinschaut (zum Testen ohne Schaufel).
 @export var debug_key_dig := true
@@ -124,11 +123,6 @@ func is_solid(world_pos: Vector3) -> bool:
 	if g.x < 0 or g.y < 0 or g.z < 0 or g.x >= _n.x or g.y >= _n.y or g.z >= _n.z:
 		return false
 	return _s[_idx(g.x, g.y, g.z)] == 1
-
-
-## Alles wieder auffüllen.
-func reset() -> void:
-	_rebuild_all()
 
 
 func _process(_delta: float) -> void:
@@ -217,7 +211,7 @@ func _apply_chunk(ck: Vector3i, arr: Array) -> void:
 		_shapes[ck] = cs
 	var mesh := ArrayMesh.new()
 	mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arr)
-	mesh.surface_set_material(0, material_override if material_override else _material())
+	mesh.surface_set_material(0, _material())
 	mi.mesh = mesh
 	cs.shape = mesh.create_trimesh_shape()
 

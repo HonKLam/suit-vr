@@ -15,9 +15,15 @@ func _ready() -> void:
 	if Engine.is_editor_hint():
 		return
 	_crumble.crumble_time = timer_time
-	_crumble.crumbled.connect(func(): _breaking = true)
+	_crumble.crumbled.connect(_on_crumbled)
 	_crumble.finished.connect(queue_free)
 
 func on_grabbed() -> void:
 	super()
 	_crumble.grab()
+
+func _on_crumbled() -> void:
+	_breaking = true
+	# Without a proper drop, the climbing code would not switch to the other hand.
+	for hand in holders.duplicate():
+		hand.drop_object()

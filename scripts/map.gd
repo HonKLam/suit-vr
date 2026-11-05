@@ -21,10 +21,6 @@ func _ready() -> void:
 	lava.player_fell.connect(_on_player_fell)
 	win_area.player_win.connect(_on_player_win)
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
-
 func _get_configuration_warnings() -> PackedStringArray:
 	var warnings := PackedStringArray()
 	if not get_node_or_null("Lava"):

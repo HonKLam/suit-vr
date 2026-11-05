@@ -22,8 +22,6 @@ extends Node
 @export var snap_distance := 1.5
 ## Sichtbare Hand bleibt am Griff kleben (folgt dem schweren Objekt).
 @export var glue_hand := true
-## Namen der Kinder des Controllers, die als Hand mitgehen (leer = alle MeshInstance3D-Kinder).
-@export var hand_visual_names: PackedStringArray = PackedStringArray()
 
 const META := "held_transform"
 
@@ -100,11 +98,7 @@ func _attach_hand_visuals() -> void:
 	if ctrl == null:
 		return
 	for c in ctrl.get_children():
-		if not (c is Node3D):
-			continue
-		var by_name := not hand_visual_names.is_empty() and c.name in hand_visual_names
-		var by_type := hand_visual_names.is_empty() and c is MeshInstance3D
-		if by_name or by_type:
+		if c is MeshInstance3D:
 			var v := c as Node3D
 			_visual_saved[v] = [v.transform, v.top_level]
 			v.top_level = true # unabhängig vom echten Controller bewegen

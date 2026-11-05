@@ -1,8 +1,8 @@
-[gd_resource type="ORMMaterial3D" format=3]
+[gd_resource type="ORMMaterial3D" format=3 uid="uid://cdtatpwsukqax"]
 
-[ext_resource type="Texture2D" path="res://assets/props/metalldetektor/md_ringhold_basecolor.png" id="1"]
-[ext_resource type="Texture2D" path="res://assets/props/metalldetektor/md_ringhold_normal.png" id="2"]
-[ext_resource type="Texture2D" path="res://assets/props/metalldetektor/md_ringhold_orm.png" id="3"]
+[ext_resource type="Texture2D" uid="uid://baoifi05pe8md" path="res://assets/props/metalldetektor/md_ringhold_basecolor.png" id="1"]
+[ext_resource type="Texture2D" uid="uid://bu5npaqbdoiot" path="res://assets/props/metalldetektor/md_ringhold_normal.png" id="2"]
+[ext_resource type="Texture2D" uid="uid://42kurr3x7f0o" path="res://assets/props/metalldetektor/md_ringhold_orm.png" id="3"]
 
 [resource]
 resource_name = "md_ringhold"

@@ -6,11 +6,13 @@
 [ext_resource type="AudioStream" uid="uid://524527t3keu0" path="res://assets/sounds/detector_beep.wav" id="4_beep"]
 [ext_resource type="PackedScene" uid="uid://ctw7nbntd5pcj" path="res://addons/godot-xr-tools/objects/grab_points/grab_point_hand_right.tscn" id="5_gr"]
 [ext_resource type="PackedScene" uid="uid://c25yxb0vt53vc" path="res://addons/godot-xr-tools/objects/grab_points/grab_point_hand_left.tscn" id="6_gl"]
-[ext_resource type="Material" path="res://assets/props/metalldetektor/md_ringhold.tres" id="10_m"]
-[ext_resource type="Material" path="res://assets/props/metalldetektor/md_hold.tres" id="11_m"]
-[ext_resource type="Material" path="res://assets/props/metalldetektor/md_ring.tres" id="12_m"]
-[ext_resource type="Material" path="res://assets/props/metalldetektor/md_box.tres" id="13_m"]
-[ext_resource type="Material" path="res://assets/props/metalldetektor/md_armgriff.tres" id="14_m"]
+[ext_resource type="Script" uid="uid://bbr0eavc06u6n" path="res://scripts/components/heavy_hold.gd" id="7_heavy"]
+[ext_resource type="Script" uid="uid://c7caxjr8y10yu" path="res://scripts/components/hold_ground_block.gd" id="8_ground"]
+[ext_resource type="Material" uid="uid://cdtatpwsukqax" path="res://assets/props/metalldetektor/md_ringhold.tres" id="10_m"]
+[ext_resource type="Material" uid="uid://c85tco1456ata" path="res://assets/props/metalldetektor/md_hold.tres" id="11_m"]
+[ext_resource type="Material" uid="uid://bba32vcr7pr2c" path="res://assets/props/metalldetektor/md_ring.tres" id="12_m"]
+[ext_resource type="Material" uid="uid://b6uitj51i0w5d" path="res://assets/props/metalldetektor/md_box.tres" id="13_m"]
+[ext_resource type="Material" uid="uid://d3wycdn6lpc82" path="res://assets/props/metalldetektor/md_armgriff.tres" id="14_m"]
 
 [sub_resource type="CapsuleShape3D" id="Shaft"]
 radius = 0.03
@@ -90,3 +92,27 @@ script = ExtResource("3_logic")
 coil = NodePath("../Coil")
 led = NodePath("../Led")
 beep = NodePath("../Beep")
+
+[node name="HeavyHold" type="Node" parent="." unique_id=2020955832]
+script = ExtResource("7_heavy")
+
+[node name="BodenPruefpunkte" type="Node3D" parent="." unique_id=629997778]
+
+[node name="Vorne" type="Marker3D" parent="BodenPruefpunkte" unique_id=119541484]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.01, 1.36)
+
+[node name="Hinten" type="Marker3D" parent="BodenPruefpunkte" unique_id=102013793]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.01, 1)
+
+[node name="Links" type="Marker3D" parent="BodenPruefpunkte" unique_id=457892574]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.2, 0.01, 1.18)
+
+[node name="Rechts" type="Marker3D" parent="BodenPruefpunkte" unique_id=197281766]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.2, 0.01, 1.18)
+
+[node name="Mitte" type="Marker3D" parent="BodenPruefpunkte" unique_id=326377758]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.01, 1.18)
+
+[node name="HoldGroundBlock" type="Node" parent="." unique_id=2088806559 node_paths=PackedStringArray("probes")]
+script = ExtResource("8_ground")
+probes = [NodePath("../BodenPruefpunkte/Vorne"), NodePath("../BodenPruefpunkte/Hinten"), NodePath("../BodenPruefpunkte/Links"), NodePath("../BodenPruefpunkte/Rechts"), NodePath("../BodenPruefpunkte/Mitte")]

@@ -33,7 +33,7 @@ func _ready() -> void:
 	# Bestehende Holds beim Öffnen nicht anfassen, nur merken
 	for c in get_children():
 		if c is Node3D:
-			_last[c.get_instance_id()] = c.global_transform
+			_last[c.get_instance_id()] = c.transform
 
 
 func _process(_delta: float) -> void:
@@ -54,12 +54,13 @@ func align_changed(force := false) -> void:
 		if not (c is Node3D):
 			continue
 		var id: int = c.get_instance_id()
-		if not force and _last.has(id) and _last[id].is_equal_approx(c.global_transform):
+		# Local transform: moving the whole zone must not re-align its holds.
+		if not force and _last.has(id) and _last[id].is_equal_approx(c.transform):
 			continue
 		var hit := _closest_surface(space, c, excl)
 		if not hit.is_empty():
 			c.global_transform = _aligned(c, hit.position, hit.normal)
-		_last[id] = c.global_transform
+		_last[id] = c.transform
 
 
 func _closest_surface(space: PhysicsDirectSpaceState3D, node: Node3D, excl: Array[RID]) -> Dictionary:

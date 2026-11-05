@@ -15,7 +15,6 @@ var wrist_menu: WristMenu
 
 @onready var map: Map = $Map
 @onready var player: Player = $XROrigin3D
-@onready var movement_climb: XRToolsMovementClimb = $XROrigin3D/MovementClimb
 @onready var status_label: Label3D = $StatusLabel
 @onready var wrist_screen: XRToolsViewport2DIn3D = $XROrigin3D/XRController3D_left/WristMenu
 
@@ -67,6 +66,7 @@ func _set_paused(paused: bool) -> void:
 	state = State.PAUSED if paused else State.PLAYING
 	player.set_frozen(paused)
 	map.lava.set_rising_paused(paused)
+	get_tree().call_group(GriffCrumble.GROUP, "set_process", not paused)
 	if paused:
 		wrist_menu.show_menu("Paused", true)
 	else:

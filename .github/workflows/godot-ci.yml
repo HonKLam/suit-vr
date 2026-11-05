@@ -12,9 +12,6 @@ env:
   EXPORT_NAME: "SUIT-VR-Climb"
   PROJECT_PATH: .
   VERSION: ${{ github.event.inputs.version }}
-  # Addon binaries are not committed; they are downloaded from these releases.
-  OPENXR_VENDORS_VERSION: 5.1.0-stable
-  META_TOOLKIT_VERSION: 1.0.3-stable
 
 jobs:
   validate-version:
