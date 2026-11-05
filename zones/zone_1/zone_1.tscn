@@ -61,3 +61,4 @@ directional_shadow_max_distance = 60.0
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0051937103, 0.6651281, 0.72032857)
 
 [node name="Map" parent="." index="4" unique_id=1890535778 instance=ExtResource("map_scene")]
+time_limit = 200.0
