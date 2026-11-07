@@ -2,11 +2,27 @@
 
 [ext_resource type="Shader" uid="uid://30jg354tdtxw" path="res://zones/zone_1/lava/lava.gdshader" id="1_dn11f"]
 [ext_resource type="Script" uid="uid://bhwqmfd62p336" path="res://zones/zone_1/lava/lava.gd" id="1_rel2p"]
-[ext_resource type="AudioStream" uid="uid://dukhnog2kkkug" path="res://zones/zone_1/lava/sounds/lava_base.wav" id="2_8v6pb"]
 [ext_resource type="Script" uid="uid://dp67gjfhkkbs8" path="res://zones/zone_1/lava/lava_audio.gd" id="3_i7dah"]
 [ext_resource type="AudioStream" uid="uid://cqcxhq8y604xi" path="res://zones/zone_1/lava/sounds/lava_blob_1.wav" id="4_t775p"]
 [ext_resource type="AudioStream" uid="uid://yo14vjpj8rvj" path="res://zones/zone_1/lava/sounds/lava_blob_2.wav" id="5_wd8vj"]
 [ext_resource type="AudioStream" uid="uid://binya52o017gh" path="res://zones/zone_1/lava/sounds/lava_blob_3.wav" id="6_lw4cc"]
+[ext_resource type="AudioStream" uid="uid://bj4ipgrhwmroq" path="res://zones/zone_1/lava/sounds/lava_bed.wav" id="3_dvpj5"]
+[ext_resource type="AudioStream" uid="uid://8pimju32wdx8" path="res://zones/zone_1/lava/sounds/lava_glop_1.wav" id="8_7y4rd"]
+[ext_resource type="AudioStream" uid="uid://dv44n31b3eh6a" path="res://zones/zone_1/lava/sounds/lava_glop_2.wav" id="9_s8klc"]
+[ext_resource type="AudioStream" uid="uid://cbmdvehbljaxb" path="res://zones/zone_1/lava/sounds/lava_glop_3.wav" id="10_pyv51"]
+[ext_resource type="AudioStream" uid="uid://jqypw3kel2cq" path="res://zones/zone_1/lava/sounds/lava_rumble.wav" id="11_bn6jj"]
+[ext_resource type="AudioStream" uid="uid://u85fjiigkqog" path="res://zones/zone_1/lava/sounds/lava_heat.wav" id="12_edned"]
+[ext_resource type="AudioStream" uid="uid://bxgd4q6yi6cbr" path="res://zones/zone_1/lava/sounds/lava_crack_1.wav" id="13_gk2ra"]
+[ext_resource type="AudioStream" uid="uid://invw18r1k08o" path="res://zones/zone_1/lava/sounds/lava_crack_2.wav" id="14_xti7o"]
+[ext_resource type="AudioStream" uid="uid://c8px6kmoy60h1" path="res://zones/zone_1/lava/sounds/lava_crack_3.wav" id="15_dd74r"]
+[ext_resource type="AudioStream" uid="uid://q1h0kvs6b346" path="res://zones/zone_1/lava/sounds/lava_hiss_1.wav" id="16_ro5cr"]
+[ext_resource type="AudioStream" uid="uid://basy4prt57p2p" path="res://zones/zone_1/lava/sounds/lava_hiss_2.wav" id="17_dw7jo"]
+[ext_resource type="AudioStream" uid="uid://di7k5vr1bkyd6" path="res://zones/zone_1/lava/sounds/lava_groan.wav" id="18_w4bf1"]
+[ext_resource type="AudioStream" uid="uid://bem2c27wprbrs" path="res://zones/zone_1/lava/sounds/lava_eruption_1.wav" id="19_ubrbq"]
+[ext_resource type="AudioStream" uid="uid://5wwlep4qksx4" path="res://zones/zone_1/lava/sounds/lava_eruption_2.wav" id="20_3u7n5"]
+[ext_resource type="AudioStream" uid="uid://dtk1hrux8wmrf" path="res://zones/zone_1/lava/sounds/lava_sizzle_1.wav" id="21_keayc"]
+[ext_resource type="AudioStream" uid="uid://bo3rgenonmahw" path="res://zones/zone_1/lava/sounds/lava_sizzle_2.wav" id="22_mwee2"]
+[ext_resource type="AudioStream" uid="uid://cn2n0jbij3mes" path="res://zones/zone_1/lava/sounds/lava_sizzle_3.wav" id="23_35dn7"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_lava"]
 render_priority = 0
@@ -46,12 +62,20 @@ material_override = SubResource("ShaderMaterial_lava")
 cast_shadow = 0
 mesh = SubResource("BoxMesh_lava")
 
-[node name="Audio" type="AudioStreamPlayer3D" parent="." unique_id=473861322]
-stream = ExtResource("2_8v6pb")
+[node name="Audio" type="AudioStreamPlayer3D" parent="." unique_id=473861322 node_paths=PackedStringArray("eruption_light")]
+stream = ExtResource("3_dvpj5")
 unit_size = 4.0
 max_distance = 40.0
 script = ExtResource("3_i7dah")
-blobs = Array[AudioStream]([ExtResource("4_t775p"), ExtResource("5_wd8vj"), ExtResource("6_lw4cc")])
+blobs = Array[AudioStream]([ExtResource("4_t775p"), ExtResource("5_wd8vj"), ExtResource("6_lw4cc"), ExtResource("8_7y4rd"), ExtResource("9_s8klc"), ExtResource("10_pyv51")])
+rumble = ExtResource("11_bn6jj")
+heat = ExtResource("12_edned")
+cracks = Array[AudioStream]([ExtResource("13_gk2ra"), ExtResource("14_xti7o"), ExtResource("15_dd74r")])
+hisses = Array[AudioStream]([ExtResource("16_ro5cr"), ExtResource("17_dw7jo")])
+groans = Array[AudioStream]([ExtResource("18_w4bf1")])
+eruptions = Array[AudioStream]([ExtResource("19_ubrbq"), ExtResource("20_3u7n5")])
+eruption_light = NodePath("../LavaGlow")
+sizzles = Array[AudioStream]([ExtResource("21_keayc"), ExtResource("22_mwee2"), ExtResource("23_35dn7")])
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=335039584]
 shape = SubResource("BoxShape3D_04ca8")

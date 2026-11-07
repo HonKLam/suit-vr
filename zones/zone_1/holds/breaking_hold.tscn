@@ -4,6 +4,20 @@
 [ext_resource type="Script" uid="uid://cgu7hqwq37fiu" path="res://zones/zone_1/holds/breaking_hold.gd" id="2_nptsb"]
 [ext_resource type="Script" uid="uid://c2cf00mh21soa" path="res://zones/zone_1/holds/hold_crumble.gd" id="3_wo0ge"]
 [ext_resource type="Texture2D" uid="uid://c7bhrjtevkj6" path="res://zones/zone_1/holds/transition_mask.png" id="8_3pean"]
+[ext_resource type="Script" uid="uid://1mdhf685bby4" path="res://zones/zone_1/holds/hold_audio.gd" id="5_txnpb"]
+[ext_resource type="AudioStream" uid="uid://cmv8y8nsmnyy" path="res://zones/zone_1/holds/sounds/hold_grab_1.wav" id="6_lf5fj"]
+[ext_resource type="AudioStream" uid="uid://ctgn7r2wdsdr8" path="res://zones/zone_1/holds/sounds/hold_grab_2.wav" id="7_iv87t"]
+[ext_resource type="AudioStream" uid="uid://c3hwioldsvrll" path="res://zones/zone_1/holds/sounds/hold_grab_3.wav" id="8_kfgoo"]
+[ext_resource type="AudioStream" uid="uid://dt2hbjc5213qb" path="res://zones/zone_1/holds/sounds/hold_grind_loop.wav" id="9_b4jcg"]
+[ext_resource type="AudioStream" uid="uid://c3fo30xk0twls" path="res://zones/zone_1/holds/sounds/hold_trickle_loop.wav" id="10_bgkos"]
+[ext_resource type="AudioStream" uid="uid://ryu7qnsvjigb" path="res://zones/zone_1/holds/sounds/hold_crackle_1.wav" id="11_wj7b3"]
+[ext_resource type="AudioStream" uid="uid://cpjfwoopracro" path="res://zones/zone_1/holds/sounds/hold_crackle_2.wav" id="12_gpkqt"]
+[ext_resource type="AudioStream" uid="uid://cpw4fode5j2cn" path="res://zones/zone_1/holds/sounds/hold_crackle_3.wav" id="13_kipma"]
+[ext_resource type="AudioStream" uid="uid://dn3ckqvrt8vlg" path="res://zones/zone_1/holds/sounds/hold_crackle_4.wav" id="14_kx8wp"]
+[ext_resource type="AudioStream" uid="uid://c6k27gs7dolhc" path="res://zones/zone_1/holds/sounds/hold_break_1.wav" id="15_shiii"]
+[ext_resource type="AudioStream" uid="uid://ccu6ekat212mx" path="res://zones/zone_1/holds/sounds/hold_break_2.wav" id="16_072g7"]
+[ext_resource type="AudioStream" uid="uid://bju4p0ojgw4uw" path="res://zones/zone_1/holds/sounds/hold_break_3.wav" id="17_f7p2k"]
+[ext_resource type="AudioStream" uid="uid://20wwrpduodj0" path="res://zones/zone_1/holds/sounds/hold_break_4.wav" id="18_usb1q"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_7q5lp"]
 resource_local_to_scene = true
@@ -20,3 +34,11 @@ script = ExtResource("3_wo0ge")
 effect_mask = ExtResource("8_3pean")
 spread_softness = 0.1
 chunk_color = Color(0.13, 0.13, 0.17, 1)
+
+[node name="HoldAudio" type="Node3D" parent="." index="3" unique_id=1260349191]
+script = ExtResource("5_txnpb")
+grab_sounds = Array[AudioStream]([ExtResource("6_lf5fj"), ExtResource("7_iv87t"), ExtResource("8_kfgoo")])
+grind_loop = ExtResource("9_b4jcg")
+trickle_loop = ExtResource("10_bgkos")
+crackles = Array[AudioStream]([ExtResource("11_wj7b3"), ExtResource("12_gpkqt"), ExtResource("13_kipma"), ExtResource("14_kx8wp")])
+break_sounds = Array[AudioStream]([ExtResource("15_shiii"), ExtResource("16_072g7"), ExtResource("17_f7p2k"), ExtResource("18_usb1q")])
