@@ -13,20 +13,6 @@
 [ext_resource type="PackedScene" uid="uid://bt7550pngvwa8" path="res://zones/zone_1/holds/breaking_hold_4.tscn" id="h4_hold"]
 [ext_resource type="PackedScene" uid="uid://ba27ysv6ciapt" path="res://zones/zone_1/holds/breaking_hold_5.tscn" id="h5_hold"]
 [ext_resource type="Script" uid="uid://b4we2mia28w0o" path="res://zones/zone_1/climb_map.gd" id="map_script"]
-[ext_resource type="Shader" uid="uid://bbjspir5dcp62" path="res://zones/zone_1/assets/height_gradient.gdshader" id="cyl_grad"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_cylinder"]
-render_priority = 0
-shader = ExtResource("cyl_grad")
-shader_parameter/bottom_color = Color(0.18, 0.13, 0.14, 1)
-shader_parameter/top_color = Color(0.6, 0.55, 0.55, 1)
-shader_parameter/bottom_height = 0.0
-shader_parameter/top_height = 24.0
-shader_parameter/gradient_curve = 1.2
-shader_parameter/glow_color = Color(1, 0.35, 0.08, 1)
-shader_parameter/glow_height = 2.5
-shader_parameter/glow_energy = 0.8
-shader_parameter/facet_strength = 0.0
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xrcqr"]
 albedo_texture = ExtResource("2_vqbg7")
@@ -57,9 +43,6 @@ material_override = ExtResource("9_wallmat")
 
 [node name="Cube_021" parent="ClimbingWall" index="2" unique_id=1251284877]
 material_override = ExtResource("9_wallmat")
-
-[node name="Cylinder" parent="ClimbingWall" index="3" unique_id=1290811562]
-material_override = SubResource("ShaderMaterial_cylinder")
 
 [node name="Outside" parent="." unique_id=1934410273 instance=ExtResource("7_outside")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.02443552, -0.012374878, -3.6385415)
