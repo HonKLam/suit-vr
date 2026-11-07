@@ -30,6 +30,8 @@ const SHAKE_STRENGTH := 0.04
 const CRUMB_RATE := 8.0
 ## The hold briefly puffs up before it disappears (seconds).
 const POP_TIME := 0.12
+## Crumbs per second while a fragile hold (start_look > 0) waits to be grabbed.
+const IDLE_CRUMB_RATE := 0.7
 
 ## Short jolt when grabbing.
 const HAPTIC_GRAB := 0.6
@@ -66,10 +68,17 @@ const HAPTIC_BREAK_TIME := 0.15
 ## Chunk color (randomly a bit lighter or darker).
 @export var chunk_color := Color(0.45, 0.38, 0.30)
 
-## Seconds from grabbing until breaking. Set by the Hold from its timer_time.
+## Seconds from grabbing until breaking. Set by the Hold (from its size).
 var crumble_time := 3.0
 var state := State.IDLE
 var progress := 0.0
+## Texture state before grabbing (0 = intact, 1 = fully crumbled). Fragile holds start
+## partly crumbled and drop crumbs while idle, so you can see they will break fast.
+var start_look := 0.0:
+	set(value):
+		start_look = value
+		_set_shader("progress", value)
+		set_process(state == State.CRUMBLING or value > 0.0)
 
 @onready var target := get_parent() as Hold
 
@@ -98,8 +107,14 @@ func grab() -> void:
 
 
 func _process(delta: float) -> void:
+	if state == State.IDLE:
+		_crumb_accum += delta * IDLE_CRUMB_RATE
+		if _crumb_accum >= 1.0:
+			_crumb_accum = 0.0
+			_spawn_crumb()
+		return
 	progress = minf(progress + delta / maxf(crumble_time, 0.001), 1.0)
-	_set_shader("progress", 1.0 - pow(1.0 - progress, FADE_EXPONENT))
+	_set_shader("progress", lerpf(start_look, 1.0, 1.0 - pow(1.0 - progress, FADE_EXPONENT)))
 	_update_warning(delta)
 	_update_haptics(delta)
 	if progress >= 1.0:

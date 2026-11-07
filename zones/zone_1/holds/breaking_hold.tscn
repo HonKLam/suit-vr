@@ -24,7 +24,6 @@ resource_local_to_scene = true
 
 [node name="Hold" unique_id=1520981350 instance=ExtResource("1_yiyra")]
 script = ExtResource("2_nptsb")
-timer_time = 5.0
 
 [node name="Collision" parent="." index="0" unique_id=1313190417]
 shape = SubResource("BoxShape3D_7q5lp")

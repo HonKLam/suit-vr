@@ -106,6 +106,7 @@ transform = Transform3D(0.9443315, 0.23549095, 0.22974868, -0.2417769, 0.97033, 
 
 [node name="Hold_076" parent="Route" unique_id=193327823 instance=ExtResource("h1_hold")]
 transform = Transform3D(-0.021996742, 0.055062924, -0.998243, -0.009940735, 0.9984191, 0.05529213, 0.99971, 0.011139455, -0.021414658, 2.3082445, 3.530238, -2.8758855)
+fragile = true
 
 [node name="Hold_005" parent="Route" unique_id=625901256 instance=ExtResource("h4_hold")]
 transform = Transform3D(8.856042e-07, -3.1376837e-07, 0.9999975, -0.20059915, 0.97967654, 4.8504035e-07, -0.9796717, -0.20060013, 8.046607e-07, 0.30419874, 1.8080753, -3.2402363)
@@ -124,6 +125,7 @@ transform = Transform3D(0.9159829, 0.32893148, 0.2297343, -0.33778965, 0.9412200
 
 [node name="Hold_078" parent="Route" unique_id=286535561 instance=ExtResource("h2_hold")]
 transform = Transform3D(-0.53753847, -0.45941696, -0.7070968, 0.6497058, -0.76018435, 0, -0.53752494, -0.4594054, 0.70711464, 3.3615947, 5.091638, -1.8719027)
+fragile = true
 
 [node name="Hold_091" parent="Route" unique_id=284646926 instance=ExtResource("h2_hold")]
 transform = Transform3D(-0.07663452, 0.22096202, -0.9722654, 0.54921573, -0.80450433, -0.22612514, -0.8321584, -0.55131304, -0.059703052, 4.249855, 4.350228, 0.6647271)
@@ -133,12 +135,14 @@ transform = Transform3D(0.2007048, 0.14563909, -0.96876943, -0.23925908, 0.96623
 
 [node name="Hold_088" parent="Route" unique_id=1052656254 instance=ExtResource("h1_hold")]
 transform = Transform3D(-0.91367507, -0.03503013, -0.4049413, -0.06337649, 0.99637264, 0.056804083, 0.401482, 0.07756375, -0.91258067, 4.4151773, 6.6174803, 0.23032561)
+fragile = true
 
 [node name="Hold_008" parent="Route" unique_id=1681559892 instance=ExtResource("h2_hold")]
 transform = Transform3D(-0.055397213, -0.023173554, -0.9981996, -0.25081602, 0.96799994, -0.008552889, 0.96645063, 0.24988979, -0.059436742, 3.5692825, 6.5483513, -1.7460786)
 
 [node name="Hold_083" parent="Route" unique_id=1041437032 instance=ExtResource("h2_hold")]
 transform = Transform3D(-0.9957298, -0.09233919, 7.450611e-09, 7.418765e-09, 6.8798056e-10, 1.000004, -0.09233913, 0.9957305, 0, 3.6725094, 7.899801, -1.7371633)
+fragile = true
 
 [node name="Hold_081" parent="Route" unique_id=898153792 instance=ExtResource("h2_hold")]
 transform = Transform3D(-0.016789567, -0.15707052, -0.98744863, 0.97607297, 0.21156843, -0.050249852, 0.21680482, -0.964662, 0.14976, 4.493522, 5.6812806, -0.0047813333)
@@ -199,6 +203,7 @@ transform = Transform3D(-0.16401029, 0.02033109, -0.98625225, 0.25438708, 0.9668
 
 [node name="Hold_116" parent="Route" unique_id=1622434679 instance=ExtResource("h5_hold")]
 transform = Transform3D(-0.34779757, -0.34879136, -0.87027955, 0.24554825, 0.86194354, -0.44358224, 0.90484107, -0.36797348, -0.21413735, 3.474576, 11.621749, 8.788374)
+fragile = true
 
 [node name="Hold_118" parent="Route" unique_id=2044585916 instance=ExtResource("h5_hold")]
 transform = Transform3D(-0.34779757, -0.34879136, -0.87027955, 0.24554826, 0.86194354, -0.44358224, 0.90484107, -0.36797348, -0.21413735, 3.1944833, 12.024649, 9.092102)
@@ -235,9 +240,11 @@ transform = Transform3D(-0.03779724, 0.007847282, -0.9992529, -0.9783987, 0.2030
 
 [node name="Hold_015" parent="Route" unique_id=1368073012 instance=ExtResource("h2_hold")]
 transform = Transform3D(-0.3947082, -0.2285461, -0.8899275, -0.6827825, 0.72109085, 0.11764213, 0.6148381, 0.65405697, -0.44066516, 4.643912, 9.238321, 3.946258)
+fragile = true
 
 [node name="Hold_098" parent="Route" unique_id=322604308 instance=ExtResource("h2_hold")]
 transform = Transform3D(-0.39470816, -0.22854611, -0.8899276, -0.68278253, 0.7210908, 0.11764214, 0.61483806, 0.654057, -0.4406652, 4.769442, 10.8264265, 4.116716)
+fragile = true
 
 [node name="Hold_016" parent="Route" unique_id=1006070220 instance=ExtResource("h1_hold")]
 transform = Transform3D(0.8045109, -0.3804572, -0.45608842, 0.3107368, 0.9240414, -0.22269198, 0.50617033, 0.037434664, 0.86162037, 4.391284, 9.39584, 4.69182)
@@ -289,6 +296,7 @@ transform = Transform3D(0.34142655, -0.93991286, -7.4505793e-09, -2.543826e-09, 
 
 [node name="Hold_111" parent="Route" unique_id=496564521 instance=ExtResource("h3_hold")]
 transform = Transform3D(-4.955794e-09, -0.58516306, -0.81091774, -0.9999965, 8.4692e-09, 0, 6.867766e-09, 0.810922, -0.5851599, 3.8549926, 12.635986, 6.898294)
+fragile = true
 
 [node name="Hold_114" parent="Route" unique_id=902048223 instance=ExtResource("h3_hold")]
 transform = Transform3D(-0.810915, -0.58516306, 7.4505793e-09, 6.0417875e-09, 4.3598045e-09, 0.9999998, -0.585158, 0.810922, 0, 4.0066094, 13.208964, 6.8306503)
@@ -310,6 +318,7 @@ transform = Transform3D(-0.58174866, -0.06309453, -0.8109192, -0.10782442, 0.994
 
 [node name="Hold_106" parent="Route" unique_id=1629205734 instance=ExtResource("h4_hold")]
 transform = Transform3D(0.007958086, 0.99996835, -7.450593e-09, -5.929236e-11, -7.450345e-09, -1.0000017, -0.9999686, 0.007958084, 0, 2.87218, 12.401623, 8.827719)
+fragile = true
 
 [node name="Hold_121" parent="Route" unique_id=41232795 instance=ExtResource("h4_hold")]
 transform = Transform3D(0.81091803, -0.5851601, -7.450593e-09, -6.04181e-09, 4.3597823e-09, -1.0000017, 0.5851602, 0.81091785, 0, 5.097567, 12.401623, 6.961746)
@@ -319,6 +328,7 @@ transform = Transform3D(-0.58174866, -0.06309453, -0.8109192, -0.10782442, 0.994
 
 [node name="Hold_024" parent="Route" unique_id=156985561 instance=ExtResource("h5_hold")]
 transform = Transform3D(0.25446317, -0.9563606, -0.14361694, -0.3369739, 0.051515345, -0.9401009, 0.9064713, 0.28761843, -0.30915952, 2.4975712, 15.476413, 10.693537)
+fragile = true
 
 [node name="Hold_128" parent="Route" unique_id=708576534 instance=ExtResource("h5_hold")]
 transform = Transform3D(0.25446317, -0.9563606, -0.14361694, -0.3369739, 0.051515345, -0.9401009, 0.9064713, 0.28761843, -0.30915952, 2.901377, 15.242831, 11.21623)
@@ -364,9 +374,11 @@ transform = Transform3D(-0.9141993, -0.3957603, 0.08727474, -0.20819646, 0.27386
 
 [node name="Hold_035" parent="Route" unique_id=697409992 instance=ExtResource("h1_hold")]
 transform = Transform3D(-0.639006, 0.029368946, 0.76863563, -0.7460993, 0.21936724, -0.62865376, -0.18707672, -0.9751971, -0.11826534, -1.3223588, 17.434351, 4.804722)
+fragile = true
 
 [node name="Hold_036" parent="Route" unique_id=1838238661 instance=ExtResource("h5_hold")]
 transform = Transform3D(-0.82391775, -0.42169222, 0.37859794, -0.43606055, 0.045055345, -0.8987919, 0.36195454, -0.90561867, -0.22100602, -1.0375197, 17.750202, 4.0631285)
+fragile = true
 
 [node name="Hold_037" parent="Route" unique_id=1966808229 instance=ExtResource("h3_hold")]
 transform = Transform3D(-0.6437351, -0.20479655, 0.73733544, -0.73572445, -0.09942313, -0.66994387, 0.2105107, -0.9737404, -0.08667181, -1.8225404, 17.373411, 3.5047624)
@@ -397,6 +409,7 @@ transform = Transform3D(0.5799991, -0.81462, -0.0006164594, 0.8080701, 0.5754404
 
 [node name="Hold_136" parent="Route" unique_id=1698864084 instance=ExtResource("h5_hold")]
 transform = Transform3D(0.5799991, -0.81462, -0.0006164594, 0.8080701, 0.57544047, -0.1260578, 0.10304336, 0.07261604, 0.99202025, -2.2839212, 14.287906, -4.556608)
+fragile = true
 
 [node name="Hold_137" parent="Route" unique_id=166035688 instance=ExtResource("h5_hold")]
 transform = Transform3D(0.5799991, -0.81462, -0.0006164594, 0.8080701, 0.57544047, -0.1260578, 0.10304336, 0.07261604, 0.99202025, -1.1172817, 14.44333, -4.5361333)
@@ -409,6 +422,7 @@ transform = Transform3D(-0.040205017, -0.93616104, 0.34926033, 0.14103615, 0.340
 
 [node name="Hold_044" parent="Route" unique_id=830682427 instance=ExtResource("h5_hold")]
 transform = Transform3D(0.6083994, -0.11618565, 0.7850817, 0.39672807, 0.90127903, -0.17406458, -0.6873517, 0.41736332, 0.59443647, -4.8710837, 16.752254, -3.867646)
+fragile = true
 
 [node name="Hold_045" parent="Route" unique_id=696724164 instance=ExtResource("h4_hold")]
 transform = Transform3D(0.5316185, -0.82325995, -0.19905871, 0.832441, 0.55122, -0.056551073, 0.1562806, -0.13564022, 0.9783602, -5.923775, 16.981047, -4.0686584)
@@ -439,6 +453,7 @@ transform = Transform3D(0.098436266, -0.45207924, 0.88652974, 0.78654766, 0.5810
 
 [node name="Hold_050" parent="Route" unique_id=319494902 instance=ExtResource("h4_hold")]
 transform = Transform3D(0.25527015, -0.3858865, 0.88652587, 0.5231639, 0.8262085, 0.20899184, -0.8131067, 0.410447, 0.41278788, -9.632405, 16.03871, -2.9011025)
+fragile = true
 
 [node name="Hold_051" parent="Route" unique_id=299170184 instance=ExtResource("h3_hold")]
 transform = Transform3D(0.45068473, -0.104663976, 0.88652587, -0.18824281, 0.95962906, 0.20899184, -0.8726091, -0.2610719, 0.41278788, -9.523163, 16.861242, -3.5521595)
