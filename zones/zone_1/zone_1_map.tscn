@@ -44,6 +44,9 @@ material_override = ExtResource("9_wallmat")
 [node name="Cube_021" parent="ClimbingWall" index="2" unique_id=1251284877]
 material_override = ExtResource("9_wallmat")
 
+[node name="Cylinder" parent="ClimbingWall" index="3" unique_id=1290811562]
+material_override = ExtResource("9_wallmat")
+
 [node name="Outside" parent="." unique_id=1934410273 instance=ExtResource("7_outside")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.02443552, -0.012374878, -3.6385415)
 
