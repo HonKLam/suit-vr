@@ -101,6 +101,7 @@ jobs:
         with:
           name: ${{ env.DEMO_NAME }}_${{ env.VERSION }}_${{ matrix.platform.id }}
           path: build
+          retention-days: 1
 
   release:
     name: Create Draft Release
