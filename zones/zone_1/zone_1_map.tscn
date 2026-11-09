@@ -47,8 +47,9 @@ material_override = ExtResource("9_wallmat")
 [node name="Outside" parent="." unique_id=1934410273 instance=ExtResource("7_outside")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.02443552, -0.012374878, -3.6385415)
 
-[node name="Route" type="Node3D" parent="." unique_id=1473158606]
+[node name="Route" type="Node3D" parent="." unique_id=1473158606 node_paths=PackedStringArray("wall")]
 script = ExtResource("7_k6alk")
+wall = NodePath("../ClimbingWall")
 
 [node name="Hold_001" parent="Route" unique_id=339081663 instance=ExtResource("h1_hold")]
 transform = Transform3D(0.79212534, 0.4060125, -0.45573255, -0.4729439, 0.88028026, -0.03779768, 0.38582468, 0.24547516, 0.8893188, 1.9539514, 1.5541607, -2.9402647)
