@@ -485,6 +485,285 @@ transform = Transform3D(0.25722742, -0.10954297, 0.96012145, 0.5229511, 0.851280
 [node name="Hold_060" parent="Route" unique_id=193309105 instance=ExtResource("h4_hold")]
 transform = Transform3D(0.20431653, -0.03748978, 0.97819036, 0.40391847, 0.91346, -0.049357995, -0.8916892, 0.40519002, 0.20177865, -12.976318, 21.829939, 0.24820453)
 
+[node name="Expert_01" parent="Route" unique_id=1667087080 instance=ExtResource("h5_hold")]
+transform = Transform3D(-0.05049444, -0.4115026, -0.9100087, -0.398752, 0.8437021, -0.3593931, 0.9156676, 0.3447205, -0.2066898, -1.631611, 0.5103955, 1.024552)
+
+[node name="Expert_02" parent="Route" unique_id=1086607411 instance=ExtResource("h3_hold")]
+transform = Transform3D(-0.2198827, -0.0008281842, -0.975526, -0.3364516, 0.9387062, 0.07503899, 0.9156702, 0.3447171, -0.2066839, -1.934271, 1.106105, 0.6772326)
+
+[node name="Expert_03" parent="Route" unique_id=1251541058 instance=ExtResource("h5_hold")]
+transform = Transform3D(0.5436304, 0.116164, -0.8312472, -0.3490253, 0.9319729, -0.09802023, 0.7633133, 0.3434131, 0.5471929, -2.424995, 1.525723, 1.188501)
+
+[node name="Expert_04" parent="Route" unique_id=368062140 instance=ExtResource("h5_hold")]
+transform = Transform3D(0.6340597, -0.5087924, -0.5823218, 0.06122677, 0.783718, -0.6180918, 0.7708564, 0.3562534, 0.5280758, -2.448753, 2.241495, 0.7602612)
+
+[node name="Expert_05" parent="Route" unique_id=2080614224 instance=ExtResource("h3_hold")]
+transform = Transform3D(0.1953522, -0.3682606, -0.9089674, 0.5601417, 0.8026781, -0.2048146, 0.8050335, -0.4691395, 0.3630831, -2.719853, 3.018399, 0.994743)
+
+[node name="Expert_06" parent="Route" unique_id=912896393 instance=ExtResource("h5_hold")]
+transform = Transform3D(-0.4488225, 0.4608281, -0.7656344, -0.1657286, 0.79899, 0.5780563, 0.8781187, 0.3863322, -0.2822323, -2.847813, 3.428759, 0.814759)
+
+[node name="Expert_07" parent="Route" unique_id=269222132 instance=ExtResource("h5_hold")]
+transform = Transform3D(-0.358791, -0.4736067, -0.8043418, -0.5177435, 0.817983, -0.2506902, 0.7766665, 0.3264974, -0.5386917, -2.969023, 4.014451, 1.234687)
+
+[node name="Expert_08" parent="Route" unique_id=1285498232 instance=ExtResource("h3_hold")]
+transform = Transform3D(-0.1144704, -0.4031175, -0.9079608, -0.4645472, 0.8296046, -0.3097614, 0.8781187, 0.3863322, -0.2822323, -3.329685, 4.578805, 0.8897271)
+
+[node name="Expert_09" parent="Route" unique_id=729595552 instance=ExtResource("h5_hold")]
+transform = Transform3D(-0.5765487, 0.5137604, -0.6353282, 0.197932, 0.8422367, 0.501458, 0.792726, 0.1633632, -0.5872802, -3.456989, 5.504726, 1.392815)
+
+[node name="Expert_10" parent="Route" unique_id=1881132953 instance=ExtResource("h5_hold")]
+transform = Transform3D(-0.608164, 0.1463661, -0.780201, -0.0414982, 0.9756482, 0.2153798, 0.792726, 0.1633632, -0.5872802, -3.758316, 6.05, 1.137754)
+
+[node name="Expert_11" parent="Route" unique_id=1449993687 instance=ExtResource("h3_hold")]
+transform = Transform3D(-0.7932946, -0.1593639, -0.5876111, -0.1217712, 0.987165, -0.1033303, 0.5965362, -0.01041728, -0.8025185, -3.528722, 6.6, 1.368296)
+
+[node name="Expert_12" parent="Route" unique_id=1428261053 instance=ExtResource("h5_hold")]
+transform = Transform3D(-0.8401514, 0.01337649, -0.5421869, 0.1602173, 0.9612007, -0.2245522, 0.5181467, -0.2755256, -0.8096973, -3.449799, 7.17, 1.256294)
+
+[node name="Expert_13" parent="Route" unique_id=2001493143 instance=ExtResource("h5_hold")]
+transform = Transform3D(0.5566338, 0.1966622, -0.8071449, -0.1945057, 0.975423, 0.1035258, 0.8076673, 0.09936836, 0.5812052, -2.901872, 7.73, 1.608599)
+
+[node name="Expert_14" parent="Route" unique_id=1950501472 instance=ExtResource("h3_hold")]
+transform = Transform3D(0.3127025, -0.2710614, -0.9103531, 0.09872057, 0.9625009, -0.2526785, 0.944707, -0.01085737, 0.3277358, -2.678618, 8.28, 1.165236)
+
+[node name="Expert_15" parent="Route" unique_id=876605304 instance=ExtResource("h5_hold")]
+transform = Transform3D(0.8549678, -0.4053005, -0.323669, 0.230322, 0.8557867, -0.4632289, 0.4647386, 0.3214976, 0.8250197, -2.69937, 8.83, 1.112199)
+
+[node name="Expert_16" parent="Route" unique_id=1339854303 instance=ExtResource("h5_hold")]
+transform = Transform3D(0.3318845, 0.3443779, -0.8782122, -0.07933885, 0.9378717, 0.3377897, 0.9399777, -0.04243081, 0.3385876, -2.198321, 9.38, 0.5832455)
+
+[node name="Expert_17" parent="Route" unique_id=512936598 instance=ExtResource("h3_hold")]
+transform = Transform3D(0.3398318, 0.2064491, -0.9175473, -0.03096791, 0.9775369, 0.2084772, 0.9399762, -0.04243266, 0.3385914, -2.340067, 9.95, 1.048188)
+
+[node name="Expert_18" parent="Route" unique_id=1613056504 instance=ExtResource("h5_hold")]
+transform = Transform3D(0.3394579, 0.01511365, -0.9404998, 0.03478887, 0.998985, 0.02860997, 0.9399777, -0.04243081, 0.3385876, -2.225142, 10.52, 0.8005658)
+
+[node name="Expert_19" parent="Route" unique_id=249368553 instance=ExtResource("h5_hold")]
+transform = Transform3D(0.9824618, 0.1568102, -0.1008935, -0.1548609, 0.3847977, -0.9099169, -0.1038607, 0.909583, 0.4023328, -3.194, 11.14974, 0.9013766)
+
+[node name="Expert_20" parent="Route" unique_id=198407116 instance=ExtResource("h3_hold")]
+transform = Transform3D(0.9801415, 0.02489844, 0.1967301, 0.1689249, 0.4147755, -0.894106, -0.1038607, 0.909583, 0.4023328, -2.605918, 11.41951, 0.4432913)
+
+[node name="Expert_21" parent="Route" unique_id=1520052172 instance=ExtResource("h5_hold")]
+transform = Transform3D(0.9319104, 0.2303326, -0.2801607, -0.3474998, 0.3458404, -0.8715724, -0.1038607, 0.909583, 0.4023328, -2.793695, 11.68697, -0.2098409)
+
+[node name="Expert_22" parent="Route" unique_id=589407815 instance=ExtResource("h5_hold")]
+transform = Transform3D(0.8255397, -0.1467704, 0.5449245, 0.5547045, 0.3887379, -0.7356532, -0.1038607, 0.909583, 0.4023328, -2.205613, 11.95674, -0.6679262)
+
+[node name="Expert_23" parent="Route" unique_id=1760151621 instance=ExtResource("h3_hold")]
+transform = Transform3D(0.9810864, 0.02725696, 0.1916419, 0.1633479, 0.4146272, -0.8952104, -0.1038607, 0.909583, 0.4023328, -2.393391, 12.2242, -1.321058)
+
+[node name="Expert_24" parent="Route" unique_id=721455910 instance=ExtResource("h5_hold")]
+transform = Transform3D(0.9635163, -0.008312472, 0.2675207, 0.2466766, 0.415439, -0.8755347, -0.1038607, 0.909583, 0.4023328, -1.805309, 12.49397, -1.779144)
+
+[node name="Expert_25" parent="Route" unique_id=271351960 instance=ExtResource("h5_hold")]
+transform = Transform3D(0.9122074, -0.07408771, 0.4029749, 0.396347, 0.4088643, -0.8220335, -0.1038595, 0.9095829, 0.4023336, -1.993086, 12.76143, -2.432276)
+
+[node name="Expert_26" parent="Route" unique_id=1936780819 instance=ExtResource("h3_hold")]
+transform = Transform3D(0.9875907, 0.04640193, 0.1500386, 0.1178035, 0.4129232, -0.903115, -0.1038607, 0.909583, 0.4023328, -1.405004, 13.0312, -2.890362)
+
+[node name="Expert_27" parent="Route" unique_id=599914620 instance=ExtResource("h5_hold")]
+transform = Transform3D(0.84582, -0.1320461, 0.516868, 0.5232608, 0.3939833, -0.7556291, -0.1038595, 0.9095829, 0.4023336, -1.592782, 13.29866, -3.543494)
+
+[node name="Expert_28" parent="Route" unique_id=1960759513 instance=ExtResource("h5_hold")]
+transform = Transform3D(0.9850562, 0.1499534, -0.08472468, -0.1373954, 0.3875216, -0.9115644, -0.1038595, 0.9095829, 0.4023336, -1.0047, 13.56843, -4.001579)
+
+[node name="Expert_29" parent="Route" unique_id=316898920 instance=ExtResource("h3_hold")]
+transform = Transform3D(0.9009418, 0.430408, 0.05525259, -0.4339395, 0.8937887, 0.1133057, -0.0006164609, -0.1260581, 0.9920227, -1.207012, 13.96815, -4.596571)
+
+[node name="ExpertBait_1" parent="Route" unique_id=916314859 instance=ExtResource("h3_hold")]
+transform = Transform3D(-0.9672577, 0.2325161, -0.1017291, 0.1590799, 0.8677619, 0.4708322, 0.1977527, 0.4392331, -0.8763379, -3.431263, 4.096806, 0.6793846)
+fragile = true
+
+[node name="ExpertBait_2" parent="Route" unique_id=696943772 instance=ExtResource("h3_hold")]
+transform = Transform3D(0.8007485, 0.2450785, -0.5465698, -0.3779154, 0.9146452, -0.1435414, 0.4647386, 0.3214976, 0.8250197, -3.155666, 8.5, 1.49783)
+fragile = true
+
+[node name="ExpertBait_3" parent="Route" unique_id=1073691209 instance=ExtResource("h3_hold")]
+transform = Transform3D(0.9941087, 0.1075451, 0.0134904, -0.03099826, 0.4013636, -0.9153939, -0.1038607, 0.909583, 0.4023328, -2.14328, 11.72657, -0.1314853)
+fragile = true
+
+[node name="Easy_01" parent="Route" unique_id=1465121943 instance=ExtResource("h1_hold")]
+transform = Transform3D(0.02552189, -0.3536919, 0.9350137, -0.01151211, 0.9351524, 0.3540586, -0.999608, -0.01980023, 0.01979512, 4.112731, 5.911237, 2.187127)
+
+[node name="Easy_02" parent="Route" unique_id=1891238511 instance=ExtResource("h2_hold")]
+transform = Transform3D(0.1804326, -0.2251159, 0.9574795, -0.1092298, 0.9628491, 0.2469622, -0.9775034, -0.1491453, 0.14914, 4.219881, 5.75, 2.737127)
+
+[node name="Easy_03" parent="Route" unique_id=883471136 instance=ExtResource("h1_hold")]
+transform = Transform3D(0.1073258, 0.2569863, 0.960437, -0.1815716, 0.954837, -0.2351978, -0.9775034, -0.1491453, 0.14914, 4.334311, 5.5, 3.237127)
+
+[node name="Easy_04" parent="Route" unique_id=449297012 instance=ExtResource("h2_hold")]
+transform = Transform3D(0.7063069, 0.06758185, 0.7046725, -0.279956, 0.9409497, 0.1903633, -0.6501963, -0.3317322, 0.6835192, 4.454981, 5.652645, 3.497892)
+
+[node name="Easy_05" parent="Route" unique_id=894957572 instance=ExtResource("h1_hold")]
+transform = Transform3D(0.7588722, -0.3271906, 0.5630803, 0.0368492, 0.8848164, 0.4644805, -0.6501963, -0.3317322, 0.6835192, 4.774271, 5.771525, 3.859312)
+
+[node name="Easy_06" parent="Route" unique_id=862938025 instance=ExtResource("h2_hold")]
+transform = Transform3D(0.8883877, -0.05686001, 0.4555592, -0.05245822, 0.973229, 0.2237712, -0.4560871, -0.2226934, 0.8616219, 5.154863, 5.811934, 4.169722)
+
+[node name="Easy_07" parent="Route" unique_id=549912919 instance=ExtResource("h1_hold")]
+transform = Transform3D(0.8855727, -0.01782114, 0.464159, -0.08801009, 0.9747257, 0.2053392, -0.4560871, -0.2226934, 0.8616219, 5.588009, 5.922494, 4.427577)
+
+[node name="Easy_08" parent="Route" unique_id=1539190226 instance=ExtResource("h2_hold")]
+transform = Transform3D(0.8756244, -0.2852423, 0.3897675, 0.1589736, 0.9322257, 0.3250887, -0.4560804, -0.2226929, 0.8616256, 5.902246, 6.047398, 4.626193)
+
+[node name="Easy_09" parent="Route" unique_id=673330498 instance=ExtResource("h1_hold")]
+transform = Transform3D(0.4559114, 0.2018689, -0.8668298, 0.01301917, 0.9723216, 0.2332835, 0.88993, -0.117642, 0.4406643, 6.369866, 6.364477, 4.139063)
+
+[node name="Easy_10" parent="Route" unique_id=1607147647 instance=ExtResource("h2_hold")]
+transform = Transform3D(0.3838957, -0.3284875, -0.8629716, 0.2462779, 0.937153, -0.2471669, 0.8899277, -0.1176445, 0.4406682, 6.675241, 6.486507, 3.554934)
+
+[node name="Easy_11" parent="Route" unique_id=2111450404 instance=ExtResource("h1_hold")]
+transform = Transform3D(-0.1807213, -0.09152479, -0.9792666, 0.2405116, 0.9613197, -0.1342333, 0.953674, -0.2597838, -0.1517182, 7.045761, 6.732663, 3.39673)
+
+[node name="Easy_12" parent="Route" unique_id=1567907436 instance=ExtResource("h2_hold")]
+transform = Transform3D(-0.1533478, 0.0141065, -0.9880716, 0.2588252, 0.9655638, -0.02638425, 0.953674, -0.2597838, -0.1517182, 7.101857, 7.073176, 3.166289)
+
+[node name="Easy_13" parent="Route" unique_id=1491645397 instance=ExtResource("h1_hold")]
+transform = Transform3D(-0.1723466, -0.05842429, -0.9833022, 0.246582, 0.9638978, -0.1004906, 0.953674, -0.2597838, -0.1517182, 7.112813, 7.340369, 2.777645)
+
+[node name="Easy_14" parent="Route" unique_id=253335723 instance=ExtResource("h2_hold")]
+transform = Transform3D(-0.1372478, 0.07307553, -0.9878376, 0.2677107, 0.9628981, 0.03403552, 0.953674, -0.2597833, -0.1517188, 7.127472, 7.613098, 2.402807)
+
+[node name="Easy_15" parent="Route" unique_id=1408098873 instance=ExtResource("h1_hold")]
+transform = Transform3D(-0.1008734, 0.1989908, -0.974796, 0.2834264, 0.9449419, 0.1635671, 0.953674, -0.2597833, -0.1517188, 7.26932, 8.075907, 2.50198)
+
+[node name="Easy_16" parent="Route" unique_id=1463605489 instance=ExtResource("h2_hold")]
+transform = Transform3D(-0.04534742, 0.3744186, -0.9261503, 0.2974047, 0.8901255, 0.3452928, 0.953674, -0.2597833, -0.1517188, 7.411167, 8.538714, 2.601153)
+
+[node name="Easy_17" parent="Route" unique_id=467517440 instance=ExtResource("h1_hold")]
+transform = Transform3D(-0.2023637, -0.1807814, -0.9624797, 0.222609, 0.948594, -0.2249773, 0.953674, -0.2597839, -0.1517174, 7.552955, 9.00064, 2.701472)
+
+[node name="Easy_18" parent="Route" unique_id=1247056643 instance=ExtResource("h2_hold")]
+transform = Transform3D(-0.1226284, 0.1248309, -0.9845707, 0.2747146, 0.9575645, 0.08719113, 0.953674, -0.2597839, -0.1517174, 7.677051, 9.195053, 3.148623)
+
+[node name="Easy_19" parent="Route" unique_id=1665787882 instance=ExtResource("h1_hold")]
+transform = Transform3D(-0.1110983, 0.164545, -0.9800929, 0.2795767, 0.9515448, 0.1280608, 0.953674, -0.2597838, -0.1517179, 7.780822, 9.353733, 3.529207)
+
+[node name="Easy_20" parent="Route" unique_id=625727461 instance=ExtResource("h2_hold")]
+transform = Transform3D(0.1665638, -0.1795341, -0.9695484, -0.03357505, 0.9816813, -0.1875488, 0.9854589, 0.06379148, 0.1574847, 7.298636, 9.26776, 4.03836)
+
+[node name="Easy_21" parent="Route" unique_id=450904183 instance=ExtResource("h1_hold")]
+transform = Transform3D(0.1696549, -0.420581, -0.8912513, 0.00938084, 0.9050095, -0.4252879, 0.9854589, 0.06379148, 0.1574847, 7.239578, 9.685801, 4.238584)
+
+[node name="Easy_22" parent="Route" unique_id=1092696249 instance=ExtResource("h2_hold")]
+transform = Transform3D(0.1192346, 0.4006987, -0.9084183, -0.1210532, 0.9139865, 0.387266, 0.9854589, 0.06379148, 0.1574847, 7.167142, 9.845201, 4.627276)
+
+[node name="Easy_23" parent="Route" unique_id=914874363 instance=ExtResource("h1_hold")]
+transform = Transform3D(0.1663953, -0.1746655, -0.9704662, -0.03440033, 0.9825592, -0.1827403, 0.9854589, 0.06379148, 0.1574847, 7.025625, 10.19741, 5.370153)
+
+[node name="Easy_24" parent="Route" unique_id=679708537 instance=ExtResource("h2_hold")]
+transform = Transform3D(0.1659121, -0.1612867, -0.9728616, -0.0366601, 0.9848437, -0.1695252, 0.9854589, 0.06379148, 0.1574847, 6.941944, 10.42707, 5.800757)
+
+[node name="Easy_25" parent="Route" unique_id=2087262417 instance=ExtResource("h1_hold")]
+transform = Transform3D(0.1275599, 0.3345313, -0.9337116, -0.1122464, 0.9402231, 0.3215296, 0.9854589, 0.06379148, 0.1574847, 6.858264, 10.65673, 6.231361)
+
+[node name="Easy_26" parent="Route" unique_id=1474389012 instance=ExtResource("h2_hold")]
+transform = Transform3D(-0.9470734, 0.0117123, 0.3208035, 0.3185758, 0.1573049, 0.9347537, -0.03951599, 0.9874806, -0.1527109, 6.373296, 10.71997, 6.62522)
+
+[node name="Medium2_01" parent="Route" unique_id=1577816546 instance=ExtResource("h2_hold")]
+transform = Transform3D(-0.9708745, 0.073305, 0.2280989, -0.1917736, 0.3329138, -0.9232503, -0.1436162, -0.9401035, -0.3091599, 5.656363, 15.55551, 8.985638)
+
+[node name="Medium2_02" parent="Route" unique_id=1296040476 instance=ExtResource("h4_hold")]
+transform = Transform3D(-0.8470614, -0.0447626, 0.5296068, -0.5117241, 0.3379372, -0.7898968, -0.1436162, -0.9401035, -0.3091599, 5.976516, 15.63308, 8.601041)
+
+[node name="Medium2_03" parent="Route" unique_id=571619987 instance=ExtResource("h1_hold")]
+transform = Transform3D(-0.3045305, -0.4151276, -0.8572807, -0.0968564, 0.9088607, -0.4056985, 0.9475654, -0.0405144, -0.3169836, 6.085394, 16.10979, 8.29021)
+
+[node name="Medium2_04" parent="Route" unique_id=1570197911 instance=ExtResource("h2_hold")]
+transform = Transform3D(-0.3063462, 0.1671477, -0.9371305, 0.09095035, 0.9850991, 0.145972, 0.9475654, -0.0405144, -0.3169836, 5.983296, 16.45972, 7.940279)
+
+[node name="Medium2_05" parent="Route" unique_id=796391871 instance=ExtResource("h4_hold")]
+transform = Transform3D(-0.2686335, 0.4362523, -0.8587899, 0.173078, 0.8989118, 0.402494, 0.9475654, -0.04051425, -0.3169836, 5.881197, 16.80965, 7.590348)
+
+[node name="Medium2_06" parent="Route" unique_id=1910010706 instance=ExtResource("h1_hold")]
+transform = Transform3D(-0.314044, -0.3015985, -0.9002303, -0.05912961, 0.9525739, -0.2985076, 0.9475654, -0.04051425, -0.3169836, 5.771285, 17.12777, 7.221124)
+
+[node name="Medium2_07" parent="Route" unique_id=1749940838 instance=ExtResource("h2_hold")]
+transform = Transform3D(-0.3090868, 0.1356977, -0.9413031, 0.08115011, 0.9899216, 0.11606, 0.9475654, -0.04051425, -0.3169836, 5.8316, 17.68811, 7.329808)
+
+[node name="Medium2_08" parent="Route" unique_id=1766447132 instance=ExtResource("h1_hold")]
+transform = Transform3D(-0.8967772, 0.2356874, 0.3744893, 0.338079, 0.9109809, 0.2362546, -0.2854704, 0.3384747, -0.8966279, 5.304646, 17.18439, 6.747071)
+
+[node name="Medium2_09" parent="Route" unique_id=220125830 instance=ExtResource("h4_hold")]
+transform = Transform3D(-0.941642, -0.2731835, 0.1966752, -0.1783748, 0.9004479, 0.3967064, -0.2854694, 0.3384735, -0.8966287, 5.298041, 17.93669, 7.033162)
+
+[node name="Medium2_10" parent="Route" unique_id=591876988 instance=ExtResource("h1_hold")]
+transform = Transform3D(-0.07299575, 0.3351044, -0.9393491, 0.17788, 0.9311343, 0.318351, 0.9813411, -0.1438532, -0.1275772, 4.426311, 17.96826, 6.591611)
+
+[node name="Medium2_11" parent="Route" unique_id=1864807637 instance=ExtResource("h2_hold")]
+transform = Transform3D(-0.1037211, 0.1626347, -0.9812196, 0.1619, 0.9761435, 0.1446795, 0.9813411, -0.1438532, -0.1275772, 4.493925, 18.66933, 6.321203)
+
+[node name="Medium2_12" parent="Route" unique_id=168934737 instance=ExtResource("h4_hold")]
+transform = Transform3D(-0.9744439, 0.1753486, 0.1404, 0.215718, 0.9047934, 0.3671711, -0.06265008, 0.3880744, -0.9194962, 4.389823, 18.53777, 5.694949)
+
+[node name="Medium2_13" parent="Route" unique_id=1828822695 instance=ExtResource("h1_hold")]
+transform = Transform3D(-0.9334883, 0.3031618, 0.1915532, 0.353093, 0.8703398, 0.3432698, -0.06265008, 0.3880744, -0.9194962, 4.247383, 18.05408, 5.50051)
+
+[node name="Medium2_14" parent="Route" unique_id=777430270 instance=ExtResource("h2_hold")]
+transform = Transform3D(-0.9968686, -0.06887194, 0.0388544, -0.04824908, 0.9190511, 0.391174, -0.06265008, 0.3880744, -0.9194962, 3.551159, 17.97792, 5.515806)
+
+[node name="Medium2_15" parent="Route" unique_id=961494829 instance=ExtResource("h4_hold")]
+transform = Transform3D(-0.9542377, 0.2466404, 0.1691121, 0.292413, 0.8880128, 0.3548632, -0.06265008, 0.3880744, -0.9194962, 3.055569, 17.96218, 5.542931)
+
+[node name="Medium2_16" parent="Route" unique_id=674969167 instance=ExtResource("h1_hold")]
+transform = Transform3D(-0.9101608, 0.3557926, 0.2121767, 0.4094903, 0.8501822, 0.3309197, -0.06265008, 0.3880744, -0.9194962, 2.544315, 18.04346, 5.61207)
+
+[node name="Medium2_17" parent="Route" unique_id=242138944 instance=ExtResource("h2_hold")]
+transform = Transform3D(-0.9230867, -0.3728133, -0.09445158, -0.3794547, 0.8428574, 0.3815832, -0.06265008, 0.3880744, -0.9194962, 2.064387, 18.3131, 5.758568)
+
+[node name="Medium2_18" parent="Route" unique_id=553082198 instance=ExtResource("h4_hold")]
+transform = Transform3D(-0.9220598, 0.3300732, 0.2021326, 0.3819435, 0.860494, 0.3371487, -0.06265008, 0.3880744, -0.9194962, 1.141798, 18.51057, 5.904774)
+
+[node name="Medium2_19" parent="Route" unique_id=2060944880 instance=ExtResource("h2_hold")]
+transform = Transform3D(-0.2153057, 0, -0.9765467, -0.1609234, 0.986329, 0.03547984, 0.9631963, 0.1647882, -0.2123622, 0.1058374, 18.75, 5.45)
+
+[node name="Medium2_20" parent="Route" unique_id=2124883186 instance=ExtResource("h1_hold")]
+transform = Transform3D(-0.1961403, -0.1093353, -0.9744613, -0.1837984, 0.9802502, -0.07298976, 0.9631963, 0.1647882, -0.2123622, -0.005927801, 18.56983, 4.80327)
+
+[node name="Medium2_21" parent="Route" unique_id=1318009887 instance=ExtResource("h2_hold")]
+transform = Transform3D(-0.2118326, -0.02098252, -0.9770807, -0.1654658, 0.9861059, 0.01469691, 0.9631968, 0.1647867, -0.2123613, -0.2108858, 18.60528, 3.901154)
+
+[node name="Medium2_22" parent="Route" unique_id=1981985143 instance=ExtResource("h4_hold")]
+transform = Transform3D(0.07389568, -0.3270597, -0.9421101, -0.4291062, 0.8423411, -0.3260817, 0.9002264, 0.4283612, -0.07809793, -0.4826065, 18.37391, 3.513402)
+
+[node name="Medium2_23" parent="Route" unique_id=1641709159 instance=ExtResource("h1_hold")]
+transform = Transform3D(-0.1726099, 0.1864138, -0.9671896, -0.3997481, 0.8841699, 0.241754, 0.9002264, 0.4283612, -0.07809793, -0.6150054, 18.55281, 2.968483)
+
+[node name="Medium2_24" parent="Route" unique_id=775765611 instance=ExtResource("h4_hold")]
+transform = Transform3D(-0.7579705, 0, -0.652289, 0.6145245, 0.3353185, -0.7140876, 0.2187246, -0.9421048, -0.2541615, -1.21, 18.05041, 2.5)
+
+[node name="Medium2Bait_1" parent="Route" unique_id=556612023 instance=ExtResource("h4_hold")]
+transform = Transform3D(-0.3057525, 0.1735056, -0.9361684, 0.09292673, 0.9839992, 0.1520205, 0.9475654, -0.0405144, -0.3169836, 6.170363, 15.78607, 8.585584)
+fragile = true
+
+[node name="Medium2Bait_2" parent="Route" unique_id=1507543818 instance=ExtResource("h4_hold")]
+transform = Transform3D(-0.9779488, 0.160039, 0.1341774, 0.1992261, 0.9076265, 0.3694905, -0.06265008, 0.3880744, -0.9194962, 1.670175, 18.48298, 5.857126)
+fragile = true
+
+[node name="Fill_01" parent="Route" unique_id=1172090968 instance=ExtResource("h2_hold")]
+transform = Transform3D(0.5741403, 7.450581e-09, -0.8187569, -0.1991047, 0.9699814, -0.139619, 0.794179, 0.2431792, 0.5569054, -6.933951, 16.7188, -3.932801)
+
+[node name="Fill_02" parent="Route" unique_id=949613032 instance=ExtResource("h2_hold")]
+transform = Transform3D(0.9919334, -7.450581e-09, -0.1267602, -0.07032382, 0.8319981, -0.5503035, 0.1054642, 0.5547786, 0.8252866, -7.559899, 16.5905, -3.569241)
+
+[node name="Fill_03" parent="Route" unique_id=1999842598 instance=ExtResource("h2_hold")]
+transform = Transform3D(0.8656762, 0, 0.5006045, 0.498248, 0.09691366, -0.8616012, -0.04851543, 0.9952928, 0.08389588, -11.99998, 21.4796, -0.1500324)
+
+[node name="FlingStone" parent="Route" unique_id=2063975986 instance=ExtResource("h1_hold")]
+transform = Transform3D(1.191048, 0, -1.849704, -0.04056231, 2.199471, -0.02611859, 1.849259, 0.04824398, 1.190762, -8.598343, 16.33298, -2.988001)
+fling_boost_allowed = true
+
+[node name="FlingCatch_1" parent="Route" unique_id=1480513881 instance=ExtResource("h1_hold")]
+transform = Transform3D(1.137898, -0.202289, -0.7901062, 0.1209933, 1.383116, -0.1798633, 0.8065664, 0.07790603, 1.141657, -10.58736, 19.06286, -3.431047)
+
+[node name="FlingCatch_2" parent="Route" unique_id=1085376852 instance=ExtResource("h1_hold")]
+transform = Transform3D(0.3906794, 0.2908075, -1.312555, -0.02392697, 1.368141, 0.2960013, 1.344172, -0.06016867, 0.3867592, -11.12991, 19.15755, -2.68288)
+
+[node name="FlingCatch_3" parent="Route" unique_id=406814401 instance=ExtResource("h1_hold")]
+transform = Transform3D(1.116101, -0.3617852, -0.7638261, 0.2525196, 1.350201, -0.2705398, 0.8065685, 0.07790621, 1.141656, -10.31194, 18.81741, -3.608873)
+
 [node name="Lava" parent="." unique_id=593035579 instance=ExtResource("13_gyx8u")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.80375, -3.2693434, 3.8778987)
 
