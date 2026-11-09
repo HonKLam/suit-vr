@@ -1309,7 +1309,9 @@ seconds_per_100_cm2 = 3.5
 fragile = false
 
 [node name="Lava" parent="." unique_id=593035579 instance=ExtResource("13_gyx8u")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.80375, -3.2693434, 3.8778987)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.818485, -3.2693434, 4.333605)
+radius = 20.1
+end_radius = 10.0
 
 [node name="WinArea" parent="." unique_id=615644896 instance=ExtResource("14_w5fjf")]
 transform = Transform3D(0.98791605, 0, -0.15499054, -0.008879689, 0.9983575, -0.056599498, 0.15473597, 0.057291824, 0.9862934, -13.94638, 22.98514, -0.25836277)

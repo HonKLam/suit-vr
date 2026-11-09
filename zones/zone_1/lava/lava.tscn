@@ -45,13 +45,18 @@ shader_parameter/pulse_speed = 1.4
 shader_parameter/pulse_amount = 0.18
 shader_parameter/surface_bob = 0.03
 
-[sub_resource type="BoxMesh" id="BoxMesh_lava"]
-size = Vector3(26, 0.4, 26)
-subdivide_width = 40
-subdivide_depth = 40
+[sub_resource type="CylinderMesh" id="CylinderMesh_lava"]
+resource_local_to_scene = true
+top_radius = 13.0
+bottom_radius = 13.0
+height = 0.4
+radial_segments = 96
+rings = 1
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_04ca8"]
-size = Vector3(26, 0.4, 26)
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_lava"]
+resource_local_to_scene = true
+height = 0.4
+radius = 13.0
 
 [node name="Lava" type="Area3D" unique_id=593035579]
 collision_mask = 524288
@@ -60,7 +65,7 @@ script = ExtResource("1_rel2p")
 [node name="Mesh" type="MeshInstance3D" parent="." unique_id=984001352]
 material_override = SubResource("ShaderMaterial_lava")
 cast_shadow = 0
-mesh = SubResource("BoxMesh_lava")
+mesh = SubResource("CylinderMesh_lava")
 
 [node name="Audio" type="AudioStreamPlayer3D" parent="." unique_id=473861322 node_paths=PackedStringArray("eruption_light")]
 stream = ExtResource("3_dvpj5")
@@ -78,7 +83,7 @@ eruption_light = NodePath("../LavaGlow")
 sizzles = Array[AudioStream]([ExtResource("21_keayc"), ExtResource("22_mwee2"), ExtResource("23_35dn7")])
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=335039584]
-shape = SubResource("BoxShape3D_04ca8")
+shape = SubResource("CylinderShape3D_lava")
 
 [node name="LavaGlow" type="OmniLight3D" parent="." unique_id=655719485]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.16443539, 0.34645176, 0.06522083)
