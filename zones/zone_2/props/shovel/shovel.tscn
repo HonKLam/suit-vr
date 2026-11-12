@@ -1,0 +1,82 @@
+[gd_scene format=3 uid="uid://djs83y84yf1dx"]
+
+[ext_resource type="Script" uid="uid://dqoe86d84hwq2" path="res://zones/zone_2/props/shovel/shovel.gd" id="1_1stim"]
+[ext_resource type="PackedScene" uid="uid://c25yxb0vt53vc" path="res://addons/godot-xr-tools/objects/grab_points/grab_point_hand_left.tscn" id="2_cjici"]
+[ext_resource type="PackedScene" uid="uid://ctw7nbntd5pcj" path="res://addons/godot-xr-tools/objects/grab_points/grab_point_hand_right.tscn" id="3_04cyy"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_04ca8"]
+top_radius = 0.01
+bottom_radius = 0.01
+height = 0.5
+
+[sub_resource type="BoxMesh" id="BoxMesh_04ca8"]
+size = Vector3(0.05, 0.05, 0.05)
+
+[sub_resource type="BoxMesh" id="BoxMesh_hua2j"]
+size = Vector3(0.05, 0.125, 0.1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_04ca8"]
+size = Vector3(0.05041504, 0.05090332, 0.050231934)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_hua2j"]
+size = Vector3(0.02079773, 0.49536133, 0.0211792)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ytuwu"]
+size = Vector3(0.057128906, 0.13232422, 0.103515625)
+
+[node name="Shovel" type="RigidBody3D" unique_id=629000454]
+collision_layer = 4
+collision_mask = 196615
+freeze_mode = 1
+script = ExtResource("1_1stim")
+second_hand_grab = 2
+
+[node name="MeshModel" type="Node3D" parent="." unique_id=656028224]
+
+[node name="Stick" type="MeshInstance3D" parent="MeshModel" unique_id=1471736412]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3707892, 0)
+mesh = SubResource("CylinderMesh_04ca8")
+
+[node name="Hold" type="MeshInstance3D" parent="MeshModel" unique_id=385450089]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6466832, 0)
+mesh = SubResource("BoxMesh_04ca8")
+
+[node name="Head" type="MeshInstance3D" parent="MeshModel" unique_id=297966483]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0625, 0)
+mesh = SubResource("BoxMesh_hua2j")
+
+[node name="Grip1" type="CollisionShape3D" parent="." unique_id=450255186]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00018310547, 0.6460396, 0.00015258789)
+shape = SubResource("BoxShape3D_04ca8")
+
+[node name="Grip2" type="CollisionShape3D" parent="." unique_id=322329567]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0005569458, 0.3737253, -0.0005187988)
+shape = SubResource("BoxShape3D_hua2j")
+
+[node name="HeadDetector" type="CollisionShape3D" parent="." unique_id=2033781884]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0012207031, 0.0650853, 0.0029296875)
+shape = SubResource("BoxShape3D_ytuwu")
+
+[node name="GrabPointHandLeft" parent="." unique_id=982229271 instance=ExtResource("2_cjici")]
+transform = Transform3D(4.371139e-08, 3.821371e-15, 1, 8.742278e-08, -1, 0, 1, 8.742278e-08, -4.371139e-08, -0.11224866, 0.601145, 0.017857276)
+handle = "top"
+
+[node name="GrabPointHandRight" parent="." unique_id=700550120 instance=ExtResource("3_04cyy")]
+transform = Transform3D(4.4321705e-08, 0.0069812597, 0.99997556, -8.742064e-08, -0.99997556, 0.0069812597, 0.99999994, -8.772793e-08, -4.371032e-08, -0.10560608, 0.5981077, -0.0074546933)
+handle = "top"
+
+[node name="GrabPointHandLeft2" parent="." unique_id=88129439 instance=ExtResource("2_cjici")]
+transform = Transform3D(4.371139e-08, 3.821371e-15, 1, 8.742278e-08, -1, 0, 1, 8.742278e-08, -4.371139e-08, -0.11224866, 0.3132803, 0.017857276)
+handle = "shaft"
+mode = 2
+drive_position = 0.0
+drive_angle = 0.0
+drive_aim = 1.0
+
+[node name="GrabPointHandRight2" parent="." unique_id=1974793374 instance=ExtResource("3_04cyy")]
+transform = Transform3D(4.4321705e-08, 0.0069812597, 0.99997556, -8.742064e-08, -0.99997556, 0.0069812597, 0.99999994, -8.772793e-08, -4.371032e-08, -0.10560608, 0.310243, -0.0074546933)
+handle = "shaft"
+mode = 2
+drive_position = 0.0
+drive_angle = 0.0
+drive_aim = 1.0

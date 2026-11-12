@@ -27,6 +27,7 @@
 [ext_resource type="PackedScene" uid="uid://cbjq1ef8nbcro" path="res://zones/zone_2/nature/assets/Rock_Medium_2.fbx" id="27_r"]
 [ext_resource type="PackedScene" uid="uid://cjhphxq1b7knw" path="res://zones/zone_2/nature/assets/Grass_Common_Short.fbx" id="28_r"]
 [ext_resource type="PackedScene" uid="uid://chf27yfaegns5" path="res://zones/zone_2/nature/assets/Grass_Common_Tall.fbx" id="29_r"]
+[ext_resource type="PackedScene" uid="uid://djs83y84yf1dx" path="res://zones/zone_2/props/shovel/shovel.tscn" id="32_k6mr2"]
 [ext_resource type="PackedScene" uid="uid://d1ql8kynvt13w" path="res://zones/zone_2/props/sign/sign.tscn" id="90_schild"]
 [ext_resource type="PackedScene" uid="uid://bdqc54mh5t12t" path="res://zones/zone_2/props/metal_detector/metal_detector.tscn" id="91_detector"]
 [ext_resource type="Script" uid="uid://cp36l1kkfjjoh" path="res://zones/zone_2/props/metal_detector/metal_object.gd" id="92_metal"]
@@ -880,3 +881,6 @@ shape = SubResource("Boundary_shape")
 [node name="B69" type="CollisionShape3D" parent="Boundary" unique_id=643953674]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 1.5, -6.064)
 shape = SubResource("Boundary_shape")
+
+[node name="Shovel" parent="." unique_id=629000454 instance=ExtResource("32_k6mr2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.22582632, 0.15837252, 7.735504)

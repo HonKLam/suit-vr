@@ -70,6 +70,7 @@ var _snap_s := PackedByteArray()
 
 
 func _ready() -> void:
+	add_to_group("diggable")
 	_body = StaticBody3D.new()
 	_body.name = "GroundBody"
 	add_child(_body, false, Node.INTERNAL_MODE_FRONT)
