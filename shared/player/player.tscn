@@ -10,28 +10,23 @@
 [ext_resource type="PackedScene" uid="uid://clujaf3u776a3" path="res://addons/godot-xr-tools/objects/viewport_2d_in_3d.tscn" id="7_wrist"]
 [ext_resource type="PackedScene" uid="uid://db32b2aisswlp" path="res://shared/ui/wrist_menu.tscn" id="8_menu"]
 [ext_resource type="PackedScene" uid="uid://cqhw276realc" path="res://addons/godot-xr-tools/functions/function_pointer.tscn" id="9_pointer"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_g3iwr"]
-albedo_color = Color(0, 1, 1, 1)
-
-[sub_resource type="BoxMesh" id="BoxMesh_s2d7e"]
-material = SubResource("StandardMaterial3D_g3iwr")
-size = Vector3(0.05, 0.05, 0.05)
+[ext_resource type="PackedScene" uid="uid://b4kad2kuba1yn" path="res://addons/godot-xr-tools/hands/scenes/lowpoly/left_hand_low.tscn" id="10_lhand"]
+[ext_resource type="PackedScene" uid="uid://l2n30mpbkdyw" path="res://addons/godot-xr-tools/hands/scenes/lowpoly/right_hand_low.tscn" id="11_rhand"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_screen"]
+render_priority = 10
 transparency = 1
+cull_mode = 2
 no_depth_test = true
 shading_mode = 0
-cull_mode = 2
 texture_filter = 1
-render_priority = 10
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_laser"]
+render_priority = 11
 transparency = 1
 no_depth_test = true
 shading_mode = 0
 albedo_color = Color(1, 0.15625, 0.15625, 0.74)
-render_priority = 11
 
 [node name="XROrigin3D" type="XROrigin3D" unique_id=1665458307]
 script = ExtResource("1_fjrip")
@@ -51,8 +46,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 1, 0)
 tracker = &"left_hand"
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="XRController3D_left" unique_id=1022898413]
-mesh = SubResource("BoxMesh_s2d7e")
+[node name="LeftHand" parent="XRController3D_left" unique_id=197497396 instance=ExtResource("10_lhand")]
 
 [node name="MovementDirect" parent="XRController3D_left" unique_id=1022307126 instance=ExtResource("4_bruh7")]
 strafe = true
@@ -74,8 +68,7 @@ scene_properties_keys = PackedStringArray("wrist_menu.gd")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 1, 0)
 tracker = &"right_hand"
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="XRController3D_right" unique_id=680970752]
-mesh = SubResource("BoxMesh_s2d7e")
+[node name="RightHand" parent="XRController3D_right" unique_id=1150311210 instance=ExtResource("11_rhand")]
 
 [node name="MovementTurn" parent="XRController3D_right" unique_id=738031673 instance=ExtResource("6_d3wef")]
 turn_mode = 2
@@ -85,6 +78,7 @@ grab_distance = 0.1
 ranged_enable = false
 
 [node name="FunctionPointer" parent="XRController3D_right" unique_id=1169083826 instance=ExtResource("9_pointer")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.02, 0.05, -0.1)
 visible = false
 enabled = false
 laser_length = 1
