@@ -3,6 +3,26 @@
 [ext_resource type="Script" uid="uid://dqoe86d84hwq2" path="res://zones/zone_2/props/shovel/shovel.gd" id="1_1stim"]
 [ext_resource type="PackedScene" uid="uid://c25yxb0vt53vc" path="res://addons/godot-xr-tools/objects/grab_points/grab_point_hand_left.tscn" id="2_cjici"]
 [ext_resource type="PackedScene" uid="uid://ctw7nbntd5pcj" path="res://addons/godot-xr-tools/objects/grab_points/grab_point_hand_right.tscn" id="3_04cyy"]
+[ext_resource type="AudioStream" uid="uid://cs2gyadyvscgb" path="res://zones/zone_2/props/sounds/tool_pickup_1.wav" id="audio_1"]
+[ext_resource type="AudioStream" uid="uid://cb7w05v6v4i8m" path="res://zones/zone_2/props/sounds/tool_drop_1.wav" id="audio_2"]
+[ext_resource type="AudioStream" uid="uid://d4hlfj7toeydh" path="res://zones/zone_2/props/sounds/tool_drop_2.wav" id="audio_3"]
+[ext_resource type="AudioStream" uid="uid://dce6j6rhwtfsx" path="res://zones/zone_2/props/sounds/tool_drop_3.wav" id="audio_4"]
+[ext_resource type="AudioStream" uid="uid://b1475ak46vb8a" path="res://zones/zone_2/props/sounds/tool_drop_4.wav" id="audio_5"]
+[ext_resource type="Script" uid="uid://bv6k414ai4h47" path="res://zones/zone_2/props/tool_audio.gd" id="audio_6"]
+[ext_resource type="AudioStream" uid="uid://dstxbvjsx4tci" path="res://zones/zone_2/props/shovel/sounds/shovel_stab_light_1.wav" id="audio_7"]
+[ext_resource type="AudioStream" uid="uid://du07go6867y58" path="res://zones/zone_2/props/shovel/sounds/shovel_stab_light_2.wav" id="audio_8"]
+[ext_resource type="AudioStream" uid="uid://xst15ofljhtj" path="res://zones/zone_2/props/shovel/sounds/shovel_stab_light_3.wav" id="audio_9"]
+[ext_resource type="AudioStream" uid="uid://rthd76lfb2e" path="res://zones/zone_2/props/shovel/sounds/shovel_stab_normal_1.wav" id="audio_10"]
+[ext_resource type="AudioStream" uid="uid://pky0w4klocr5" path="res://zones/zone_2/props/shovel/sounds/shovel_stab_normal_2.wav" id="audio_11"]
+[ext_resource type="AudioStream" uid="uid://r2wgi3nwdea8" path="res://zones/zone_2/props/shovel/sounds/shovel_stab_normal_3.wav" id="audio_12"]
+[ext_resource type="AudioStream" uid="uid://dtdijyhvfabc3" path="res://zones/zone_2/props/shovel/sounds/shovel_stab_strong_1.wav" id="audio_13"]
+[ext_resource type="AudioStream" uid="uid://dtqyrmu6aj56m" path="res://zones/zone_2/props/shovel/sounds/shovel_stab_strong_2.wav" id="audio_14"]
+[ext_resource type="AudioStream" uid="uid://cyhhyornroy6y" path="res://zones/zone_2/props/shovel/sounds/shovel_scoop_1.wav" id="audio_15"]
+[ext_resource type="AudioStream" uid="uid://uikq3d27v7gs" path="res://zones/zone_2/props/shovel/sounds/shovel_scoop_2.wav" id="audio_16"]
+[ext_resource type="AudioStream" uid="uid://rq5xodf3c08u" path="res://zones/zone_2/props/shovel/sounds/shovel_scoop_3.wav" id="audio_17"]
+[ext_resource type="AudioStream" uid="uid://qe8m7k3cf2cj" path="res://zones/zone_2/props/shovel/sounds/shovel_scoop_4.wav" id="audio_18"]
+[ext_resource type="AudioStream" uid="uid://117trgt0dtcq" path="res://zones/zone_2/props/shovel/sounds/shovel_scoop_5.wav" id="audio_19"]
+[ext_resource type="Script" uid="uid://bsjlb2faa4pac" path="res://zones/zone_2/props/shovel/shovel_audio.gd" id="audio_20"]
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_04ca8"]
 top_radius = 0.01
@@ -80,3 +100,15 @@ mode = 2
 drive_position = 0.0
 drive_angle = 0.0
 drive_aim = 1.0
+
+[node name="ToolAudio" type="Node3D" parent="."]
+script = ExtResource("audio_6")
+pickup_sounds = Array[AudioStream]([ExtResource("audio_1")])
+drop_sounds = Array[AudioStream]([ExtResource("audio_2"), ExtResource("audio_3"), ExtResource("audio_4"), ExtResource("audio_5")])
+
+[node name="ShovelAudio" type="Node3D" parent="."]
+script = ExtResource("audio_20")
+stab_light = Array[AudioStream]([ExtResource("audio_7"), ExtResource("audio_8"), ExtResource("audio_9")])
+stab_normal = Array[AudioStream]([ExtResource("audio_10"), ExtResource("audio_11"), ExtResource("audio_12")])
+stab_strong = Array[AudioStream]([ExtResource("audio_13"), ExtResource("audio_14")])
+scoops = Array[AudioStream]([ExtResource("audio_15"), ExtResource("audio_16"), ExtResource("audio_17"), ExtResource("audio_18"), ExtResource("audio_19")])

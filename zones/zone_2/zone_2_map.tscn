@@ -31,6 +31,14 @@
 [ext_resource type="PackedScene" uid="uid://d1ql8kynvt13w" path="res://zones/zone_2/props/sign/sign.tscn" id="90_schild"]
 [ext_resource type="PackedScene" uid="uid://bdqc54mh5t12t" path="res://zones/zone_2/props/metal_detector/metal_detector.tscn" id="91_detector"]
 [ext_resource type="Script" uid="uid://cp36l1kkfjjoh" path="res://zones/zone_2/props/metal_detector/metal_object.gd" id="92_metal"]
+[ext_resource type="AudioStream" uid="uid://cvmu5aabre4uc" path="res://zones/zone_2/nature/sounds/forest_wind.wav" id="audio_1"]
+[ext_resource type="AudioStream" uid="uid://cs8li8dkirrtq" path="res://zones/zone_2/nature/sounds/forest_birds.wav" id="audio_2"]
+[ext_resource type="AudioStream" uid="uid://c3if1kicphjpo" path="res://zones/zone_2/nature/sounds/forest_distant.wav" id="audio_3"]
+[ext_resource type="AudioStream" uid="uid://bqpikgaqoryje" path="res://zones/zone_2/nature/sounds/bird_call_1.wav" id="audio_4"]
+[ext_resource type="AudioStream" uid="uid://b2vmwce7x3lul" path="res://zones/zone_2/nature/sounds/bird_call_2.wav" id="audio_5"]
+[ext_resource type="AudioStream" uid="uid://df8u2mdi2jeis" path="res://zones/zone_2/nature/sounds/bird_call_3.wav" id="audio_6"]
+[ext_resource type="AudioStream" uid="uid://cld4k1vj417ib" path="res://zones/zone_2/nature/sounds/bird_call_4.wav" id="audio_7"]
+[ext_resource type="Script" uid="uid://cxey4tbuone3t" path="res://zones/zone_2/nature/forest_audio.gd" id="audio_8"]
 [ext_resource type="Script" uid="uid://8w6h67mki0an" path="res://shared/game/zone_map.gd" id="map_script"]
 
 [sub_resource type="ShaderMaterial" id="Ground_mat"]
@@ -884,3 +892,10 @@ shape = SubResource("Boundary_shape")
 
 [node name="Shovel" parent="." unique_id=629000454 instance=ExtResource("32_k6mr2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.22582632, 0.15837252, 7.735504)
+
+[node name="ForestAudio" type="Node3D" parent="." unique_id=1762206560]
+script = ExtResource("audio_8")
+wind = ExtResource("audio_1")
+birds = ExtResource("audio_2")
+distant = ExtResource("audio_3")
+calls = Array[AudioStream]([ExtResource("audio_4"), ExtResource("audio_5"), ExtResource("audio_6"), ExtResource("audio_7")])

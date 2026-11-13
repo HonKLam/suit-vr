@@ -11,6 +11,11 @@ extends XRToolsPickable
 ##    removed where the stab hit. Faster and straighter stab = bigger hole.
 ## Letting go with a hand in between cancels the stab.
 
+## The blade hit the earth. strength: 0..1 (speed and straightness of the stab), at: where.
+signal stabbed(strength: float, at: Vector3)
+## Earth was removed after the lift. radius: size of the hole (m).
+signal scooped(at: Vector3, radius: float)
+
 const MIN_SPEED: float = 0.7
 const MAX_SPEED: float = 3.0
 
@@ -61,7 +66,8 @@ func _physics_process(delta: float) -> void:
 	if _stab_sandbox:
 		_stab_lowest = minf(_stab_lowest, tip.y)
 		if tip.y > _stab_lowest + LIFT_HEIGHT:
-			_stab_sandbox.dig_at(_stab_center, _stab_radius)
+			if _stab_sandbox.dig_at(_stab_center, _stab_radius) > 0.0:
+				scooped.emit(_stab_center, _stab_radius)
 			_stab_sandbox = null
 		return
 
@@ -97,6 +103,7 @@ func _physics_process(delta: float) -> void:
 	var strength: float = HAPTIC_STRENGTH * lerpf(0.3, 1.0, t)
 	Haptics.pulse(_grab_driver.primary.controller, strength, HAPTIC_TIME)
 	Haptics.pulse(_grab_driver.secondary.controller, strength, HAPTIC_TIME)
+	stabbed.emit(t, center)
 
 
 func _sandbox_at(pos: Vector3) -> Sandbox:
