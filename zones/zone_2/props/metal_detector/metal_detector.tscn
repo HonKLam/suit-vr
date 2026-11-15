@@ -13,6 +13,12 @@
 [ext_resource type="Material" uid="uid://bba32vcr7pr2c" path="res://zones/zone_2/props/metal_detector/assets/md_ring.tres" id="12_m"]
 [ext_resource type="Material" uid="uid://b6uitj51i0w5d" path="res://zones/zone_2/props/metal_detector/assets/md_box.tres" id="13_m"]
 [ext_resource type="Material" uid="uid://d3wycdn6lpc82" path="res://zones/zone_2/props/metal_detector/assets/md_arm_grip.tres" id="14_m"]
+[ext_resource type="AudioStream" uid="uid://cs2gyadyvscgb" path="res://zones/zone_2/props/sounds/tool_pickup_1.wav" id="audio_1"]
+[ext_resource type="AudioStream" uid="uid://cb7w05v6v4i8m" path="res://zones/zone_2/props/sounds/tool_drop_1.wav" id="audio_2"]
+[ext_resource type="AudioStream" uid="uid://d4hlfj7toeydh" path="res://zones/zone_2/props/sounds/tool_drop_2.wav" id="audio_3"]
+[ext_resource type="AudioStream" uid="uid://dce6j6rhwtfsx" path="res://zones/zone_2/props/sounds/tool_drop_3.wav" id="audio_4"]
+[ext_resource type="AudioStream" uid="uid://b1475ak46vb8a" path="res://zones/zone_2/props/sounds/tool_drop_4.wav" id="audio_5"]
+[ext_resource type="Script" uid="uid://bv6k414ai4h47" path="res://zones/zone_2/props/tool_audio.gd" id="audio_6"]
 
 [sub_resource type="CapsuleShape3D" id="Shaft"]
 radius = 0.03
@@ -117,3 +123,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.01, 1.18)
 [node name="HoldGroundBlock" type="Node" parent="." unique_id=2088806559 node_paths=PackedStringArray("probes")]
 script = ExtResource("8_ground")
 probes = [NodePath("../GroundProbes/Front"), NodePath("../GroundProbes/Back"), NodePath("../GroundProbes/Left"), NodePath("../GroundProbes/Right"), NodePath("../GroundProbes/Center")]
+
+[node name="ToolAudio" type="Node3D" parent="."]
+script = ExtResource("audio_6")
+pickup_sounds = Array[AudioStream]([ExtResource("audio_1")])
+drop_sounds = Array[AudioStream]([ExtResource("audio_2"), ExtResource("audio_3"), ExtResource("audio_4"), ExtResource("audio_5")])
