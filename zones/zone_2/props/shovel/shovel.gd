@@ -3,7 +3,9 @@ class_name Shovel
 extends XRToolsPickable
 
 ## Two-handed shovel (top handle + shaft). Digging only with both hands.
-## 1. Stab: push both hands along the shaft into a Sandbox -> blade sinks in (faster = deeper) and sticks.
+## 0. Aim: StabMarker shows where the blade will go in (straight along the blade).
+## 1. Stab: push both hands along the shaft into a Sandbox -> blade lands on the marker,
+##    sinks in (faster = deeper) and sticks.
 ## 2. Pull: hands up along the shaft -> growing vibration + PullRing, then pops out and digs.
 ##    Deeper = bigger hole, longer pull.
 
@@ -47,8 +49,14 @@ const POP_VIBRATION_TIME: float = 0.15
 ## Glide back into the hands after popping out (s)
 const POP_RETURN_TIME: float = 0.1
 
+## How far ahead of the tip the stab point is searched (m)
+const STAB_TARGET_RANGE: float = 0.6
+
 ## 0..1, read by PullRing
 var pull_progress: float = 0.0
+## Earth surface straight ahead of the blade, read by StabMarker
+var has_stab_target: bool = false
+var stab_target: Vector3 = Vector3.ZERO
 
 var _recent_hand_positions: Array[Vector3] = [] # center between both hands
 var _stuck_in_sandbox: Sandbox
@@ -94,6 +102,8 @@ func _physics_process(delta: float) -> void:
 		_update_pull(delta)
 		return
 
+	_update_stab_target()
+
 	if not is_two_handed():
 		_recent_hand_positions.clear()
 		return
@@ -132,6 +142,8 @@ func _stick_into_ground(sandbox: Sandbox, stab_strength: float) -> void:
 	_stuck_in_sandbox = sandbox
 	_stuck_depth = lerpf(MIN_DEPTH, MAX_DEPTH, stab_strength)
 	_keep_in_ground()
+	if has_stab_target:
+		global_position = stab_target
 	global_position += -global_basis.y * _stuck_depth
 	_stuck_transform = global_transform
 
@@ -197,6 +209,25 @@ func _pop_out() -> void:
 	_grab_driver.state = XRToolsGrabDriver.GrabState.LERP
 	_grab_driver.global_transform = global_transform
 	_grab_driver.remote_path = _grab_driver.get_path_to(self)
+
+
+## Earth surface straight ahead of the blade (ray onto the Sandbox ground).
+func _update_stab_target() -> void:
+	has_stab_target = false
+	if not is_two_handed():
+		return
+	var tip: Vector3 = global_position
+	if _sandbox_at(tip) != null:
+		# tip already in the earth
+		has_stab_target = true
+		stab_target = tip
+		return
+	var ray := PhysicsRayQueryParameters3D.create(tip, tip - global_basis.y * STAB_TARGET_RANGE)
+	ray.exclude = [get_rid()]
+	var hit: Dictionary = get_world_3d().direct_space_state.intersect_ray(ray)
+	if hit and hit.collider.get_parent() is Sandbox:
+		has_stab_target = true
+		stab_target = hit.position
 
 
 func _vibrate_both_hands(strength: float, duration: float) -> void:
