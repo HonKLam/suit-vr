@@ -66,15 +66,15 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.215, -0.0063)
 shape = SubResource("BoxShape3D_ytuwu")
 
 [node name="GrabPointHandLeft" parent="." unique_id=982229271 instance=ExtResource("2_cjici")]
-transform = Transform3D(4.371139e-08, 3.821371e-15, 1, 8.742278e-08, -1, 0, 1, 8.742278e-08, -4.371139e-08, -0.11224866, 1.1645, 0.017857276)
+transform = Transform3D(0, 1, 0, 0, 0, 1, 1, 0, 0, 0.05, 1.1, 0.02)
 handle = "top"
 
 [node name="GrabPointHandRight" parent="." unique_id=700550120 instance=ExtResource("3_04cyy")]
-transform = Transform3D(4.4321705e-08, 0.0069812597, 0.99997556, -8.742064e-08, -0.99997556, 0.0069812597, 0.99999994, -8.772793e-08, -4.371032e-08, -0.10560608, 1.1614, -0.0074546933)
+transform = Transform3D(0, 1, 0, 0, 0, 1, 1, 0, 0, 0.05, 1.1, -0.02)
 handle = "top"
 
 [node name="GrabPointHandLeft2" parent="." unique_id=88129439 instance=ExtResource("2_cjici")]
-transform = Transform3D(4.371139e-08, 3.821371e-15, 1, 8.742278e-08, -1, 0, 1, 8.742278e-08, -4.371139e-08, -0.11224866, 0.6646, 0.017857276)
+transform = Transform3D(0, 0, -1, 0, -1, 0, -1, 0, 0, 0.11, 0.7, -0.02)
 handle = "shaft"
 mode = 2
 drive_position = 0.0
@@ -82,7 +82,7 @@ drive_angle = 0.0
 drive_aim = 1.0
 
 [node name="GrabPointHandRight2" parent="." unique_id=1974793374 instance=ExtResource("3_04cyy")]
-transform = Transform3D(4.4321705e-08, 0.0069812597, 0.99997556, -8.742064e-08, -0.99997556, 0.0069812597, 0.99999994, -8.772793e-08, -4.371032e-08, -0.10560608, 0.6615, -0.0074546933)
+transform = Transform3D(0, 0, -1, 0, -1, 0, -1, 0, 0, 0.11, 0.7, 0.02)
 handle = "shaft"
 mode = 2
 drive_position = 0.0

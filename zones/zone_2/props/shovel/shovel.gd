@@ -81,6 +81,7 @@ func get_hands_center() -> Vector3:
 
 func pick_up(by: Node3D) -> void:
 	super(by)
+	_ignore_player_body(by)
 	if is_stuck() and _grab_driver:
 		_keep_in_ground()
 		global_transform = _stuck_transform
@@ -228,6 +229,14 @@ func _update_stab_target() -> void:
 	if hit and hit.collider.get_parent() is Sandbox:
 		has_stab_target = true
 		stab_target = hit.position
+
+
+## Never collide with the player: a stuck shovel the player stands over would push them away.
+func _ignore_player_body(hand: Node3D) -> void:
+	var player_body := XRToolsPlayerBody.find_instance(hand)
+	if player_body and not get_collision_exceptions().has(player_body):
+		add_collision_exception_with(player_body)
+		player_body.add_collision_exception_with(self)
 
 
 func _vibrate_both_hands(strength: float, duration: float) -> void:
