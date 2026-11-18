@@ -153,7 +153,10 @@ transform = Transform3D(0.0667, 0, -0.5539, 0, 0.5579, 0, 0.5539, 0, 0.0667, -0.
 transform = Transform3D(0.4651, 0, 0.3092, 0, 0.5585, 0, -0.3092, 0, 0.4651, -0.141, 0, 2.34)
 
 [node name="RockPath_Round_Small_3_5" parent="Path" unique_id=1148031382 instance=ExtResource("25_r")]
-transform = Transform3D(-0.3682, 0, 0.3691, 0, 0.5213, 0, -0.3691, 0, -0.3682, -0.014, 0, 1.72)
+transform = Transform3D(0.050983325, 0, 0.51885146, 0, 0.5213001, 0, -0.51885146, 0, 0.050983325, -0.5955312, 0, 1.9072982)
+
+[node name="RockPath_Round_Small_3_6" parent="Path" unique_id=941771346 instance=ExtResource("25_r")]
+transform = Transform3D(-0.45805424, 0, -0.24898274, 0, 0.5213, 0, 0.24898274, 0, -0.45805424, 0.28319395, 0, 1.9079088)
 
 [node name="Nature" type="Node3D" parent="." unique_id=1171048139]
 script = ExtResource("5_r")
@@ -531,7 +534,7 @@ transform = Transform3D(0.0044, 0, -0.3102, 0, 0.3103, 0, 0.3102, 0, 0.0044, 2.0
 transform = Transform3D(0.0286, 0, 0.2201, 0, 0.2219, 0, -0.2201, 0, 0.0286, -0.642, 0, -2.371)
 
 [node name="Flower_4_Group_5" parent="Nature" unique_id=1279257888 instance=ExtResource("15_r")]
-transform = Transform3D(0.1444, 0, 0.1646, 0, 0.2189, 0, -0.1646, 0, 0.1444, -1.557, 0, 2.333)
+transform = Transform3D(0.1444, 0, 0.1646, 0, 0.2189, 0, -0.1646, 0, 0.1444, -1.635857, 0, 2.333)
 
 [node name="Clover_1_5" parent="Nature" unique_id=863861855 instance=ExtResource("9_r")]
 transform = Transform3D(-0.2136, 0, 0.0958, 0, 0.2341, 0, -0.0958, 0, -0.2136, -4.928, 0, -3.146)
