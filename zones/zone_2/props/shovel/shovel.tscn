@@ -23,26 +23,19 @@
 [ext_resource type="AudioStream" uid="uid://qe8m7k3cf2cj" path="res://zones/zone_2/props/shovel/sounds/shovel_scoop_4.wav" id="audio_18"]
 [ext_resource type="AudioStream" uid="uid://117trgt0dtcq" path="res://zones/zone_2/props/shovel/sounds/shovel_scoop_5.wav" id="audio_19"]
 [ext_resource type="Script" uid="uid://bsjlb2faa4pac" path="res://zones/zone_2/props/shovel/shovel_audio.gd" id="audio_20"]
-
-[sub_resource type="CylinderMesh" id="CylinderMesh_04ca8"]
-top_radius = 0.01
-bottom_radius = 0.01
-height = 0.5
-
-[sub_resource type="BoxMesh" id="BoxMesh_04ca8"]
-size = Vector3(0.05, 0.05, 0.05)
-
-[sub_resource type="BoxMesh" id="BoxMesh_hua2j"]
-size = Vector3(0.05, 0.125, 0.1)
+[ext_resource type="PackedScene" uid="uid://ckqwe48adb3lp" path="res://zones/zone_2/props/shovel/model/shovel.fbx" id="4_model"]
+[ext_resource type="Material" path="res://zones/zone_2/props/shovel/materials/shovel_wood.tres" id="5_wood"]
+[ext_resource type="Material" path="res://zones/zone_2/props/shovel/materials/shovel_metal.tres" id="6_metal"]
+[ext_resource type="Material" path="res://zones/zone_2/props/shovel/materials/shovel_grip.tres" id="7_grip"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_04ca8"]
-size = Vector3(0.05041504, 0.05090332, 0.050231934)
+size = Vector3(0.164, 0.205, 0.045)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_hua2j"]
-size = Vector3(0.02079773, 0.49536133, 0.0211792)
+size = Vector3(0.036, 0.61, 0.036)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ytuwu"]
-size = Vector3(0.057128906, 0.13232422, 0.103515625)
+size = Vector3(0.228, 0.43, 0.057)
 
 [node name="Shovel" type="RigidBody3D" unique_id=629000454]
 collision_layer = 4
@@ -51,42 +44,35 @@ freeze_mode = 1
 script = ExtResource("1_1stim")
 second_hand_grab = 2
 
-[node name="MeshModel" type="Node3D" parent="." unique_id=656028224]
+[node name="MeshModel" parent="." unique_id=656028224 instance=ExtResource("4_model")]
 
-[node name="Stick" type="MeshInstance3D" parent="MeshModel" unique_id=1471736412]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3707892, 0)
-mesh = SubResource("CylinderMesh_04ca8")
-
-[node name="Hold" type="MeshInstance3D" parent="MeshModel" unique_id=385450089]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6466832, 0)
-mesh = SubResource("BoxMesh_04ca8")
-
-[node name="Head" type="MeshInstance3D" parent="MeshModel" unique_id=297966483]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0625, 0)
-mesh = SubResource("BoxMesh_hua2j")
+[node name="Shovel" parent="MeshModel" index="0"]
+surface_material_override/0 = ExtResource("5_wood")
+surface_material_override/1 = ExtResource("6_metal")
+surface_material_override/2 = ExtResource("7_grip")
 
 [node name="Grip1" type="CollisionShape3D" parent="." unique_id=450255186]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00018310547, 0.6460396, 0.00015258789)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1225, 0)
 shape = SubResource("BoxShape3D_04ca8")
 
 [node name="Grip2" type="CollisionShape3D" parent="." unique_id=322329567]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0005569458, 0.3737253, -0.0005187988)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.725, 0)
 shape = SubResource("BoxShape3D_hua2j")
 
 [node name="HeadDetector" type="CollisionShape3D" parent="." unique_id=2033781884]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0012207031, 0.0650853, 0.0029296875)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.215, -0.0063)
 shape = SubResource("BoxShape3D_ytuwu")
 
 [node name="GrabPointHandLeft" parent="." unique_id=982229271 instance=ExtResource("2_cjici")]
-transform = Transform3D(4.371139e-08, 3.821371e-15, 1, 8.742278e-08, -1, 0, 1, 8.742278e-08, -4.371139e-08, -0.11224866, 0.601145, 0.017857276)
+transform = Transform3D(4.371139e-08, 3.821371e-15, 1, 8.742278e-08, -1, 0, 1, 8.742278e-08, -4.371139e-08, -0.11224866, 1.1645, 0.017857276)
 handle = "top"
 
 [node name="GrabPointHandRight" parent="." unique_id=700550120 instance=ExtResource("3_04cyy")]
-transform = Transform3D(4.4321705e-08, 0.0069812597, 0.99997556, -8.742064e-08, -0.99997556, 0.0069812597, 0.99999994, -8.772793e-08, -4.371032e-08, -0.10560608, 0.5981077, -0.0074546933)
+transform = Transform3D(4.4321705e-08, 0.0069812597, 0.99997556, -8.742064e-08, -0.99997556, 0.0069812597, 0.99999994, -8.772793e-08, -4.371032e-08, -0.10560608, 1.1614, -0.0074546933)
 handle = "top"
 
 [node name="GrabPointHandLeft2" parent="." unique_id=88129439 instance=ExtResource("2_cjici")]
-transform = Transform3D(4.371139e-08, 3.821371e-15, 1, 8.742278e-08, -1, 0, 1, 8.742278e-08, -4.371139e-08, -0.11224866, 0.3132803, 0.017857276)
+transform = Transform3D(4.371139e-08, 3.821371e-15, 1, 8.742278e-08, -1, 0, 1, 8.742278e-08, -4.371139e-08, -0.11224866, 0.6646, 0.017857276)
 handle = "shaft"
 mode = 2
 drive_position = 0.0
@@ -94,7 +80,7 @@ drive_angle = 0.0
 drive_aim = 1.0
 
 [node name="GrabPointHandRight2" parent="." unique_id=1974793374 instance=ExtResource("3_04cyy")]
-transform = Transform3D(4.4321705e-08, 0.0069812597, 0.99997556, -8.742064e-08, -0.99997556, 0.0069812597, 0.99999994, -8.772793e-08, -4.371032e-08, -0.10560608, 0.310243, -0.0074546933)
+transform = Transform3D(4.4321705e-08, 0.0069812597, 0.99997556, -8.742064e-08, -0.99997556, 0.0069812597, 0.99999994, -8.772793e-08, -4.371032e-08, -0.10560608, 0.6615, -0.0074546933)
 handle = "shaft"
 mode = 2
 drive_position = 0.0
