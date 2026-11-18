@@ -1,10 +1,9 @@
 [gd_scene format=3 uid="uid://djs83y84yf1dx"]
 
 [ext_resource type="Script" uid="uid://dqoe86d84hwq2" path="res://zones/zone_2/props/shovel/shovel.gd" id="1_1stim"]
-[ext_resource type="Script" path="res://zones/zone_2/props/shovel/pull_ring.gd" id="pull_ring"]
-[ext_resource type="Script" path="res://zones/zone_2/props/shovel/stab_marker.gd" id="stab_marker"]
 [ext_resource type="PackedScene" uid="uid://c25yxb0vt53vc" path="res://addons/godot-xr-tools/objects/grab_points/grab_point_hand_left.tscn" id="2_cjici"]
 [ext_resource type="PackedScene" uid="uid://ctw7nbntd5pcj" path="res://addons/godot-xr-tools/objects/grab_points/grab_point_hand_right.tscn" id="3_04cyy"]
+[ext_resource type="PackedScene" uid="uid://ckqwe48adb3lp" path="res://zones/zone_2/props/shovel/model/shovel.fbx" id="4_model"]
 [ext_resource type="AudioStream" uid="uid://cs2gyadyvscgb" path="res://zones/zone_2/props/sounds/tool_pickup_1.wav" id="audio_1"]
 [ext_resource type="AudioStream" uid="uid://cb7w05v6v4i8m" path="res://zones/zone_2/props/sounds/tool_drop_1.wav" id="audio_2"]
 [ext_resource type="AudioStream" uid="uid://d4hlfj7toeydh" path="res://zones/zone_2/props/sounds/tool_drop_2.wav" id="audio_3"]
@@ -25,10 +24,8 @@
 [ext_resource type="AudioStream" uid="uid://qe8m7k3cf2cj" path="res://zones/zone_2/props/shovel/sounds/shovel_scoop_4.wav" id="audio_18"]
 [ext_resource type="AudioStream" uid="uid://117trgt0dtcq" path="res://zones/zone_2/props/shovel/sounds/shovel_scoop_5.wav" id="audio_19"]
 [ext_resource type="Script" uid="uid://bsjlb2faa4pac" path="res://zones/zone_2/props/shovel/shovel_audio.gd" id="audio_20"]
-[ext_resource type="PackedScene" uid="uid://ckqwe48adb3lp" path="res://zones/zone_2/props/shovel/model/shovel.fbx" id="4_model"]
-[ext_resource type="Material" path="res://zones/zone_2/props/shovel/materials/shovel_wood.tres" id="5_wood"]
-[ext_resource type="Material" path="res://zones/zone_2/props/shovel/materials/shovel_metal.tres" id="6_metal"]
-[ext_resource type="Material" path="res://zones/zone_2/props/shovel/materials/shovel_grip.tres" id="7_grip"]
+[ext_resource type="Script" uid="uid://bls76n0384tgt" path="res://zones/zone_2/props/shovel/pull_ring.gd" id="pull_ring"]
+[ext_resource type="Script" uid="uid://ckw0vws0448af" path="res://zones/zone_2/props/shovel/stab_marker.gd" id="stab_marker"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_04ca8"]
 size = Vector3(0.164, 0.205, 0.045)
@@ -47,11 +44,6 @@ script = ExtResource("1_1stim")
 second_hand_grab = 2
 
 [node name="MeshModel" parent="." unique_id=656028224 instance=ExtResource("4_model")]
-
-[node name="Shovel" parent="MeshModel" index="0"]
-surface_material_override/0 = ExtResource("5_wood")
-surface_material_override/1 = ExtResource("6_metal")
-surface_material_override/2 = ExtResource("7_grip")
 
 [node name="Grip1" type="CollisionShape3D" parent="." unique_id=450255186]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1225, 0)
@@ -74,7 +66,7 @@ transform = Transform3D(0, -1, 0, 0, 0, 1, -1, 0, 0, -0.038, 1.104, 0.0075)
 handle = "top"
 
 [node name="GrabPointHandLeft2" parent="." unique_id=88129439 instance=ExtResource("2_cjici")]
-transform = Transform3D(0, 0, -1, 0, -1, 0, -1, 0, 0, 0.112, 0.75, -0.018)
+transform = Transform3D(0, 0, -1, 0, -1, 0, -1, 0, 0, 0.112, 0.598113, -0.018)
 handle = "shaft"
 mode = 2
 drive_position = 0.0
@@ -82,19 +74,19 @@ drive_angle = 0.0
 drive_aim = 1.0
 
 [node name="GrabPointHandRight2" parent="." unique_id=1974793374 instance=ExtResource("3_04cyy")]
-transform = Transform3D(0, 0, 1, 0, -1, 0, 1, 0, 0, -0.106, 0.75, -0.0075)
+transform = Transform3D(0, 0, 1, 0, -1, 0, 1, 0, 0, -0.106, 0.598113, -0.0075)
 handle = "shaft"
 mode = 2
 drive_position = 0.0
 drive_angle = 0.0
 drive_aim = 1.0
 
-[node name="ToolAudio" type="Node3D" parent="."]
+[node name="ToolAudio" type="Node3D" parent="." unique_id=1846616679]
 script = ExtResource("audio_6")
 pickup_sounds = Array[AudioStream]([ExtResource("audio_1")])
 drop_sounds = Array[AudioStream]([ExtResource("audio_2"), ExtResource("audio_3"), ExtResource("audio_4"), ExtResource("audio_5")])
 
-[node name="ShovelAudio" type="Node3D" parent="."]
+[node name="ShovelAudio" type="Node3D" parent="." unique_id=990508786]
 script = ExtResource("audio_20")
 stab_light = Array[AudioStream]([ExtResource("audio_7"), ExtResource("audio_8"), ExtResource("audio_9")])
 stab_normal = Array[AudioStream]([ExtResource("audio_10"), ExtResource("audio_11"), ExtResource("audio_12")])
