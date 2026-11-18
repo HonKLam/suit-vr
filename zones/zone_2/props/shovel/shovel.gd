@@ -46,6 +46,9 @@ const PULL_VIBRATION_INTERVAL := Vector2(0.3, 0.06)
 const PULL_VIBRATION_TIME: float = 0.05
 const POP_VIBRATION_STRENGTH: float = 1.0
 const POP_VIBRATION_TIME: float = 0.15
+## How far the front hand can slide along the shaft from its grab point (m, each way)
+const FRONT_HAND_SLIDE: float = 0.1
+
 ## Glide back into the hands after popping out (s)
 const POP_RETURN_TIME: float = 0.1
 
@@ -64,6 +67,7 @@ var _stuck_transform: Transform3D
 var _stuck_depth: float = 0.0
 var _hands_lowest_point: float = INF # along the shaft, since pull start
 var _time_to_next_pull_vibration: float = 0.0
+var _front_grab_point_home: Dictionary = {} # grab point -> its position in the scene
 
 
 ## xr-tools has no getter for the second hand -> reads the grab driver
@@ -98,6 +102,8 @@ func let_go(by: Node3D, p_linear_velocity: Vector3, p_angular_velocity: Vector3)
 func _physics_process(delta: float) -> void:
 	if Engine.is_editor_hint():
 		return
+
+	_slide_front_hand()
 
 	if is_stuck():
 		_update_pull(delta)
@@ -150,6 +156,25 @@ func _stick_into_ground(sandbox: Sandbox, stab_strength: float) -> void:
 
 	_vibrate_both_hands(STAB_VIBRATION_STRENGTH * lerpf(0.3, 1.0, stab_strength), STAB_VIBRATION_TIME)
 	stabbed.emit(stab_strength, global_position)
+
+
+## Front hand follows the real hand along the shaft, within FRONT_HAND_SLIDE.
+func _slide_front_hand() -> void:
+	if not is_two_handed():
+		for grab_point: Node3D in _front_grab_point_home:
+			grab_point.position = _front_grab_point_home[grab_point]
+		return
+	var front_grab: Grab = _grab_driver.secondary
+	var grab_point := front_grab.point as XRToolsGrabPointHand
+	if grab_point == null:
+		return
+	if not _front_grab_point_home.has(grab_point):
+		_front_grab_point_home[grab_point] = grab_point.position
+	var home: Vector3 = _front_grab_point_home[grab_point]
+	var home_palm_height: float = (Transform3D(grab_point.basis, home) * Vector3(0.0, -0.05, 0.10)).y
+	var slide: float = clampf(to_local(front_grab.by.global_position).y - home_palm_height, -FRONT_HAND_SLIDE, FRONT_HAND_SLIDE)
+	grab_point.position = home + Vector3.UP * slide
+	front_grab.transform = grab_point.get_palm_transform()
 
 
 ## Driver keeps following the hands but no longer moves the shovel -> hands can pull away
