@@ -3,36 +3,37 @@ class_name Shovel
 extends XRToolsPickable
 
 ## Two-handed shovel (top handle + shaft). Digging only with both hands.
-## 1. Stab: fast, blade first into a Sandbox -> blade sinks in (faster = deeper) and sticks.
+## 1. Stab: push both hands along the shaft into a Sandbox -> blade sinks in (faster = deeper) and sticks.
 ## 2. Pull: hands up along the shaft -> growing vibration + PullRing, then pops out and digs.
 ##    Deeper = bigger hole, longer pull.
 
-## strength: 0..1 (speed and straightness of the stab)
+## strength: 0..1 (push speed of the hands)
 signal stabbed(strength: float, at: Vector3)
 ## radius: hole size (m)
 signal scooped(at: Vector3, radius: float)
 
-const MIN_SPEED: float = 0.7
-const MAX_SPEED: float = 3.0
+## Push speed of the hands along the shaft (m/s): weakest / strongest stab
+const MIN_SPEED: float = 0.6
+const MAX_SPEED: float = 2.0
 
 const MIN_RADIUS: float = 0.06
 const MAX_RADIUS: float = 0.15
 
 ## Stab depth (m), weakest / strongest stab
 const MIN_DEPTH: float = 0.05
-const MAX_DEPTH: float = 0.25
+const MAX_DEPTH: float = 0.38
 
-## Max angle movement vs. blade (more = sideways swipe)
+## Max angle hand movement vs. blade (more = sideways swipe)
 const MAX_STAB_ANGLE: float = 50.0
 ## Max angle blade vs. straight down
 const MAX_TILT_ANGLE: float = 70.0
 
-## Speed is measured over this time (s): smooths shaky hands
+## Hand speed is measured over this time (s): smooths shaky hands
 const MOTION_WINDOW: float = 0.1
 
 ## Pull distance to pop out (m) = BASE + PER_DEPTH * stuck depth
 const PULL_DISTANCE_BASE: float = 0.12
-const PULL_DISTANCE_PER_DEPTH: float = 1.0
+const PULL_DISTANCE_PER_DEPTH: float = 0.6
 
 ## Vibration (both hands)
 const STAB_VIBRATION_STRENGTH: float = 0.6
@@ -49,7 +50,7 @@ const POP_RETURN_TIME: float = 0.1
 ## 0..1, read by PullRing
 var pull_progress: float = 0.0
 
-var _recent_tip_positions: Array[Vector3] = []
+var _recent_hand_positions: Array[Vector3] = [] # center between both hands
 var _stuck_in_sandbox: Sandbox
 var _stuck_transform: Transform3D
 var _stuck_depth: float = 0.0
@@ -93,33 +94,37 @@ func _physics_process(delta: float) -> void:
 		_update_pull(delta)
 		return
 
-	var tip: Vector3 = global_position
-	_recent_tip_positions.push_back(tip)
-
-	while _recent_tip_positions.size() > maxi(2, roundi(MOTION_WINDOW / delta) + 1):
-		_recent_tip_positions.pop_front()
-
-	if not is_two_handed() or _recent_tip_positions.size() < 2:
+	if not is_two_handed():
+		_recent_hand_positions.clear()
 		return
 
-	var velocity: Vector3 = (tip - _recent_tip_positions[0]) / (delta * (_recent_tip_positions.size() - 1))
-	var speed: float = velocity.length()
+	# Both hands together give the push (the rear hand pushes, the front one guides),
+	# so measure the center between them instead of the blade tip (which swings like a lever).
+	var hands_center: Vector3 = get_hands_center()
+	_recent_hand_positions.push_back(hands_center)
 
-	if speed < MIN_SPEED:
+	while _recent_hand_positions.size() > maxi(2, roundi(MOTION_WINDOW / delta) + 1):
+		_recent_hand_positions.pop_front()
+
+	if _recent_hand_positions.size() < 2:
 		return
 
+	var hands_velocity: Vector3 = (hands_center - _recent_hand_positions[0]) / (delta * (_recent_hand_positions.size() - 1))
 	var blade_direction: Vector3 = -global_basis.y
-	var stab_angle: float = velocity.angle_to(blade_direction)
+	var push_speed: float = hands_velocity.dot(blade_direction)
 
-	if stab_angle > deg_to_rad(MAX_STAB_ANGLE) or blade_direction.angle_to(Vector3.DOWN) > deg_to_rad(MAX_TILT_ANGLE):
+	if push_speed < MIN_SPEED:
+		return
+
+	if hands_velocity.angle_to(blade_direction) > deg_to_rad(MAX_STAB_ANGLE) or blade_direction.angle_to(Vector3.DOWN) > deg_to_rad(MAX_TILT_ANGLE):
 		return
 
 	# a bit in front of the tip: counts as soon as the blade touches the earth
-	var sandbox: Sandbox = _sandbox_at(tip + blade_direction * MIN_DEPTH * 0.5)
+	var sandbox: Sandbox = _sandbox_at(global_position + blade_direction * MIN_DEPTH * 0.5)
 	if sandbox == null:
 		return
 
-	var stab_strength: float = clampf(inverse_lerp(MIN_SPEED, MAX_SPEED, speed), 0.0, 1.0) * (1.0 - stab_angle / deg_to_rad(MAX_STAB_ANGLE))
+	var stab_strength: float = clampf(inverse_lerp(MIN_SPEED, MAX_SPEED, push_speed), 0.0, 1.0)
 	_stick_into_ground(sandbox, stab_strength)
 
 
@@ -168,13 +173,21 @@ func _update_pull(delta: float) -> void:
 func _pop_out() -> void:
 	var depth_factor: float = inverse_lerp(MIN_DEPTH, MAX_DEPTH, _stuck_depth)
 	var hole_radius: float = lerpf(MIN_RADIUS, MAX_RADIUS, depth_factor)
-	var hole_center: Vector3 = global_position + global_basis.y * hole_radius
-	if _stuck_in_sandbox.dig_at(hole_center, hole_radius) > 0.0:
-		scooped.emit(hole_center, hole_radius)
+	# spheres from the tip up to the surface, so a deep stab gives a deep hole, not a cave
+	var shaft_up: Vector3 = global_basis.y.normalized()
+	var removed_volume: float = 0.0
+	var distance_from_tip: float = hole_radius
+	while true:
+		removed_volume += _stuck_in_sandbox.dig_at(global_position + shaft_up * distance_from_tip, hole_radius)
+		if distance_from_tip >= _stuck_depth:
+			break
+		distance_from_tip = minf(distance_from_tip + hole_radius, _stuck_depth)
+	if removed_volume > 0.0:
+		scooped.emit(global_position + shaft_up * _stuck_depth * 0.5, hole_radius)
 
 	_stuck_in_sandbox = null
 	pull_progress = 0.0
-	_recent_tip_positions.clear()
+	_recent_hand_positions.clear()
 	_vibrate_both_hands(POP_VIBRATION_STRENGTH, POP_VIBRATION_TIME)
 
 	# hand the shovel back to the driver, glide instead of jump
