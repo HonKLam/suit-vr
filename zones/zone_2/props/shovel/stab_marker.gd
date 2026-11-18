@@ -4,7 +4,7 @@ extends MeshInstance3D
 const RING_RADIUS: float = 0.05
 const RING_THICKNESS: float = 0.008
 ## Lifted a bit, so it isn't hidden in the earth
-const LIFT: float = 0.01
+const LIFT_ABOVE_GROUND: float = 0.01
 
 var _shovel: Shovel
 
@@ -32,4 +32,4 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	visible = _shovel.has_stab_target and not _shovel.is_stuck()
 	if visible:
-		global_position = _shovel.stab_target + Vector3.UP * LIFT
+		global_position = _shovel.stab_target + Vector3.UP * LIFT_ABOVE_GROUND

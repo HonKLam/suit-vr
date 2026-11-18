@@ -65,11 +65,11 @@ func _process(delta: float) -> void:
 	if not _find_player():
 		return
 	var palm_up: float = (-_right.global_basis.x).dot(Vector3.UP) # palm of the right hand is -X
-	var hand_free := _right_pickup.picked_up_object == null
+	var right_hand_free := _right_pickup.picked_up_object == null
 	if visible:
-		visible = hand_free and palm_up > PALM_UP_CLOSE
+		visible = right_hand_free and palm_up > PALM_UP_CLOSE
 	else:
-		visible = hand_free and palm_up > PALM_UP_OPEN
+		visible = right_hand_free and palm_up > PALM_UP_OPEN
 	_laser.visible = visible
 	if not visible:
 		_hovered = -1
@@ -77,11 +77,11 @@ func _process(delta: float) -> void:
 
 	# row of tools above the wrist, facing the head
 	var head := _camera.global_transform
-	var side := head.basis.x
-	side.y = 0.0
-	side = side.normalized()
-	var center := _right.global_position + Vector3.UP * MENU_HEIGHT
-	global_transform = Transform3D(Basis.looking_at(center - head.origin), center)
+	var sideways := head.basis.x
+	sideways.y = 0.0
+	sideways = sideways.normalized()
+	var menu_center := _right.global_position + Vector3.UP * MENU_HEIGHT
+	global_transform = Transform3D(Basis.looking_at(menu_center - head.origin), menu_center)
 
 	# laser from the left hand: the first tool it passes close enough is hovered
 	var laser_start := _left.global_position
@@ -90,18 +90,18 @@ func _process(delta: float) -> void:
 	_hovered = -1
 	for i in _icons.size():
 		var icon := _icons[i]
-		icon.global_position = center + side * (i - (_icons.size() - 1) * 0.5) * ICON_SPACING
+		icon.global_position = menu_center + sideways * (i - (_icons.size() - 1) * 0.5) * ICON_SPACING
 		icon.rotate_y(SPIN_SPEED * delta)
 		var to_icon := icon.global_position - laser_start
-		var along := to_icon.dot(laser_direction)
-		var miss := (to_icon - laser_direction * along).length()
-		if along > 0.0 and along < laser_length and miss < LASER_HIT_RADIUS:
-			laser_length = along
+		var distance_along_laser := to_icon.dot(laser_direction)
+		var distance_from_laser := (to_icon - laser_direction * distance_along_laser).length()
+		if distance_along_laser > 0.0 and distance_along_laser < laser_length and distance_from_laser < LASER_HIT_RADIUS:
+			laser_length = distance_along_laser
 			_hovered = i
 	_laser.global_transform = Transform3D(Basis(Quaternion(Vector3.UP, laser_direction)) * Basis.from_scale(Vector3(1.0, laser_length, 1.0)), laser_start + laser_direction * laser_length * 0.5)
 	for i in _icons.size():
-		var grow := HOVER_SCALE if i == _hovered else 1.0
-		_icons[i].scale = Vector3.ONE * grow
+		var icon_scale := HOVER_SCALE if i == _hovered else 1.0
+		_icons[i].scale = Vector3.ONE * icon_scale
 
 	var trigger_pressed := _left.get_float("trigger") > TRIGGER_PRESSED
 	if trigger_pressed and not _trigger_was_pressed and _hovered >= 0:
@@ -146,7 +146,7 @@ func _find_player() -> bool:
 
 ## Small copy of the tool model (only its meshes), scaled to ICON_SIZE.
 func _add_choice(model: Node3D, title: String, choose: Callable) -> void:
-	var copy := Node3D.new()
+	var model_copy := Node3D.new()
 	var bounds := AABB()
 	var meshes: Array = model.find_children("*", "MeshInstance3D", true, false)
 	if model is MeshInstance3D:
@@ -159,14 +159,14 @@ func _add_choice(model: Node3D, title: String, choose: Callable) -> void:
 		for surface in original.get_surface_override_material_count():
 			mesh_copy.set_surface_override_material(surface, original.get_surface_override_material(surface))
 		mesh_copy.transform = Transform3D.IDENTITY if original == model else _relative_transform(model, original)
-		copy.add_child(mesh_copy)
-		var box := mesh_copy.transform * original.get_aabb()
-		bounds = box if i == 0 else bounds.merge(box)
-	var fit := ICON_SIZE / maxf(bounds.get_longest_axis_size(), 0.001)
-	copy.scale = Vector3.ONE * fit
-	copy.position = -bounds.get_center() * fit
+		model_copy.add_child(mesh_copy)
+		var mesh_bounds := mesh_copy.transform * original.get_aabb()
+		bounds = mesh_bounds if i == 0 else bounds.merge(mesh_bounds)
+	var fit_scale := ICON_SIZE / maxf(bounds.get_longest_axis_size(), 0.001)
+	model_copy.scale = Vector3.ONE * fit_scale
+	model_copy.position = -bounds.get_center() * fit_scale
 	var icon := Node3D.new()
-	icon.add_child(copy)
+	icon.add_child(model_copy)
 	var label := Label3D.new()
 	label.text = title
 	label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
@@ -183,12 +183,12 @@ func _add_choice(model: Node3D, title: String, choose: Callable) -> void:
 
 ## Transform of node relative to root (works outside the scene tree).
 func _relative_transform(root: Node3D, node: Node3D) -> Transform3D:
-	var result := Transform3D.IDENTITY
-	var current := node
-	while current != root and current != null:
-		result = current.transform * result
-		current = current.get_parent() as Node3D
-	return result
+	var node_to_root := Transform3D.IDENTITY
+	var on_the_way := node
+	while on_the_way != root and on_the_way != null:
+		node_to_root = on_the_way.transform * node_to_root
+		on_the_way = on_the_way.get_parent() as Node3D
+	return node_to_root
 
 
 ## Shows the tool floating in front of the player, grab point toward the player.
@@ -202,7 +202,7 @@ func _bring(tool: XRToolsPickable) -> void:
 	var forward := -head.basis.z
 	forward.y = 0.0
 	forward = forward.normalized()
-	var spot := head.origin + forward * SPAWN_DISTANCE + Vector3.DOWN * SPAWN_DROP
+	var spawn_position := head.origin + forward * SPAWN_DISTANCE + Vector3.DOWN * SPAWN_DROP
 	var orientation: Basis
 	var grab_point: Vector3
 	if tool == shovel:
@@ -212,8 +212,8 @@ func _bring(tool: XRToolsPickable) -> void:
 	else:
 		orientation = Basis.looking_at(-forward) # coil (+Z) forward
 		grab_point = Vector3(0, 0.559, 0.498) # handle
-		spot += Vector3.DOWN * DETECTOR_EXTRA_DROP
-	tool.global_transform = Transform3D(orientation, spot - orientation * grab_point)
+		spawn_position += Vector3.DOWN * DETECTOR_EXTRA_DROP
+	tool.global_transform = Transform3D(orientation, spawn_position - orientation * grab_point)
 	_show(tool)
 
 

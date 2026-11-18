@@ -22,11 +22,11 @@ extends Node
 ## The visible hand sticks to the grip (follows the heavy object).
 @export var glue_hand := true
 
-const META := "held_transform"
+const HELD_TRANSFORM_META := "held_transform"
 
 var _pickable: Node3D
-var _state: Transform3D
-var _active := false
+var _held_transform: Transform3D # where the object is now (with inertia)
+var _is_held := false
 var _glued_hand: XRToolsHand
 
 
@@ -39,40 +39,41 @@ func _ready() -> void:
 		_pickable.dropped.connect(_on_dropped)
 
 
-func _on_picked_up(_p) -> void:
-	_state = _pickable.global_transform
-	_pickable.set_meta(META, _state)
-	_active = true
+func _on_picked_up(_pickable_object) -> void:
+	_held_transform = _pickable.global_transform
+	_pickable.set_meta(HELD_TRANSFORM_META, _held_transform)
+	_is_held = true
 	if glue_hand:
 		_glued_hand = XRToolsHand.find_instance(_controller())
 
 
-func _on_dropped(_p) -> void:
-	_active = false
-	_pickable.remove_meta(META)
+func _on_dropped(_pickable_object) -> void:
+	_is_held = false
+	_pickable.remove_meta(HELD_TRANSFORM_META)
 	_glued_hand = null
 
 
 func _physics_process(delta: float) -> void:
-	if not _active:
+	if not _is_held:
 		return
-	var target := _hand_target()
-	if _pickable.has_meta(META):
-		_state = _pickable.get_meta(META)
-	if _state.origin.distance_to(target.origin) > snap_distance:
-		_state = target
+	var hand_target := _hand_target()
+	if _pickable.has_meta(HELD_TRANSFORM_META):
+		_held_transform = _pickable.get_meta(HELD_TRANSFORM_META)
+	if _held_transform.origin.distance_to(hand_target.origin) > snap_distance:
+		_held_transform = hand_target
 	else:
-		var tp := 1.0 - exp(-position_follow * delta)
-		var tr := 1.0 - exp(-rotation_follow * delta)
-		var q := _state.basis.get_rotation_quaternion().slerp(target.basis.get_rotation_quaternion(), tr)
-		_state = Transform3D(Basis(q).scaled(target.basis.get_scale()), _state.origin.lerp(target.origin, tp))
-	_pickable.global_transform = _state
-	_pickable.set_meta(META, _state)
+		# share of the way to the hand this frame (frame rate independent)
+		var position_blend := 1.0 - exp(-position_follow * delta)
+		var rotation_blend := 1.0 - exp(-rotation_follow * delta)
+		var rotation := _held_transform.basis.get_rotation_quaternion().slerp(hand_target.basis.get_rotation_quaternion(), rotation_blend)
+		_held_transform = Transform3D(Basis(rotation).scaled(hand_target.basis.get_scale()), _held_transform.origin.lerp(hand_target.origin, position_blend))
+	_pickable.global_transform = _held_transform
+	_pickable.set_meta(HELD_TRANSFORM_META, _held_transform)
 	_put_hand_on_grip()
 
 
 func _process(_delta: float) -> void:
-	if _active:
+	if _is_held:
 		_put_hand_on_grip()
 
 
@@ -93,7 +94,7 @@ func _controller() -> Node3D:
 
 # Where the hand wants to put the object right now (target of the xr-tools grab driver).
 func _hand_target() -> Transform3D:
-	var driver = _pickable.get("_grab_driver")
-	if driver is Node3D and is_instance_valid(driver):
-		return driver.global_transform
+	var grab_driver = _pickable.get("_grab_driver")
+	if grab_driver is Node3D and is_instance_valid(grab_driver):
+		return grab_driver.global_transform
 	return _pickable.global_transform

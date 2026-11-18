@@ -11,6 +11,9 @@ const STICK_DEPTH: float = 0.05
 ## Physics layers that count as ground
 const GROUND_MASK: int = 1
 const LANDING_RING_RADIUS: float = 0.05
+## Ray starts this far above the flag tip; ring floats this far above the ground (m)
+const RAY_START_ABOVE: float = 0.1
+const RING_LIFT: float = 0.01
 
 var _landing_ring: MeshInstance3D
 
@@ -33,27 +36,27 @@ func _ready() -> void:
 
 
 func _process(_delta: float) -> void:
-	var landing = _landing_spot() if is_picked_up() else null
-	_landing_ring.visible = landing != null
-	if landing != null:
-		_landing_ring.global_position = landing + Vector3.UP * 0.01
+	var landing_spot = _landing_spot() if is_picked_up() else null
+	_landing_ring.visible = landing_spot != null
+	if landing_spot != null:
+		_landing_ring.global_position = landing_spot + Vector3.UP * RING_LIFT
 
 
-func let_go(by: Node3D, p_linear_velocity: Vector3, p_angular_velocity: Vector3) -> void:
-	super(by, p_linear_velocity, p_angular_velocity)
-	if is_picked_up() or not by is XRToolsFunctionPickup:
+func let_go(released_by: Node3D, p_linear_velocity: Vector3, p_angular_velocity: Vector3) -> void:
+	super(released_by, p_linear_velocity, p_angular_velocity)
+	if is_picked_up() or not released_by is XRToolsFunctionPickup:
 		return
 	_landing_ring.visible = false
-	var landing = _landing_spot()
-	if landing == null:
+	var landing_spot = _landing_spot()
+	if landing_spot == null:
 		queue_free()
 		return
 	freeze = true
-	global_transform = Transform3D(Basis(Vector3.UP, global_rotation.y), landing + Vector3.DOWN * STICK_DEPTH)
+	global_transform = Transform3D(Basis(Vector3.UP, global_rotation.y), landing_spot + Vector3.DOWN * STICK_DEPTH)
 
 
 ## Ground straight below the flag, or null.
 func _landing_spot() -> Variant:
-	var ray := PhysicsRayQueryParameters3D.create(global_position + Vector3.UP * 0.1, global_position + Vector3.DOWN * MAX_DROP_HEIGHT, GROUND_MASK, [get_rid()])
-	var hit: Dictionary = get_world_3d().direct_space_state.intersect_ray(ray)
-	return hit.position if hit else null
+	var ray := PhysicsRayQueryParameters3D.create(global_position + Vector3.UP * RAY_START_ABOVE, global_position + Vector3.DOWN * MAX_DROP_HEIGHT, GROUND_MASK, [get_rid()])
+	var ray_hit: Dictionary = get_world_3d().direct_space_state.intersect_ray(ray)
+	return ray_hit.position if ray_hit else null

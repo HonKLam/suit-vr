@@ -7,7 +7,8 @@ extends Node3D
 
 const STAB_SPREAD_DB := 3.0
 const SCOOP_SPREAD_DB := 4.0
-const PITCH := Vector2(0.92, 1.08)
+## Random pitch range
+const PITCH_RANGE := Vector2(0.92, 1.08)
 const UNIT_SIZE := 2.0
 const MAX_DISTANCE := 30.0
 
@@ -29,9 +30,9 @@ const MAX_DISTANCE := 30.0
 
 var _stab_voices: Array[AudioStreamPlayer3D] = []
 var _scoop_voices: Array[AudioStreamPlayer3D] = []
-var _next_stab := 0
-var _next_scoop := 0
-var _last := {}
+var _next_stab_voice := 0
+var _next_scoop_voice := 0
+var _last_sound_index := {} # sound kind -> index of the last sound played
 
 
 func _ready() -> void:
@@ -51,52 +52,52 @@ func _on_stabbed(strength: float, at: Vector3) -> void:
 
 
 func _on_scooped(at: Vector3, radius: float) -> void:
-	var size := clampf(inverse_lerp(Shovel.MIN_RADIUS, Shovel.MAX_RADIUS, radius), 0.0, 1.0)
-	var db := scoop_volume_db + lerpf(-SCOOP_SPREAD_DB, SCOOP_SPREAD_DB, size)
-	_next_scoop = _play(_scoop_voices, _next_scoop, _pick("scoop", scoops), at, db)
+	var hole_size := clampf(inverse_lerp(Shovel.MIN_HOLE_RADIUS, Shovel.MAX_HOLE_RADIUS, radius), 0.0, 1.0)
+	var volume_db := scoop_volume_db + lerpf(-SCOOP_SPREAD_DB, SCOOP_SPREAD_DB, hole_size)
+	_next_scoop_voice = _play(_scoop_voices, _next_scoop_voice, _pick("scoop", scoops), at, volume_db)
 
 
 func _play_stab(strength: float, at: Vector3) -> void:
-	var key := "light"
-	var list := stab_light
+	var sound_kind := "light"
+	var sounds := stab_light
 	if strength >= strong_stab_from:
-		key = "strong"
-		list = stab_strong
+		sound_kind = "strong"
+		sounds = stab_strong
 	elif strength >= normal_stab_from:
-		key = "normal"
-		list = stab_normal
-	var db := stab_volume_db + lerpf(-STAB_SPREAD_DB, STAB_SPREAD_DB, strength)
-	_next_stab = _play(_stab_voices, _next_stab, _pick(key, list), at, db)
+		sound_kind = "normal"
+		sounds = stab_normal
+	var volume_db := stab_volume_db + lerpf(-STAB_SPREAD_DB, STAB_SPREAD_DB, strength)
+	_next_stab_voice = _play(_stab_voices, _next_stab_voice, _pick(sound_kind, sounds), at, volume_db)
 
 
 ## Returns the index of the next voice.
-func _play(pool: Array[AudioStreamPlayer3D], next: int, s: AudioStream, at: Vector3, db: float) -> int:
-	if s == null:
-		return next
-	var p := pool[next]
-	p.global_position = at
-	p.stream = s
-	p.volume_db = db
-	p.pitch_scale = randf_range(PITCH.x, PITCH.y)
-	p.play()
-	return (next + 1) % pool.size()
+func _play(voices: Array[AudioStreamPlayer3D], voice_index: int, sound: AudioStream, at: Vector3, volume_db: float) -> int:
+	if sound == null:
+		return voice_index
+	var voice := voices[voice_index]
+	voice.global_position = at
+	voice.stream = sound
+	voice.volume_db = volume_db
+	voice.pitch_scale = randf_range(PITCH_RANGE.x, PITCH_RANGE.y)
+	voice.play()
+	return (voice_index + 1) % voices.size()
 
 
 ## Random sound, never the same one twice in a row.
-func _pick(key: String, list: Array[AudioStream]) -> AudioStream:
-	if list.is_empty():
+func _pick(sound_kind: String, sounds: Array[AudioStream]) -> AudioStream:
+	if sounds.is_empty():
 		return null
-	var i := randi() % list.size()
-	if list.size() > 1 and i == _last.get(key, -1):
-		i = (i + 1) % list.size()
-	_last[key] = i
-	return list[i]
+	var sound_index := randi() % sounds.size()
+	if sounds.size() > 1 and sound_index == _last_sound_index.get(sound_kind, -1):
+		sound_index = (sound_index + 1) % sounds.size()
+	_last_sound_index[sound_kind] = sound_index
+	return sounds[sound_index]
 
 
 func _make_voice() -> AudioStreamPlayer3D:
-	var p := AudioStreamPlayer3D.new()
-	p.top_level = true
-	p.unit_size = UNIT_SIZE
-	p.max_distance = MAX_DISTANCE
-	add_child(p)
-	return p
+	var voice := AudioStreamPlayer3D.new()
+	voice.top_level = true
+	voice.unit_size = UNIT_SIZE
+	voice.max_distance = MAX_DISTANCE
+	add_child(voice)
+	return voice

@@ -18,7 +18,7 @@ signal time_up
 @export var blink_below_seconds: float = 10.0
 
 @onready var _flap: Node3D = $Model/Flap
-@onready var _display: Label3D = $TimerLabel
+@onready var _timer_label: Label3D = $TimerLabel
 
 var time_left: float = 0.0
 var is_running: bool = false
@@ -51,20 +51,20 @@ func start_countdown(seconds: float = -1.0) -> void:
 
 func stop_countdown() -> void:
 	is_running = false
-	_display.visible = true
+	_timer_label.visible = true
 
 
 func open_flap() -> void:
 	is_flap_open = true
-	_turn_flap(deg_to_rad(flap_open_angle))
+	_rotate_flap_to(deg_to_rad(flap_open_angle))
 
 
 func close_flap() -> void:
 	is_flap_open = false
-	_turn_flap(0.0)
+	_rotate_flap_to(0.0)
 
 
-func _turn_flap(angle: float) -> void:
+func _rotate_flap_to(angle: float) -> void:
 	if _flap_tween:
 		_flap_tween.kill()
 	_flap_tween = create_tween().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
@@ -74,6 +74,6 @@ func _turn_flap(angle: float) -> void:
 ## SS:CC (seconds and hundredths), starts at 59:99
 func _show_time() -> void:
 	var hundredths := mini(int(time_left * 100.0), 5999)
-	_display.text = "%02d:%02d" % [hundredths / 100, hundredths % 100]
-	var blinking := is_running and time_left < blink_below_seconds
-	_display.visible = not blinking or fmod(time_left, 0.5) > 0.25
+	_timer_label.text = "%02d:%02d" % [hundredths / 100, hundredths % 100]
+	var is_blinking := is_running and time_left < blink_below_seconds
+	_timer_label.visible = not is_blinking or fmod(time_left, 0.5) > 0.25

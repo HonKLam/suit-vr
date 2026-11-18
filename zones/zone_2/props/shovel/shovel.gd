@@ -18,8 +18,9 @@ signal scooped(at: Vector3, radius: float)
 const MIN_SPEED: float = 0.6
 const MAX_SPEED: float = 2.0
 
-const MIN_RADIUS: float = 0.06
-const MAX_RADIUS: float = 0.15
+## Hole radius (m), shallowest / deepest stab
+const MIN_HOLE_RADIUS: float = 0.06
+const MAX_HOLE_RADIUS: float = 0.15
 
 ## Stab depth (m), weakest / strongest stab
 const MIN_DEPTH: float = 0.05
@@ -85,13 +86,13 @@ func unstick() -> void:
 	pull_progress = 0.0
 
 
-func pick_up(by: Node3D) -> void:
-	super(by)
-	if not by is XRToolsFunctionPickup:
+func pick_up(grabbed_by: Node3D) -> void:
+	super(grabbed_by)
+	if not grabbed_by is XRToolsFunctionPickup:
 		return
-	_ignore_player_body(by)
+	_ignore_player_body(grabbed_by)
 	# full fist while holding, also without pressing grip/trigger
-	var hand := XRToolsHand.find_instance(by)
+	var hand := XRToolsHand.find_instance(grabbed_by)
 	if hand and is_picked_up():
 		hand.force_grip_trigger(1.0, 1.0)
 	if is_stuck() and _grab_driver:
@@ -99,10 +100,10 @@ func pick_up(by: Node3D) -> void:
 		global_transform = _stuck_transform
 
 
-func let_go(by: Node3D, p_linear_velocity: Vector3, p_angular_velocity: Vector3) -> void:
-	super(by, p_linear_velocity, p_angular_velocity)
-	if by is XRToolsFunctionPickup:
-		var hand := XRToolsHand.find_instance(by)
+func let_go(released_by: Node3D, p_linear_velocity: Vector3, p_angular_velocity: Vector3) -> void:
+	super(released_by, p_linear_velocity, p_angular_velocity)
+	if released_by is XRToolsFunctionPickup:
+		var hand := XRToolsHand.find_instance(released_by)
 		if hand:
 			hand.force_grip_trigger(-1.0, -1.0) # back to the controller buttons
 	if is_stuck() and not is_picked_up():
@@ -201,7 +202,7 @@ func _update_pull(delta: float) -> void:
 
 func _pop_out() -> void:
 	var depth_factor: float = inverse_lerp(MIN_DEPTH, MAX_DEPTH, _stuck_depth)
-	var hole_radius: float = lerpf(MIN_RADIUS, MAX_RADIUS, depth_factor)
+	var hole_radius: float = lerpf(MIN_HOLE_RADIUS, MAX_HOLE_RADIUS, depth_factor)
 	# spheres from the tip up to the surface, so a deep stab gives a deep hole, not a cave
 	var shaft_up: Vector3 = global_basis.y.normalized()
 	var removed_volume: float = 0.0
@@ -241,10 +242,10 @@ func _update_stab_target() -> void:
 		return
 	var ray := PhysicsRayQueryParameters3D.create(tip, tip - global_basis.y * STAB_TARGET_RANGE)
 	ray.exclude = [get_rid()]
-	var hit: Dictionary = get_world_3d().direct_space_state.intersect_ray(ray)
-	if hit and hit.collider.get_parent() is Sandbox:
+	var ray_hit: Dictionary = get_world_3d().direct_space_state.intersect_ray(ray)
+	if ray_hit and ray_hit.collider.get_parent() is Sandbox:
 		has_stab_target = true
-		stab_target = hit.position
+		stab_target = ray_hit.position
 
 
 ## Never collide with the player: a stuck shovel the player stands over would push them away.
@@ -260,8 +261,9 @@ func _vibrate_both_hands(strength: float, duration: float) -> void:
 	Haptics.pulse(_grab_driver.secondary.controller, strength, duration)
 
 
-func _sandbox_at(pos: Vector3) -> Sandbox:
+## Sandbox that has earth at this point, or null.
+func _sandbox_at(world_position: Vector3) -> Sandbox:
 	for sandbox: Sandbox in get_tree().get_nodes_in_group("diggable"):
-		if sandbox.is_solid(pos):
+		if sandbox.is_solid(world_position):
 			return sandbox
 	return null
