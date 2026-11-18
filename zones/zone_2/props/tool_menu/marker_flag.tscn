@@ -1,7 +1,6 @@
 [gd_scene format=3]
 
-[ext_resource type="Script" path="res://zones/zone_2/props/tool_belt/marker_flag.gd" id="1_flag"]
-[ext_resource type="PackedScene" uid="uid://dh8grd7s3n8kg" path="res://addons/godot-xr-tools/objects/grab_points/grab_point_snap.tscn" id="2_snap"]
+[ext_resource type="Script" path="res://zones/zone_2/props/tool_menu/marker_flag.gd" id="1_flag"]
 
 [sub_resource type="StandardMaterial3D" id="Stick_mat"]
 albedo_color = Color(0.85, 0.75, 0.55, 1)
@@ -43,6 +42,3 @@ mesh = SubResource("Cloth")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
 shape = SubResource("Shape")
 
-[node name="BeltPoint" parent="." instance=ExtResource("2_snap")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
-require_group = "tool_belt"

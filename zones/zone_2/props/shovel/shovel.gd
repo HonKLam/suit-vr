@@ -79,13 +79,15 @@ func get_hands_center() -> Vector3:
 	return (_grab_driver.primary.by.global_position + _grab_driver.secondary.by.global_position) * 0.5
 
 
+## Comes out of the ground without digging (e.g. when it goes back into the tool menu).
+func unstick() -> void:
+	_stuck_in_sandbox = null
+	pull_progress = 0.0
+
+
 func pick_up(by: Node3D) -> void:
-	var by_hand := by is XRToolsFunctionPickup
-	if not by_hand:
-		_stuck_in_sandbox = null # back to the tool belt: comes out of the ground
-		pull_progress = 0.0
 	super(by)
-	if not by_hand:
+	if not by is XRToolsFunctionPickup:
 		return
 	_ignore_player_body(by)
 	# full fist while holding, also without pressing grip/trigger

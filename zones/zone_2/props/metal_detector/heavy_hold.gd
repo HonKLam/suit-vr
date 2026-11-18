@@ -40,8 +40,6 @@ func _ready() -> void:
 
 
 func _on_picked_up(_p) -> void:
-	if _controller() == null:
-		return # held by the tool belt, not by a hand
 	_state = _pickable.global_transform
 	_pickable.set_meta(META, _state)
 	_active = true

@@ -1,7 +1,6 @@
 [gd_scene format=3 uid="uid://bdqc54mh5t12t"]
 
 [ext_resource type="Script" uid="uid://bfrlpbsqg5lqr" path="res://addons/godot-xr-tools/objects/pickable.gd" id="1_pick"]
-[ext_resource type="PackedScene" uid="uid://dh8grd7s3n8kg" path="res://addons/godot-xr-tools/objects/grab_points/grab_point_snap.tscn" id="belt_point"]
 [ext_resource type="ArrayMesh" uid="uid://bijiev7ivnrlr" path="res://zones/zone_2/props/metal_detector/assets/metal_detector.obj" id="2_mesh"]
 [ext_resource type="Script" uid="uid://c7yuct4p7jr02" path="res://zones/zone_2/props/metal_detector/metal_detector.gd" id="3_logic"]
 [ext_resource type="AudioStream" uid="uid://524527t3keu0" path="res://zones/zone_2/props/metal_detector/detector_beep.wav" id="4_beep"]
@@ -129,7 +128,3 @@ probes = [NodePath("../GroundProbes/Front"), NodePath("../GroundProbes/Back"), N
 script = ExtResource("audio_6")
 pickup_sounds = Array[AudioStream]([ExtResource("audio_1")])
 drop_sounds = Array[AudioStream]([ExtResource("audio_2"), ExtResource("audio_3"), ExtResource("audio_4"), ExtResource("audio_5")])
-
-[node name="BeltPoint" parent="." unique_id=1349918213 instance=ExtResource("belt_point")]
-transform = Transform3D(1, 0, 0, 0, 0.6, 0.8, 0, -0.8, 0.6, 0, 0.559, 0.498)
-require_group = "tool_belt"
