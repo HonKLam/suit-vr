@@ -1,10 +1,12 @@
 class_name DigFinds
 extends Node3D
 ## Buried finds in the sandbox (one at every MetalObject inside it).
-## - Placeholder boxes = trash. The BOMB_NUMBER-th find you uncover turns into the bomb.
-## - Uncovered = most of its top is free of earth.
+## - Placeholder boxes = trash. The bomb_number-th find is the bomb:
+##   once one less has been uncovered, the bomb lies (tilted, timer up) in the most covered
+##   remaining spot, the other spots are cleared.
+## - Uncovered = the upper part (UNCOVER_DEPTH of its height) is mostly free of earth.
 ## - Select: point the laser of an empty hand at it and pull the trigger.
-##   Trash disappears, the bomb flies up in front of you, opens and starts counting down.
+##   Trash disappears, the bomb flies up in front of you (countdown is started later).
 
 signal find_uncovered(find: Node3D, is_bomb: bool)
 signal trash_selected(trash_count: int)
@@ -20,12 +22,16 @@ signal bomb_selected(bomb: Bomb)
 
 ## Uncovered when at least this share of the top samples is free of earth
 const FREE_SHARE: float = 0.65
-const SAMPLE_HEIGHT: float = 0.03
+## Share of the find's height that must be dug free from the top
+const UNCOVER_DEPTH: float = 0.35
 const CHECK_INTERVAL: float = 0.25
 const LASER_LENGTH: float = 3.0
 const LASER_THICKNESS: float = 0.002
 const HIT_MARGIN: float = 0.03
 const TRIGGER_PRESSED: float = 0.7
+## Bomb in the ground: tilt around its long axis and nose down (degrees, random in range)
+const BOMB_ROLL_DEGREES := Vector2(15.0, 30.0)
+const BOMB_PITCH_DEGREES := Vector2(8.0, 20.0)
 ## Where the selected bomb floats: in front of / below the head (m)
 const BOMB_DISTANCE: float = 0.55
 const BOMB_DROP: float = 0.55
@@ -33,7 +39,7 @@ const BOMB_FLIGHT_TIME: float = 1.2
 
 var uncovered_count: int = 0
 var trash_count: int = 0
-var _finds: Array[Dictionary] = [] # {node, bounds (local AABB), uncovered, is_bomb, selectable}
+var _finds: Array[Dictionary] = [] # {spot, model, bounds (AABB in spot space), uncovered, is_bomb, selectable}
 var _check_timer: float = 0.0
 var _camera: XRCamera3D
 var _hands: Array[Dictionary] = [] # {controller, pickup, laser, trigger_was_pressed}
@@ -70,7 +76,9 @@ func _bury() -> void:
 			box.mesh = box_mesh
 			box.rotation.y = randf() * TAU
 			spot.add_child(box)
-			_finds.append({node = box, bounds = box_mesh.get_aabb(), uncovered = false, is_bomb = false, selectable = false})
+			_finds.append({spot = spot, model = box, bounds = box.transform * box_mesh.get_aabb(), uncovered = false, is_bomb = false, selectable = false})
+	if bomb_number <= 1:
+		_place_bomb()
 
 
 func _process(delta: float) -> void:
@@ -86,47 +94,64 @@ func _process(delta: float) -> void:
 
 
 func _check_uncovered() -> void:
-	for find in _finds:
-		if find.uncovered or not is_instance_valid(find.node):
+	for find in _finds.duplicate():
+		if find.uncovered or not _finds.has(find):
 			continue
 		if _top_free_share(find) >= FREE_SHARE:
 			find.uncovered = true
 			find.selectable = true
 			uncovered_count += 1
-			if uncovered_count == bomb_number:
-				_turn_into_bomb(find)
-			find_uncovered.emit(find.node, find.is_bomb)
+			find_uncovered.emit(find.model, find.is_bomb)
+			if uncovered_count == bomb_number - 1:
+				_place_bomb()
 
 
-## Share of a 3x3 grid on top of the find that has no earth.
+## Share of a 3x3 grid (UNCOVER_DEPTH below the top of the find) that has no earth.
 func _top_free_share(find: Dictionary) -> float:
-	var node: Node3D = find.node
+	var spot: Node3D = find.spot
 	var bounds: AABB = find.bounds
 	var free_samples := 0
 	for ix in 3:
 		for iz in 3:
 			var local := Vector3(
 				bounds.position.x + bounds.size.x * (0.15 + 0.35 * ix),
-				bounds.end.y + SAMPLE_HEIGHT,
+				bounds.end.y - bounds.size.y * UNCOVER_DEPTH,
 				bounds.position.z + bounds.size.z * (0.15 + 0.35 * iz))
-			if not sandbox.is_solid(node.global_transform * local):
+			if not sandbox.is_solid(spot.global_transform * local):
 				free_samples += 1
 	return free_samples / 9.0
 
 
-## Swaps the box for the bomb, tops at the same height.
-func _turn_into_bomb(find: Dictionary) -> void:
-	if bomb_scene == null:
+## The bomb goes into the most covered remaining spot, the other remaining spots are cleared.
+func _place_bomb() -> void:
+	var remaining := _finds.filter(func(find): return not find.uncovered)
+	if remaining.is_empty() or bomb_scene == null:
 		return
-	var box: Node3D = find.node
+	remaining.shuffle()
+	remaining.sort_custom(func(a, b): return _top_free_share(a) < _top_free_share(b))
+	for i in range(1, remaining.size()):
+		var empty_spot: Dictionary = remaining[i]
+		empty_spot.model.queue_free()
+		empty_spot.spot.remove_from_group(MetalObject.GROUP) # detector stays quiet there
+		_finds.erase(empty_spot)
+	_turn_into_bomb(remaining[0])
+
+
+## Swaps the box for the bomb: tilted like it fell in, timer up, highest point at the box top.
+func _turn_into_bomb(find: Dictionary) -> void:
+	var box: Node3D = find.model
 	var box_top: float = find.bounds.end.y
 	var bomb: Bomb = bomb_scene.instantiate()
-	box.get_parent().add_child(bomb)
-	var bounds := _local_bounds(bomb)
-	bomb.transform = Transform3D(box.transform.basis, box.position + Vector3.UP * (box_top - bounds.end.y))
+	find.spot.add_child(bomb)
+	var roll := deg_to_rad(randf_range(BOMB_ROLL_DEGREES.x, BOMB_ROLL_DEGREES.y)) * (1 if randf() < 0.5 else -1)
+	var pitch := deg_to_rad(randf_range(BOMB_PITCH_DEGREES.x, BOMB_PITCH_DEGREES.y)) * (1 if randf() < 0.5 else -1)
+	var tilt := Basis(Vector3.UP, randf() * TAU) * Basis(Vector3.BACK, pitch) * Basis(Vector3.RIGHT, roll)
+	var bounds := Transform3D(tilt, Vector3.ZERO) * _local_bounds(bomb)
+	bomb.transform = Transform3D(tilt, Vector3.UP * (box_top - bounds.end.y))
 	box.queue_free()
-	find.node = bomb
-	find.bounds = bounds
+	find.spot.strength = 1.0
+	find.model = bomb
+	find.bounds = bomb.transform * _local_bounds(bomb)
 	find.is_bomb = true
 
 
@@ -150,15 +175,15 @@ func _update_hand(hand: Dictionary) -> void:
 	for find in _finds:
 		if not find.selectable:
 			continue
-		var hit := _ray_hits_box(start, direction, find.node, find.bounds.grow(HIT_MARGIN))
+		var hit := _ray_hits_box(start, direction, find.spot, find.bounds.grow(HIT_MARGIN))
 		if hit >= 0.0 and hit < length:
 			length = hit
 			hovered = find
 	laser.global_transform = Transform3D(Basis(Quaternion(Vector3.UP, direction)) * Basis.from_scale(Vector3(1.0, length, 1.0)), start + direction * length * 0.5)
 	if hovered.is_empty():
 		return
-	var node: Node3D = hovered.node
-	_hint.global_position = node.global_transform * hovered.bounds.get_center() + Vector3.UP * (hovered.bounds.size.y * 0.5 + 0.12)
+	var spot: Node3D = hovered.spot
+	_hint.global_position = spot.global_transform * hovered.bounds.get_center() + Vector3.UP * (hovered.bounds.size.y * 0.5 + 0.12)
 	_hint.visible = true
 	if just_pressed:
 		_select(hovered)
@@ -167,10 +192,10 @@ func _update_hand(hand: Dictionary) -> void:
 func _select(find: Dictionary) -> void:
 	find.selectable = false
 	if find.is_bomb:
-		_bring_bomb(find.node)
+		_bring_bomb(find.model)
 	else:
 		trash_count += 1
-		_throw_away(find.node)
+		_throw_away(find.model)
 		trash_selected.emit(trash_count)
 
 
@@ -195,7 +220,7 @@ func _throw_away(trash: Node3D) -> void:
 	tween.tween_callback(label.queue_free)
 
 
-## Bomb: flies up in front of the player (front toward them), then opens and counts down.
+## Bomb: flies up in front of the player (front toward them). The countdown starts later (after the monologue).
 func _bring_bomb(bomb: Bomb) -> void:
 	var start := bomb.global_transform
 	bomb.top_level = true
@@ -208,8 +233,6 @@ func _bring_bomb(bomb: Bomb) -> void:
 	var target := Transform3D(Basis.looking_at(forward), spot) # bomb front (+Z) faces the player
 	var tween := create_tween().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 	tween.tween_property(bomb, "global_transform", target, BOMB_FLIGHT_TIME)
-	tween.tween_callback(bomb.open_flap)
-	tween.tween_callback(bomb.start_countdown)
 	bomb_selected.emit(bomb)
 
 

@@ -1,14 +1,14 @@
 class_name Bomb
 extends Node3D
 ## The bomb: flap on the hinge, countdown on the timer display.
-## - start_countdown() / stop_countdown()
+## - start_countdown() / stop_countdown() (display SS:CC, seconds and hundredths)
 ## - open_flap() / close_flap()
 ## - time_up fires when the timer reaches 00:00
 
 signal time_up
 
 ## Countdown length (s)
-@export var countdown_seconds: float = 300.0
+@export var countdown_seconds: float = 60.0
 ## Starts the countdown as soon as the bomb is in the scene
 @export var autostart: bool = false
 ## How far the flap opens (degrees) and how long it takes (s)
@@ -71,9 +71,9 @@ func _turn_flap(angle: float) -> void:
 	_flap_tween.tween_property(_flap, "rotation:x", angle, flap_open_time)
 
 
-## MM:SS, rounded up (shows 00:01 until the very end)
+## SS:CC (seconds and hundredths), starts at 59:99
 func _show_time() -> void:
-	var whole_seconds := int(ceil(time_left))
-	_display.text = "%02d:%02d" % [whole_seconds / 60, whole_seconds % 60]
+	var hundredths := mini(int(time_left * 100.0), 5999)
+	_display.text = "%02d:%02d" % [hundredths / 100, hundredths % 100]
 	var blinking := is_running and time_left < blink_below_seconds
 	_display.visible = not blinking or fmod(time_left, 0.5) > 0.25
