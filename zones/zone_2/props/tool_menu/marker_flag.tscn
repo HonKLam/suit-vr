@@ -1,7 +1,9 @@
 [gd_scene format=3]
 
 [ext_resource type="Script" path="res://zones/zone_2/props/tool_menu/marker_flag.gd" id="1_flag"]
-[ext_resource type="PackedScene" uid="uid://dpj5l5rwu1hlo" path="res://zones/zone_2/props/tool_menu/model/flag.fbx" id="2_model"]
+[ext_resource type="Mesh" uid="uid://cu3wo2k10dh06" path="res://zones/zone_2/props/tool_menu/model/flag.obj" id="2_model"]
+[ext_resource type="Material" path="res://zones/zone_2/props/tool_menu/materials/flag_stick.tres" id="3_stick"]
+[ext_resource type="Material" path="res://zones/zone_2/props/tool_menu/materials/flag_cloth.tres" id="4_cloth"]
 
 [sub_resource type="BoxShape3D" id="Shape"]
 size = Vector3(0.11, 0.22, 0.03)
@@ -12,8 +14,10 @@ collision_mask = 196615
 mass = 0.1
 script = ExtResource("1_flag")
 
-[node name="MeshModel" parent="." instance=ExtResource("2_model")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.315, 0.0088, 0.1105)
+[node name="MeshModel" type="MeshInstance3D" parent="."]
+mesh = ExtResource("2_model")
+surface_material_override/0 = ExtResource("3_stick")
+surface_material_override/1 = ExtResource("4_cloth")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.045, 0.11, 0)
