@@ -26,8 +26,8 @@ const TRIGGER_PRESSED: float = 0.7
 ## Where a chosen tool appears: grab point this far in front of / below the head (m)
 const SPAWN_DISTANCE: float = 0.4
 const SPAWN_DROP: float = 0.35
-## Shovel appears blade forward, tilted down by this angle
-const SHOVEL_TILT: float = 30.0
+## The detector appears this much lower (m)
+const DETECTOR_EXTRA_DROP: float = 0.25
 
 var _camera: XRCamera3D
 var _right: XRController3D
@@ -177,14 +177,13 @@ func _bring(tool: XRToolsPickable) -> void:
 	var orientation: Basis
 	var grab_point: Vector3
 	if tool == shovel:
-		var tilt := deg_to_rad(SHOVEL_TILT)
-		var toward_handle := -forward * cos(tilt) + Vector3.UP * sin(tilt)
-		var loading_side_down := -Vector3.UP * cos(tilt) - forward * sin(tilt) # -Z (loading side) up
-		orientation = Basis(toward_handle.cross(loading_side_down), toward_handle, loading_side_down)
+		# upright, blade down, loading side (-Z) away from the player
+		orientation = Basis(Vector3.UP.cross(-forward), Vector3.UP, -forward)
 		grab_point = Vector3(0, 1.21, 0) # D-grip
 	else:
 		orientation = Basis.looking_at(-forward) # coil (+Z) forward
 		grab_point = Vector3(0, 0.559, 0.498) # handle
+		spot += Vector3.DOWN * DETECTOR_EXTRA_DROP
 	tool.global_transform = Transform3D(orientation, spot - orientation * grab_point)
 	_show(tool)
 
