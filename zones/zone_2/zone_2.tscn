@@ -4,6 +4,8 @@
 [ext_resource type="PackedScene" uid="uid://dnih82iesuh5h" path="res://zones/zone_2/zone_2_map.tscn" id="map_scene"]
 [ext_resource type="Script" path="res://zones/zone_2/props/tool_menu/tool_menu.gd" id="tool_menu"]
 [ext_resource type="PackedScene" path="res://zones/zone_2/props/tool_menu/marker_flag.tscn" id="marker_flag"]
+[ext_resource type="Script" path="res://zones/zone_2/dig/dig_finds.gd" id="dig_finds"]
+[ext_resource type="PackedScene" path="res://zones/zone_2/props/bomb/bomb.tscn" id="bomb_scene"]
 
 [sub_resource type="ProceduralSkyMaterial" id="Sky_mat"]
 sky_top_color = Color(0.3, 0.55, 0.92, 1)
@@ -51,3 +53,9 @@ script = ExtResource("tool_menu")
 shovel = NodePath("../Map/Shovel")
 metal_detector = NodePath("../Map/MetalDetector")
 flag_scene = ExtResource("marker_flag")
+
+[node name="DigFinds" type="Node3D" parent="." unique_id=1093384712 node_paths=PackedStringArray("sandbox", "tool_menu")]
+script = ExtResource("dig_finds")
+sandbox = NodePath("../Map/Sandbox")
+bomb_scene = ExtResource("bomb_scene")
+tool_menu = NodePath("../ToolMenu")
