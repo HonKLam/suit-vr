@@ -1,8 +1,6 @@
 [gd_scene format=3 uid="uid://djs83y84yf1dx"]
 
 [ext_resource type="Script" uid="uid://dqoe86d84hwq2" path="res://zones/zone_2/props/shovel/shovel.gd" id="1_1stim"]
-[ext_resource type="Resource" path="res://zones/zone_2/props/shovel/hand_poses/pose_cup_left.tres" id="pose_cup_left"]
-[ext_resource type="Resource" path="res://zones/zone_2/props/shovel/hand_poses/pose_cup_right.tres" id="pose_cup_right"]
 [ext_resource type="Script" path="res://zones/zone_2/props/shovel/pull_ring.gd" id="pull_ring"]
 [ext_resource type="Script" path="res://zones/zone_2/props/shovel/stab_marker.gd" id="stab_marker"]
 [ext_resource type="PackedScene" uid="uid://c25yxb0vt53vc" path="res://addons/godot-xr-tools/objects/grab_points/grab_point_hand_left.tscn" id="2_cjici"]
@@ -76,8 +74,7 @@ transform = Transform3D(0, 1, 0, 0, 0, 1, 1, 0, 0, 0.05, 1.1, -0.02)
 handle = "top"
 
 [node name="GrabPointHandLeft2" parent="." unique_id=88129439 instance=ExtResource("2_cjici")]
-transform = Transform3D(0, 1, 0, 0, 0, 1, 1, 0, 0, 0.04, 0.65, -0.005)
-hand_pose = ExtResource("pose_cup_left")
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -0.018, 0.75, 0.112)
 handle = "shaft"
 mode = 2
 drive_position = 0.0
@@ -85,8 +82,7 @@ drive_angle = 0.0
 drive_aim = 1.0
 
 [node name="GrabPointHandRight2" parent="." unique_id=1974793374 instance=ExtResource("3_04cyy")]
-transform = Transform3D(0, 1, 0, 0, 0, 1, 1, 0, 0, 0.04, 0.65, 0.005)
-hand_pose = ExtResource("pose_cup_right")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0075, 0.75, -0.106)
 handle = "shaft"
 mode = 2
 drive_position = 0.0
