@@ -2,8 +2,8 @@ class_name ShovelAudio
 extends Node3D
 ## Shovel sounds. Add as a direct child of a Shovel.
 ## - Stab: light / normal / strong, depending on the strength of Shovel.stabbed.
-## - Scoop: earth trickles off after the lift, louder for a bigger hole.
-## Both play together once earth was really removed, so a cancelled stab stays silent.
+##   Plays right away, as the shovel then sticks in the ground.
+## - Scoop: earth trickles off when the shovel pops out, louder for a bigger hole.
 
 const STAB_SPREAD_DB := 3.0
 const SCOOP_SPREAD_DB := 4.0
@@ -32,9 +32,6 @@ var _scoop_voices: Array[AudioStreamPlayer3D] = []
 var _next_stab := 0
 var _next_scoop := 0
 var _last := {}
-var _pending := false # a stab waits for its hole
-var _pending_strength := 0.0
-var _pending_at := Vector3.ZERO
 
 
 func _ready() -> void:
@@ -50,15 +47,10 @@ func _ready() -> void:
 
 
 func _on_stabbed(strength: float, at: Vector3) -> void:
-	_pending = true
-	_pending_strength = strength
-	_pending_at = at
+	_play_stab(strength, at)
 
 
 func _on_scooped(at: Vector3, radius: float) -> void:
-	if _pending:
-		_pending = false
-		_play_stab(_pending_strength, _pending_at)
 	var size := clampf(inverse_lerp(Shovel.MIN_RADIUS, Shovel.MAX_RADIUS, radius), 0.0, 1.0)
 	var db := scoop_volume_db + lerpf(-SCOOP_SPREAD_DB, SCOOP_SPREAD_DB, size)
 	_next_scoop = _play(_scoop_voices, _next_scoop, _pick("scoop", scoops), at, db)
