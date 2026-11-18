@@ -80,7 +80,13 @@ func get_hands_center() -> Vector3:
 
 
 func pick_up(by: Node3D) -> void:
+	var by_hand := by is XRToolsFunctionPickup
+	if not by_hand:
+		_stuck_in_sandbox = null # back to the tool belt: comes out of the ground
+		pull_progress = 0.0
 	super(by)
+	if not by_hand:
+		return
 	_ignore_player_body(by)
 	# full fist while holding, also without pressing grip/trigger
 	var hand := XRToolsHand.find_instance(by)
@@ -93,9 +99,10 @@ func pick_up(by: Node3D) -> void:
 
 func let_go(by: Node3D, p_linear_velocity: Vector3, p_angular_velocity: Vector3) -> void:
 	super(by, p_linear_velocity, p_angular_velocity)
-	var hand := XRToolsHand.find_instance(by)
-	if hand:
-		hand.force_grip_trigger(-1.0, -1.0) # back to the controller buttons
+	if by is XRToolsFunctionPickup:
+		var hand := XRToolsHand.find_instance(by)
+		if hand:
+			hand.force_grip_trigger(-1.0, -1.0) # back to the controller buttons
 	if is_stuck() and not is_picked_up():
 		# stay in the ground
 		freeze = true

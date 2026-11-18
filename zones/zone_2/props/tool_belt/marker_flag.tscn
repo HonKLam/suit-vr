@@ -1,0 +1,48 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://zones/zone_2/props/tool_belt/marker_flag.gd" id="1_flag"]
+[ext_resource type="PackedScene" uid="uid://dh8grd7s3n8kg" path="res://addons/godot-xr-tools/objects/grab_points/grab_point_snap.tscn" id="2_snap"]
+
+[sub_resource type="StandardMaterial3D" id="Stick_mat"]
+albedo_color = Color(0.85, 0.75, 0.55, 1)
+
+[sub_resource type="CylinderMesh" id="Stick"]
+material = SubResource("Stick_mat")
+top_radius = 0.006
+bottom_radius = 0.006
+height = 0.5
+radial_segments = 8
+rings = 1
+
+[sub_resource type="StandardMaterial3D" id="Cloth_mat"]
+albedo_color = Color(0.95, 0.15, 0.1, 1)
+
+[sub_resource type="BoxMesh" id="Cloth"]
+material = SubResource("Cloth_mat")
+size = Vector3(0.14, 0.09, 0.004)
+
+[sub_resource type="CapsuleShape3D" id="Shape"]
+radius = 0.025
+height = 0.5
+
+[node name="MarkerFlag" type="RigidBody3D"]
+collision_layer = 4
+collision_mask = 196615
+mass = 0.1
+script = ExtResource("1_flag")
+
+[node name="Stick" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
+mesh = SubResource("Stick")
+
+[node name="Cloth" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.075, 0.44, 0)
+mesh = SubResource("Cloth")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
+shape = SubResource("Shape")
+
+[node name="BeltPoint" parent="." instance=ExtResource("2_snap")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
+require_group = "tool_belt"

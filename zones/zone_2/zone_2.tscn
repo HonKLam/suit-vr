@@ -2,6 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://chjrlgbxu2o51" path="res://shared/game/game_scene.tscn" id="game_scene"]
 [ext_resource type="PackedScene" uid="uid://dnih82iesuh5h" path="res://zones/zone_2/zone_2_map.tscn" id="map_scene"]
+[ext_resource type="PackedScene" path="res://zones/zone_2/props/tool_belt/tool_belt.tscn" id="tool_belt"]
 
 [sub_resource type="ProceduralSkyMaterial" id="Sky_mat"]
 sky_top_color = Color(0.3, 0.55, 0.92, 1)
@@ -43,3 +44,7 @@ shadow_enabled = true
 directional_shadow_max_distance = 25.0
 
 [node name="Map" parent="." index="4" unique_id=2042539260 instance=ExtResource("map_scene")]
+
+[node name="ToolBelt" parent="." unique_id=1590347282 node_paths=PackedStringArray("shovel", "metal_detector") instance=ExtResource("tool_belt")]
+shovel = NodePath("../Map/Shovel")
+metal_detector = NodePath("../Map/MetalDetector")

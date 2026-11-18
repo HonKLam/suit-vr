@@ -1,0 +1,35 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://zones/zone_2/props/tool_belt/tool_belt.gd" id="1_belt"]
+[ext_resource type="PackedScene" uid="uid://ce7vysyvondf8" path="res://addons/godot-xr-tools/objects/snap_zone.tscn" id="2_slot"]
+[ext_resource type="PackedScene" path="res://zones/zone_2/props/tool_belt/marker_flag.tscn" id="3_flag"]
+
+[sub_resource type="StandardMaterial3D" id="Belt_mat"]
+albedo_color = Color(0.45, 0.3, 0.18, 1)
+
+[sub_resource type="TorusMesh" id="Belt"]
+material = SubResource("Belt_mat")
+inner_radius = 0.2
+outer_radius = 0.225
+rings = 32
+ring_segments = 6
+
+[node name="ToolBelt" type="Node3D"]
+script = ExtResource("1_belt")
+flag_scene = ExtResource("3_flag")
+
+[node name="Belt" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.95, 0)
+mesh = SubResource("Belt")
+
+[node name="ShovelSlot" parent="." instance=ExtResource("2_slot")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.32, 1.26, 0.08)
+grab_distance = 0.15
+
+[node name="DetectorSlot" parent="." instance=ExtResource("2_slot")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.32, 1.1, 0.08)
+grab_distance = 0.15
+
+[node name="FlagSlot" parent="." instance=ExtResource("2_slot")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.12, 0.85, -0.22)
+grab_distance = 0.12
