@@ -2,7 +2,7 @@ class_name ToolMenu
 extends Node3D
 ## Tool menu on the right wrist.
 ## - Open: turn the empty right hand palm up.
-## - Choose: hold the left hand at a tool and pull the left trigger.
+## - Choose: point the laser of the left hand at a tool and pull the left trigger.
 ## - The tool appears in front of you, ready to grab.
 ## - Let go of shovel or detector: it goes back into the menu. Flags stick in the ground.
 
@@ -15,8 +15,10 @@ const ICON_SIZE: float = 0.09
 const ICON_SPACING: float = 0.11
 ## Height of the menu above the wrist (m)
 const MENU_HEIGHT: float = 0.12
-## How close the left hand must be to a tool (m)
-const HOVER_DISTANCE: float = 0.07
+## Laser of the left hand: length and how close it must pass a tool (m)
+const LASER_LENGTH: float = 2.0
+const LASER_HIT_RADIUS: float = 0.06
+const LASER_THICKNESS: float = 0.002
 const HOVER_SCALE: float = 1.35
 const SPIN_SPEED: float = 1.0
 ## Palm facing up: opens above OPEN, closes below CLOSE (dot product with up)
@@ -33,17 +35,18 @@ var _camera: XRCamera3D
 var _right: XRController3D
 var _left: XRController3D
 var _right_pickup: XRToolsFunctionPickup
-var _left_pickup: XRToolsFunctionPickup
 var _icons: Array[Node3D] = []
 var _choices: Array[Callable] = []
 var _hovered: int = -1
 var _trigger_was_pressed: bool = false
 var _tool_layers: Dictionary = {} # tool -> [collision_layer, collision_mask]
+var _laser: MeshInstance3D
 
 
 func _ready() -> void:
 	top_level = true
 	visible = false
+	_laser = _make_laser()
 	if shovel:
 		_add_choice(shovel.get_node("MeshModel"), "Schaufel", _bring.bind(shovel))
 		_put_away.call_deferred(shovel)
@@ -67,6 +70,7 @@ func _process(delta: float) -> void:
 		visible = hand_free and palm_up > PALM_UP_CLOSE
 	else:
 		visible = hand_free and palm_up > PALM_UP_OPEN
+	_laser.visible = visible
 	if not visible:
 		_hovered = -1
 		return
@@ -79,16 +83,22 @@ func _process(delta: float) -> void:
 	var center := _right.global_position + Vector3.UP * MENU_HEIGHT
 	global_transform = Transform3D(Basis.looking_at(center - head.origin), center)
 
+	# laser from the left hand: the first tool it passes close enough is hovered
+	var laser_start := _left.global_position
+	var laser_direction := -_left.global_basis.z
+	var laser_length := LASER_LENGTH
 	_hovered = -1
-	var closest := HOVER_DISTANCE
 	for i in _icons.size():
 		var icon := _icons[i]
 		icon.global_position = center + side * (i - (_icons.size() - 1) * 0.5) * ICON_SPACING
 		icon.rotate_y(SPIN_SPEED * delta)
-		var distance := icon.global_position.distance_to(_left_pickup.global_position)
-		if distance < closest:
-			closest = distance
+		var to_icon := icon.global_position - laser_start
+		var along := to_icon.dot(laser_direction)
+		var miss := (to_icon - laser_direction * along).length()
+		if along > 0.0 and along < laser_length and miss < LASER_HIT_RADIUS:
+			laser_length = along
 			_hovered = i
+	_laser.global_transform = Transform3D(Basis(Quaternion(Vector3.UP, laser_direction)) * Basis.from_scale(Vector3(1.0, laser_length, 1.0)), laser_start + laser_direction * laser_length * 0.5)
 	for i in _icons.size():
 		var grow := HOVER_SCALE if i == _hovered else 1.0
 		_icons[i].scale = Vector3.ONE * grow
@@ -97,6 +107,26 @@ func _process(delta: float) -> void:
 	if trigger_pressed and not _trigger_was_pressed and _hovered >= 0:
 		_choices[_hovered].call()
 	_trigger_was_pressed = trigger_pressed
+
+
+func _make_laser() -> MeshInstance3D:
+	var laser := MeshInstance3D.new()
+	var beam := CylinderMesh.new()
+	beam.top_radius = LASER_THICKNESS
+	beam.bottom_radius = LASER_THICKNESS
+	beam.height = 1.0 # stretched to the laser length
+	beam.radial_segments = 6
+	beam.rings = 1
+	var beam_material := StandardMaterial3D.new()
+	beam_material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+	beam_material.albedo_color = Color(1.0, 1.0, 1.0)
+	beam.material = beam_material
+	laser.mesh = beam
+	laser.top_level = true
+	laser.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	laser.visible = false
+	add_child(laser)
+	return laser
 
 
 func _find_player() -> bool:
@@ -111,7 +141,6 @@ func _find_player() -> bool:
 	if _right == null or _left == null:
 		return false
 	_right_pickup = _right.get_node("FunctionPickup")
-	_left_pickup = _left.get_node("FunctionPickup")
 	return true
 
 
