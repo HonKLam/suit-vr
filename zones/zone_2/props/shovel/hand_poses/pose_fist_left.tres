@@ -1,9 +1,0 @@
-[gd_resource type="Resource" script_class="XRToolsHandPoseSettings" format=3]
-
-[ext_resource type="Script" uid="uid://dvobm6vcfnqe8" path="res://addons/godot-xr-tools/hands/poses/hand_pose_settings.gd" id="1_script"]
-[ext_resource type="Animation" path="res://addons/godot-xr-tools/hands/animations/left/Grip.res" id="2_grip"]
-
-[resource]
-script = ExtResource("1_script")
-open_pose = ExtResource("2_grip")
-closed_pose = ExtResource("2_grip")

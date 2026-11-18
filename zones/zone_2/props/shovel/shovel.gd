@@ -86,6 +86,10 @@ func get_hands_center() -> Vector3:
 func pick_up(by: Node3D) -> void:
 	super(by)
 	_ignore_player_body(by)
+	# full fist while holding, also without pressing grip/trigger
+	var hand := XRToolsHand.find_instance(by)
+	if hand and is_picked_up():
+		hand.force_grip_trigger(1.0, 1.0)
 	if is_stuck() and _grab_driver:
 		_keep_in_ground()
 		global_transform = _stuck_transform
@@ -93,6 +97,9 @@ func pick_up(by: Node3D) -> void:
 
 func let_go(by: Node3D, p_linear_velocity: Vector3, p_angular_velocity: Vector3) -> void:
 	super(by, p_linear_velocity, p_angular_velocity)
+	var hand := XRToolsHand.find_instance(by)
+	if hand:
+		hand.force_grip_trigger(-1.0, -1.0) # back to the controller buttons
 	if is_stuck() and not is_picked_up():
 		# stay in the ground
 		freeze = true
