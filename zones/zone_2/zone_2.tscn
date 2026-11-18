@@ -20,11 +20,11 @@ ambient_light_source = 3
 tonemap_mode = 2
 fog_enabled = true
 fog_mode = 1
-fog_light_color = Color(0.74, 0.84, 0.9, 1)
+fog_light_color = Color(0.78, 0.83, 0.86, 1)
 fog_density = 1.0
-fog_sky_affect = 0.0
-fog_depth_begin = 7.0
-fog_depth_end = 26.0
+fog_sky_affect = 0.6
+fog_depth_begin = 8.0
+fog_depth_end = 70.0
 
 [node name="Zone2" unique_id=1081860193 instance=ExtResource("game_scene")]
 countdown_seconds = 0
