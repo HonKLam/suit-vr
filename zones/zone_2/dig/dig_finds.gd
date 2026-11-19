@@ -156,12 +156,11 @@ func _update_countdown(delta: float) -> void:
 		_explode()
 
 
-## SS:CC above the back of the left wrist, blinks in the last 10 s.
+## Whole seconds above the back of the left wrist (59 ... 0), blinks in the last 10 s.
 func _show_wrist_timer() -> void:
 	if _wrist_timer == null:
 		return
-	var hundredths := clampi(int(time_left * 100.0), 0, 5999)
-	_wrist_timer.text = "%02d:%02d" % [hundredths / 100, hundredths % 100]
+	_wrist_timer.text = str(maxi(int(time_left), 0))
 	_wrist_timer.visible = time_left >= WRIST_TIMER_BLINK_BELOW or fmod(time_left, 0.5) > 0.25
 
 
@@ -388,7 +387,7 @@ func _make_wrist_timer(left_controller: XRController3D) -> void:
 		_wrist_timer.queue_free()
 	_wrist_timer = Label3D.new()
 	_wrist_timer.billboard = BaseMaterial3D.BILLBOARD_ENABLED
-	_wrist_timer.pixel_size = 0.0004
+	_wrist_timer.pixel_size = 0.0005
 	_wrist_timer.font_size = 64
 	_wrist_timer.outline_size = 12
 	_wrist_timer.modulate = Color(1.0, 0.15, 0.1)
