@@ -9,6 +9,7 @@ extends Node3D
 ##   Trash disappears, the bomb flies up in front of you.
 ## - Countdown: starts when the intro text is over (GameScene.intro_finished), shown on the wrist
 ##   and, once it is in the ground, on the bomb. At 00:00 the bomb goes off = Game Over.
+##   Selecting the bomb stops the time.
 ## - Digging is locked until the countdown runs.
 ## - A small timer floats above the back of the left wrist while the countdown runs.
 ## - The player walks on an invisible floor at the sandbox surface, so holes can't trap them.
@@ -169,6 +170,16 @@ func _show_wrist_timer() -> void:
 	_wrist_timer.visible = time_left >= WRIST_TIMER_BLINK_BELOW or fmod(time_left, 0.5) > 0.25
 
 
+## Bomb found: the time stops (display stays, no blinking).
+func _pause_countdown() -> void:
+	is_counting_down = false
+	if is_instance_valid(_bomb):
+		_bomb.show_time(time_left, false)
+	if _wrist_timer:
+		_show_wrist_timer()
+		_wrist_timer.visible = true
+
+
 ## Simple version for now: the bomb disappears and the round is lost (Game Over on the wrist).
 func _explode() -> void:
 	if is_instance_valid(_bomb):
@@ -278,6 +289,7 @@ func _update_hand(hand: Dictionary) -> void:
 func _select(find: Dictionary) -> void:
 	find.selectable = false
 	if find.is_bomb:
+		_pause_countdown()
 		_bring_bomb(find.model)
 	else:
 		trash_count += 1
