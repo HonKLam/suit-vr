@@ -2,22 +2,26 @@
 
 [sub_resource type="AudioEffectHighPassFilter" id="AudioEffectHighPassFilter_j3pel"]
 resource_name = "HighPassFilter"
-cutoff_hz = 400.0
+cutoff_hz = 1304.0
+resonance = 0.19
 
 [sub_resource type="AudioEffectLowPassFilter" id="AudioEffectLowPassFilter_funk"]
 resource_name = "LowPassFilter"
-cutoff_hz = 3000.0
+cutoff_hz = 11924.0
+resonance = 0.75
 
 [sub_resource type="AudioEffectDistortion" id="AudioEffectDistortion_funk"]
 resource_name = "Distortion"
 mode = 3
-drive = 0.3
-post_gain = -6.0
+pre_gain = 6.26
+keep_hf_hz = 16194.0
+drive = 0.73
+post_gain = -1.56
 
 [sub_resource type="AudioEffectCompressor" id="AudioEffectCompressor_funk"]
 resource_name = "Compressor"
-threshold = -20.0
-ratio = 4.0
+threshold = -12.3
+ratio = 17.6
 
 [resource]
 bus/1/name = &"Funk"

@@ -84,17 +84,14 @@ script = ExtResource("92_metal")
 [node name="Can" type="Node3D" parent="Sandbox/MetalTestPlaceholder" unique_id=887402717]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.8, -0.25, 0.5)
 script = ExtResource("92_metal")
-strength = 0.8
 
 [node name="Coin1" type="Node3D" parent="Sandbox/MetalTestPlaceholder" unique_id=1893665757]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.9, -0.15, 0.9)
 script = ExtResource("92_metal")
-strength = 0.5
 
 [node name="Coin2" type="Node3D" parent="Sandbox/MetalTestPlaceholder" unique_id=1094815136]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, -0.4, -0.9)
 script = ExtResource("92_metal")
-strength = 0.5
 
 [node name="MetalDetector" parent="." unique_id=1538982907 instance=ExtResource("91_detector")]
 transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 1.4, 0, 9)
@@ -573,7 +570,7 @@ transform = Transform3D(-0.0546, 0, 0.2114, 0, 0.2183, 0, -0.2114, 0, -0.0546, 2
 transform = Transform3D(0.1058, 0, 0.4502, 0, 0.4625, 0, -0.4502, 0, 0.1058, -1.844, 0, 4.528)
 
 [node name="Pebble_Round_1_1" parent="Nature" unique_id=243128048 instance=ExtResource("17_r")]
-transform = Transform3D(0.1912, 0, 0.5227, 0, 0.5565, 0, -0.5227, 0, 0.1912, -0.397, 0, 6.376)
+transform = Transform3D(0.1912, 0, 0.5227, 0, 0.5565, 0, -0.5227, 0, 0.1912, -0.4235807, 0, 5.9065957)
 
 [node name="Pebble_Round_2_1" parent="Nature" unique_id=564595767 instance=ExtResource("18_r")]
 transform = Transform3D(-0.2406, 0, 0.3201, 0, 0.4004, 0, -0.3201, 0, -0.2406, 1.48, 0, 9.024)
@@ -588,7 +585,7 @@ transform = Transform3D(-0.4644, 0, -0.1711, 0, 0.495, 0, 0.1711, 0, -0.4644, 0.
 transform = Transform3D(0.4159, 0, -0.1882, 0, 0.4565, 0, 0.1882, 0, 0.4159, 1.547, 0, 8.231)
 
 [node name="Pebble_Round_2_3" parent="Nature" unique_id=676594864 instance=ExtResource("18_r")]
-transform = Transform3D(-0.2813, 0, 0.4019, 0, 0.4905, 0, -0.4019, 0, -0.2813, -0.368, 0, 7.014)
+transform = Transform3D(-0.2813, 0, 0.4019, 0, 0.4905, 0, -0.4019, 0, -0.2813, -0.0061129034, 0, 6.9909353)
 
 [node name="Pebble_Round_1_4" parent="Nature" unique_id=2038285262 instance=ExtResource("17_r")]
 transform = Transform3D(-0.2642, 0, 0.5117, 0, 0.5759, 0, -0.5117, 0, -0.2642, 0.056, 0, 7.674)

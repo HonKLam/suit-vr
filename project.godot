@@ -15,6 +15,10 @@ run/main_scene="uid://dam3o6pbwcth0"
 config/features=PackedStringArray("4.7", "Mobile")
 config/icon="res://icon.svg"
 
+[audio]
+
+buses/default_bus_layout="uid://dndw8jv6lb1al"
+
 [autoload]
 
 XrSimulator="*uid://ctltchlf2j2r4"

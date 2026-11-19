@@ -1,4 +1,4 @@
-[gd_resource type="StandardMaterial3D" format=3]
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://5538fpoa7krm"]
 
 [ext_resource type="Texture2D" uid="uid://c45rgjt7ecd3o" path="res://zones/zone_2/props/shovel/textures/shovel_wood_basecolor.png" id="1_base"]
 [ext_resource type="Texture2D" uid="uid://bc0pb0inwwv3" path="res://zones/zone_2/props/shovel/textures/shovel_wood_metallic.png" id="2_metal"]

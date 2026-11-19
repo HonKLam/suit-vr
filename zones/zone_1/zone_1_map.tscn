@@ -19,7 +19,7 @@ albedo_texture = ExtResource("2_vqbg7")
 uv1_triplanar = true
 uv1_world_triplanar = true
 
-[node name="Map" type="Node3D" unique_id=548434147]
+[node name="Map2" type="Node3D" unique_id=548434147]
 script = ExtResource("map_script")
 time_limit = 60.0
 
@@ -483,6 +483,11 @@ fragile = false
 
 [node name="Hold84" parent="Route" unique_id=1182677669 instance=ExtResource("h4_hold")]
 transform = Transform3D(-0.20014635, -0.45006523, -0.87027866, -0.07880575, 0.89276767, -0.44357252, 0.97659624, -0.020196348, -0.21415108, 3.6959457, 11.307607, 8.539438)
+seconds_per_100_cm2 = 3.5
+fragile = false
+
+[node name="Hold305" parent="Route" unique_id=460777994 instance=ExtResource("h4_hold")]
+transform = Transform3D(-0.20013005, -0.45007724, -0.87027615, -0.07879745, 0.8927616, -0.44358632, 0.97660017, -0.020199304, -0.21413253, 3.5206828, 11.449333, 8.958141)
 seconds_per_100_cm2 = 3.5
 fragile = false
 
