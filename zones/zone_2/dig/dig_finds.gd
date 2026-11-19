@@ -1,19 +1,20 @@
 class_name DigFinds
 extends Node3D
 ## Buried finds in the sandbox (one at every MetalObject inside it).
-## - Placeholder boxes = trash. The bomb_number-th find is the bomb:
+## - Finds: coin and can (Marcel's models; grey box if none is set). Each one selected = +bonus_seconds.
+##   The bomb_number-th find is the bomb:
 ##   once one less has been uncovered, the bomb lies (tilted, timer up) in the most covered
 ##   remaining spot, the other spots are cleared.
 ## - Uncovered = enough of the top is free of earth (uncovered_free_share at uncover_depth).
 ## - Select: point the laser of an empty hand at it and pull the trigger.
-##   Trash disappears, the bomb flies up in front of you.
+##   Coin/can fly up and vanish ("+10 s"), the bomb flies up in front of you.
 ## - Countdown: starts when the intro text is over (GameScene.intro_finished), shown on the wrist
 ##   and, once it is in the ground, on the bomb. At 00:00 the bomb goes off = Game Over.
 ##   Selecting the bomb stops the time.
 ## - Digging is locked until the countdown runs.
 ## - A small timer floats above the back of the left wrist while the countdown runs.
 ## - The player walks on an invisible floor at the sandbox surface, so holes can't trap them.
-## - Each trash find gets a taunt from the guide (trash_voices, in order).
+## - Each coin/can find gets a taunt from the guide (trash_voices, in order).
 
 signal find_uncovered(find: Node3D, is_bomb: bool)
 signal trash_selected(trash_count: int)
@@ -26,7 +27,13 @@ signal time_up
 @export var tool_menu: Node3D
 ## Which uncovered find is the bomb (1 = first)
 @export var bomb_number: int = 3
+## Find models: spots named "...Can..." get the can, "...Coin..." the coin, others take turns
+@export var coin_scene: PackedScene
+@export var can_scene: PackedScene
+## Fallback grey box when no model is set
 @export var trash_size: Vector3 = Vector3(0.28, 0.16, 0.2)
+## Time bonus for each coin/can found (s)
+@export var bonus_seconds: float = 10.0
 ## Bomb countdown (s)
 @export var countdown_seconds: float = 60.0
 ## Uncovered when this share of the sample points around the top is free of earth
@@ -107,21 +114,42 @@ func _bury() -> void:
 	if sandbox == null:
 		return
 	_make_player_floor()
+	var spot_index := 0
 	for spot in sandbox.find_children("*", "", true, false):
 		if spot is MetalObject:
-			var trash_box := MeshInstance3D.new()
-			var box_mesh := BoxMesh.new()
-			box_mesh.size = trash_size
-			box_mesh.material = _trash_material
-			trash_box.mesh = box_mesh
-			trash_box.rotation.y = randf() * TAU
-			spot.add_child(trash_box)
-			var top_below_surface: float = -(sandbox.to_local(spot.global_position).y + trash_size.y * 0.5)
+			var model := _make_find_model(spot.name, spot_index)
+			spot_index += 1
+			spot.add_child(model)
+			var top_below_surface: float = -(sandbox.to_local(spot.global_position).y + (model.transform * _local_bounds(model)).end.y)
 			if top_below_surface > max_find_depth:
-				trash_box.global_position += Vector3.UP * (top_below_surface - max_find_depth)
-			_finds.append({spot = spot, model = trash_box, bounds = trash_box.transform * box_mesh.get_aabb(), uncovered = false, is_bomb = false, selectable = false})
+				model.global_position += Vector3.UP * (top_below_surface - max_find_depth)
+			_finds.append({spot = spot, model = model, bounds = model.transform * _local_bounds(model), uncovered = false, is_bomb = false, selectable = false})
 	if bomb_number <= 1:
 		_place_bomb()
+
+
+## Coin lies flat, can lies on its side, both turned randomly. Grey box without models.
+func _make_find_model(spot_name: String, spot_index: int) -> Node3D:
+	var name_lower := spot_name.to_lower()
+	var scene: PackedScene = null
+	if "can" in name_lower or "dose" in name_lower:
+		scene = can_scene
+	elif "coin" in name_lower or "münze" in name_lower or "muenze" in name_lower:
+		scene = coin_scene
+	else:
+		scene = coin_scene if spot_index % 2 == 0 else can_scene
+	var yaw := Basis(Vector3.UP, randf() * TAU)
+	if scene == null:
+		var trash_box := MeshInstance3D.new()
+		var box_mesh := BoxMesh.new()
+		box_mesh.size = trash_size
+		box_mesh.material = _trash_material
+		trash_box.mesh = box_mesh
+		trash_box.basis = yaw
+		return trash_box
+	var model: Node3D = scene.instantiate()
+	model.basis = yaw * Basis(Vector3.RIGHT, PI * 0.5) if scene == can_scene else yaw
+	return model
 
 
 func _process(delta: float) -> void:
@@ -293,16 +321,22 @@ func _select(find: Dictionary) -> void:
 		_bring_bomb(find.model)
 	else:
 		trash_count += 1
-		_throw_away(find.model)
+		var bonus_text := ""
+		if is_counting_down and bonus_seconds > 0.0:
+			time_left += bonus_seconds
+			bonus_text = "+%d s" % roundi(bonus_seconds)
+		_throw_away(find.model, bonus_text)
 		if _game and trash_count <= trash_voices.size():
 			_game.narrator.say(trash_voices[trash_count - 1])
 		trash_selected.emit(trash_count)
 
 
-## Trash: "Müll" pops up, the box rises and shrinks away.
-func _throw_away(trash: Node3D) -> void:
+## Coin/can: "+10 s" (or "Müll" without bonus) pops up, the box rises and shrinks away.
+func _throw_away(trash: Node3D, bonus_text: String) -> void:
 	var trash_label := Label3D.new()
-	trash_label.text = "Müll"
+	trash_label.text = bonus_text if bonus_text != "" else "Müll"
+	if bonus_text != "":
+		trash_label.modulate = Color(0.3, 1.0, 0.35)
 	trash_label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
 	trash_label.pixel_size = 0.002
 	trash_label.font_size = 64
@@ -349,7 +383,10 @@ func _ray_hits_box(ray_start: Vector3, ray_direction: Vector3, node: Node3D, bou
 func _local_bounds(node: Node3D) -> AABB:
 	var bounds := AABB()
 	var is_first_mesh := true
-	for mesh: MeshInstance3D in node.find_children("*", "MeshInstance3D", true, false):
+	var meshes: Array = node.find_children("*", "MeshInstance3D", true, false)
+	if node is MeshInstance3D:
+		meshes.append(node)
+	for mesh: MeshInstance3D in meshes:
 		var mesh_to_node := Transform3D.IDENTITY
 		var on_the_way: Node3D = mesh
 		while on_the_way != node:

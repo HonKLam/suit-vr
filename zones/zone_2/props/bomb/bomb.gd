@@ -17,9 +17,9 @@ var is_flap_open: bool = false
 var _flap_tween: Tween
 
 
-## SS:CC, at most 59:99. Blinks in the last seconds while the time is running.
+## SS:CC, at most 99:99. Blinks in the last seconds while the time is running.
 func show_time(seconds: float, is_running: bool = true) -> void:
-	var hundredths := clampi(int(seconds * 100.0), 0, 5999)
+	var hundredths := clampi(int(seconds * 100.0), 0, 9999)
 	_timer_label.text = "%02d:%02d" % [hundredths / 100, hundredths % 100]
 	var is_blinking := is_running and seconds < blink_below_seconds
 	_timer_label.visible = not is_blinking or fmod(seconds, 0.5) > 0.25

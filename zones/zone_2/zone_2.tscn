@@ -7,6 +7,8 @@
 [ext_resource type="Script" path="res://zones/zone_2/dig/dig_finds.gd" id="dig_finds"]
 [ext_resource type="PackedScene" path="res://zones/zone_2/props/bomb/bomb.tscn" id="bomb_scene"]
 [ext_resource type="AudioStream" path="res://zones/zone_2/voice/stage_2_intro.mp3" id="intro_voice"]
+[ext_resource type="PackedScene" uid="uid://dcqjd7q20f5en" path="res://zones/zone_2/props/finds/coin/model/coin.glb" id="coin_scene"]
+[ext_resource type="PackedScene" uid="uid://by73tu3cuwoxm" path="res://zones/zone_2/props/finds/can/model/can.glb" id="can_scene"]
 [ext_resource type="AudioStream" path="res://zones/zone_2/voice/stage_2_trash_1.mp3" id="trash_voice_1"]
 [ext_resource type="AudioStream" path="res://zones/zone_2/voice/stage_2_trash_2.mp3" id="trash_voice_2"]
 
@@ -63,5 +65,7 @@ flag_scene = ExtResource("marker_flag")
 script = ExtResource("dig_finds")
 sandbox = NodePath("../Map/Sandbox")
 bomb_scene = ExtResource("bomb_scene")
+coin_scene = ExtResource("coin_scene")
+can_scene = ExtResource("can_scene")
 trash_voices = Array[AudioStream]([ExtResource("trash_voice_1"), ExtResource("trash_voice_2")])
 tool_menu = NodePath("../ToolMenu")
