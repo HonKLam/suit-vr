@@ -1,17 +1,25 @@
 @tool
 class_name GameScene
 extends XRToolsSceneBase
-## Base of every playable scene: player, countdown, pause menu and round end.
+## Base of every playable scene: player, countdown, pause menu, round end and the guide's voice.
 ## A zone inherits game_scene.tscn and adds its sky, sun and a ZoneMap child named "Map".
 
 enum State { COUNTDOWN, PLAYING, PAUSED, WON, LOST }
 
+## The intro text is over (also fires right away when there is no intro).
+signal intro_finished
+
 ## 0 = start right away, without countdown or "GO!".
 @export var countdown_seconds: int = 3
+## Spoken intro of the guide.
+@export var intro_voice: AudioStream
+## On: intro plays before the countdown (player frozen). Off: intro plays after "GO!" (player can move).
+@export var intro_before_start: bool = true
 
 var state: State = State.COUNTDOWN
 var time_left: float
 var wrist_menu: WristMenu
+var narrator: Narrator
 
 @onready var map: ZoneMap = get_node_or_null("Map")
 @onready var player: Player = $XROrigin3D
@@ -31,6 +39,9 @@ func _ready() -> void:
 	wrist_menu.restart_pressed.connect(reset_scene)
 	wrist_menu.lobby_pressed.connect(_on_lobby_pressed)
 	time_left = map.time_limit
+	narrator = Narrator.new()
+	narrator.name = "Narrator"
+	add_child(narrator)
 	_show_status()
 	player.set_frozen(true)
 
@@ -43,6 +54,9 @@ func _process(delta: float) -> void:
 # Called by staging once the fade-in is done, so the countdown isn't missed.
 func scene_visible(user_data = null) -> void:
 	super(user_data)
+	if intro_before_start:
+		await narrator.say_and_wait(intro_voice)
+		intro_finished.emit()
 	_run_countdown()
 
 func _run_countdown() -> void:
@@ -55,14 +69,21 @@ func _start_round() -> void:
 	state = State.PLAYING
 	player.set_frozen(false)
 	map.start()
+	if not intro_before_start:
+		_play_intro_after_start()
 	if countdown_seconds <= 0:
 		return
 	status_label.text = "GO!"
 	await get_tree().create_timer(1.0).timeout
 	status_label.text = ""
 
+func _play_intro_after_start() -> void:
+	await narrator.say_and_wait(intro_voice)
+	intro_finished.emit()
+
 func _set_paused(paused: bool) -> void:
 	state = State.PAUSED if paused else State.PLAYING
+	narrator.stream_paused = paused
 	player.set_frozen(paused)
 	player.set_menu_open(paused)
 	map.set_paused(paused)
@@ -73,6 +94,7 @@ func _set_paused(paused: bool) -> void:
 
 func _end_round(new_state: State, text: String) -> void:
 	state = new_state
+	narrator.stop_all()
 	map.stop()
 	player.set_frozen(true)
 	player.set_menu_open(true)

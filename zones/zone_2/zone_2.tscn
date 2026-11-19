@@ -6,6 +6,9 @@
 [ext_resource type="PackedScene" path="res://zones/zone_2/props/tool_menu/marker_flag.tscn" id="marker_flag"]
 [ext_resource type="Script" path="res://zones/zone_2/dig/dig_finds.gd" id="dig_finds"]
 [ext_resource type="PackedScene" path="res://zones/zone_2/props/bomb/bomb.tscn" id="bomb_scene"]
+[ext_resource type="AudioStream" path="res://zones/zone_2/voice/stage_2_intro.mp3" id="intro_voice"]
+[ext_resource type="AudioStream" path="res://zones/zone_2/voice/stage_2_trash_1.mp3" id="trash_voice_1"]
+[ext_resource type="AudioStream" path="res://zones/zone_2/voice/stage_2_trash_2.mp3" id="trash_voice_2"]
 
 [sub_resource type="ProceduralSkyMaterial" id="Sky_mat"]
 sky_top_color = Color(0.3, 0.55, 0.92, 1)
@@ -32,6 +35,8 @@ fog_depth_end = 70.0
 
 [node name="Zone2" unique_id=1081860193 instance=ExtResource("game_scene")]
 countdown_seconds = 0
+intro_voice = ExtResource("intro_voice")
+intro_before_start = false
 
 [node name="XROrigin3D" parent="." index="0" unique_id=1665458307]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.3, 0, 10.6)
@@ -58,4 +63,5 @@ flag_scene = ExtResource("marker_flag")
 script = ExtResource("dig_finds")
 sandbox = NodePath("../Map/Sandbox")
 bomb_scene = ExtResource("bomb_scene")
+trash_voices = Array[AudioStream]([ExtResource("trash_voice_1"), ExtResource("trash_voice_2")])
 tool_menu = NodePath("../ToolMenu")

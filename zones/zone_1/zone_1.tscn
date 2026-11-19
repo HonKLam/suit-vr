@@ -3,6 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://chjrlgbxu2o51" path="res://shared/game/game_scene.tscn" id="1_qqlev"]
 [ext_resource type="Shader" uid="uid://bpect6c11t5w4" path="res://zones/zone_1/assets/stylized_sky.gdshader" id="6_sky"]
 [ext_resource type="PackedScene" uid="uid://c67jgxxx22mmp" path="res://zones/zone_1/zone_1_map.tscn" id="map_scene"]
+[ext_resource type="AudioStream" path="res://zones/zone_1/voice/stage_1_intro.mp3" id="intro_voice"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_sky"]
 shader = ExtResource("6_sky")
@@ -43,6 +44,7 @@ fog_height = 6.0
 fog_height_density = 0.18
 
 [node name="Zone1" unique_id=933885685 instance=ExtResource("1_qqlev")]
+intro_voice = ExtResource("intro_voice")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." index="0" unique_id=840686269]
 environment = SubResource("Environment_30f0p")
