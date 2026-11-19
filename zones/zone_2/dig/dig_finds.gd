@@ -4,12 +4,13 @@ extends Node3D
 ## - Placeholder boxes = trash. The bomb_number-th find is the bomb:
 ##   once one less has been uncovered, the bomb lies (tilted, timer up) in the most covered
 ##   remaining spot, the other spots are cleared.
-## - Uncovered = the upper part (UNCOVER_DEPTH of its height) is mostly free of earth.
+## - Uncovered = enough of the top is free of earth (uncovered_free_share at uncover_depth).
 ## - Select: point the laser of an empty hand at it and pull the trigger.
 ##   Trash disappears, the bomb flies up in front of you.
 ## - Countdown: starts when the intro text is over (GameScene.intro_finished), shown on the wrist
 ##   and, once it is in the ground, on the bomb. At 00:00 the bomb goes off = Game Over.
 ## - Digging is locked until the countdown runs.
+## - A small timer floats above the back of the left wrist while the countdown runs.
 ## - Each trash find gets a taunt from the guide (trash_voices, in order).
 
 signal find_uncovered(find: Node3D, is_bomb: bool)
@@ -26,13 +27,17 @@ signal time_up
 @export var trash_size: Vector3 = Vector3(0.28, 0.16, 0.2)
 ## Bomb countdown (s)
 @export var countdown_seconds: float = 60.0
+## Uncovered when this share of the sample points around the top is free of earth
+@export_range(0.1, 1.0, 0.05) var uncovered_free_share: float = 0.3
+## Sample points lie this share of the find's height below its top (0 = right on top)
+@export_range(0.0, 0.5, 0.05) var uncover_depth: float = 0.15
+## Finds lie at most this deep (top of the find below the surface, m). Deeper spots are lifted.
+@export var max_find_depth: float = 0.12
 ## Taunts after the 1st, 2nd, ... trash find
 @export var trash_voices: Array[AudioStream] = []
 
 ## Uncovered when at least this share of the top samples is free of earth
-const UNCOVERED_FREE_SHARE: float = 0.65
 ## Share of the find's height that must be dug free from the top
-const UNCOVER_DEPTH: float = 0.35
 const CHECK_INTERVAL: float = 0.25
 const LASER_LENGTH: float = 3.0
 const LASER_THICKNESS: float = 0.002
@@ -47,6 +52,9 @@ const BOMB_PITCH_DEGREES := Vector2(8.0, 20.0)
 const BOMB_DISTANCE: float = 0.55
 const BOMB_DROP: float = 0.55
 const BOMB_FLIGHT_TIME: float = 1.2
+## Wrist timer: offset from the left controller (back of the hand is -X), last seconds blink
+const WRIST_TIMER_OFFSET := Vector3(-0.06, 0.02, 0.1)
+const WRIST_TIMER_BLINK_BELOW: float = 10.0
 
 var time_left: float = 0.0
 var is_counting_down: bool = false
@@ -61,6 +69,7 @@ var _trash_material: StandardMaterial3D
 var _game: GameScene
 var _bomb: Bomb
 var _shovels: Array[Shovel] = []
+var _wrist_timer: Label3D
 var _countdown_started: bool = false
 
 
@@ -101,6 +110,9 @@ func _bury() -> void:
 			trash_box.mesh = box_mesh
 			trash_box.rotation.y = randf() * TAU
 			spot.add_child(trash_box)
+			var top_below_surface: float = -(sandbox.to_local(spot.global_position).y + trash_size.y * 0.5)
+			if top_below_surface > max_find_depth:
+				trash_box.global_position += Vector3.UP * (top_below_surface - max_find_depth)
 			_finds.append({spot = spot, model = trash_box, bounds = trash_box.transform * box_mesh.get_aabb(), uncovered = false, is_bomb = false, selectable = false})
 	if bomb_number <= 1:
 		_place_bomb()
@@ -136,11 +148,21 @@ func _update_countdown(delta: float) -> void:
 		return
 	time_left = maxf(time_left - delta, 0.0)
 	_game.wrist_menu.show_time(time_left)
+	_show_wrist_timer()
 	if is_instance_valid(_bomb):
 		_bomb.show_time(time_left)
 	if time_left <= 0.0:
 		is_counting_down = false
 		_explode()
+
+
+## SS:CC above the back of the left wrist, blinks in the last 10 s.
+func _show_wrist_timer() -> void:
+	if _wrist_timer == null:
+		return
+	var hundredths := clampi(int(time_left * 100.0), 0, 5999)
+	_wrist_timer.text = "%02d:%02d" % [hundredths / 100, hundredths % 100]
+	_wrist_timer.visible = time_left >= WRIST_TIMER_BLINK_BELOW or fmod(time_left, 0.5) > 0.25
 
 
 ## Simple version for now: the bomb disappears and the round is lost (Game Over on the wrist).
@@ -155,7 +177,7 @@ func _check_uncovered() -> void:
 	for find in _finds.duplicate():
 		if find.uncovered or not _finds.has(find):
 			continue
-		if _top_free_share(find) >= UNCOVERED_FREE_SHARE:
+		if _top_free_share(find) >= uncovered_free_share:
 			find.uncovered = true
 			find.selectable = true
 			uncovered_count += 1
@@ -164,7 +186,7 @@ func _check_uncovered() -> void:
 				_place_bomb()
 
 
-## Share of a 3x3 grid (UNCOVER_DEPTH below the top of the find) that has no earth.
+## Share of a 3x3 grid (uncover_depth below the top of the find) that has no earth.
 func _top_free_share(find: Dictionary) -> float:
 	var spot: Node3D = find.spot
 	var bounds: AABB = find.bounds
@@ -173,7 +195,7 @@ func _top_free_share(find: Dictionary) -> float:
 		for row in 3:
 			var sample_point := Vector3(
 				bounds.position.x + bounds.size.x * (0.15 + 0.35 * column),
-				bounds.end.y - bounds.size.y * UNCOVER_DEPTH,
+				bounds.end.y - bounds.size.y * uncover_depth,
 				bounds.position.z + bounds.size.z * (0.15 + 0.35 * row))
 			if not sandbox.is_solid(spot.global_transform * sample_point):
 				free_samples += 1
@@ -337,6 +359,7 @@ func _find_player() -> bool:
 			_hands.clear()
 			return false
 		_hands.append({controller = controller, pickup = controller.get_node("FunctionPickup"), laser = _make_laser(), trigger_was_pressed = false})
+	_make_wrist_timer(_hands[0].controller)
 	return true
 
 
@@ -358,3 +381,20 @@ func _make_laser() -> MeshInstance3D:
 	laser.visible = false
 	add_child(laser)
 	return laser
+
+
+func _make_wrist_timer(left_controller: XRController3D) -> void:
+	if is_instance_valid(_wrist_timer):
+		_wrist_timer.queue_free()
+	_wrist_timer = Label3D.new()
+	_wrist_timer.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	_wrist_timer.pixel_size = 0.0004
+	_wrist_timer.font_size = 64
+	_wrist_timer.outline_size = 12
+	_wrist_timer.modulate = Color(1.0, 0.15, 0.1)
+	_wrist_timer.outline_modulate = Color(0.0, 0.0, 0.0, 0.8)
+	_wrist_timer.position = WRIST_TIMER_OFFSET
+	_wrist_timer.visible = false
+	left_controller.add_child(_wrist_timer)
+	if is_counting_down:
+		_show_wrist_timer()
