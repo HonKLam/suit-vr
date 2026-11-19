@@ -9,6 +9,7 @@ extends Node3D
 ##   Trash disappears, the bomb flies up in front of you.
 ## - Countdown: starts when the intro text is over (GameScene.intro_finished), shown on the wrist
 ##   and, once it is in the ground, on the bomb. At 00:00 the bomb goes off = Game Over.
+## - Digging is locked until the countdown runs.
 ## - Each trash find gets a taunt from the guide (trash_voices, in order).
 
 signal find_uncovered(find: Node3D, is_bomb: bool)
@@ -59,6 +60,7 @@ var _select_hint: Label3D
 var _trash_material: StandardMaterial3D
 var _game: GameScene
 var _bomb: Bomb
+var _shovels: Array[Shovel] = []
 var _countdown_started: bool = false
 
 
@@ -66,6 +68,10 @@ func _ready() -> void:
 	_game = get_parent() as GameScene
 	if _game:
 		_game.intro_finished.connect(start_countdown)
+		for node in _game.get_node("Map").find_children("*", "", true, false): # map var not set yet in _ready
+			if node is Shovel:
+				_shovels.append(node)
+				node.can_dig = false # until the countdown runs
 	time_left = countdown_seconds
 	_trash_material = StandardMaterial3D.new()
 	_trash_material.albedo_color = Color(0.42, 0.4, 0.36)
@@ -118,6 +124,8 @@ func start_countdown() -> void:
 		return
 	_countdown_started = true
 	is_counting_down = true
+	for shovel in _shovels:
+		shovel.can_dig = true
 	time_left = countdown_seconds
 
 

@@ -53,6 +53,8 @@ const POP_RETURN_TIME: float = 0.1
 ## How far ahead of the tip the stab point is searched (m)
 const STAB_TARGET_RANGE: float = 0.6
 
+## Off = the shovel can be held but does not dig (e.g. before the countdown runs)
+var can_dig: bool = true
 ## 0..1, read by PullRing
 var pull_progress: float = 0.0
 ## Earth surface straight ahead of the blade, read by StabMarker
@@ -118,6 +120,11 @@ func _physics_process(delta: float) -> void:
 
 	if is_stuck():
 		_update_pull(delta)
+		return
+
+	if not can_dig:
+		has_stab_target = false
+		_recent_hand_positions.clear()
 		return
 
 	_update_stab_target()
