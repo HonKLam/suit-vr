@@ -15,6 +15,7 @@ extends Node3D
 ## - A small timer floats above the back of the left wrist while the countdown runs.
 ## - The player walks on an invisible floor at the sandbox surface, so holes can't trap them.
 ## - Each coin/can find gets a taunt from the guide (trash_voices, in order).
+## - Selecting the bomb: the guide comments on it (bomb_found_voice), a taunt still playing is cut off.
 
 signal find_uncovered(find: Node3D, is_bomb: bool)
 signal trash_selected(trash_count: int)
@@ -42,6 +43,8 @@ signal time_up
 @export_range(0.0, 0.5, 0.05) var uncover_depth: float = 0.15
 ## Finds lie at most this deep (top of the find below the surface, m). Deeper spots are lifted.
 @export var max_find_depth: float = 0.12
+## Guide's line when the bomb is selected
+@export var bomb_found_voice: AudioStream
 ## Taunts after the 1st, 2nd, ... trash find
 @export var trash_voices: Array[AudioStream] = []
 
@@ -318,6 +321,9 @@ func _select(find: Dictionary) -> void:
 	if find.is_bomb:
 		_pause_countdown()
 		_bring_bomb(find.model)
+		if _game and bomb_found_voice:
+			_game.narrator.stop_all()
+			_game.narrator.say(bomb_found_voice)
 	else:
 		trash_count += 1
 		var bonus_text := ""
