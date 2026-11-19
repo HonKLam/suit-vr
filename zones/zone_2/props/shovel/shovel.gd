@@ -248,6 +248,7 @@ func _update_stab_target() -> void:
 		stab_target = tip
 		return
 	var ray := PhysicsRayQueryParameters3D.create(tip, tip - global_basis.y * STAB_TARGET_RANGE)
+	ray.collision_mask = 1 # ground only (the sandbox), not the player's invisible floor
 	ray.exclude = [get_rid()]
 	var ray_hit: Dictionary = get_world_3d().direct_space_state.intersect_ray(ray)
 	if ray_hit and ray_hit.collider.get_parent() is Sandbox:

@@ -11,6 +11,7 @@ extends Node3D
 ##   and, once it is in the ground, on the bomb. At 00:00 the bomb goes off = Game Over.
 ## - Digging is locked until the countdown runs.
 ## - A small timer floats above the back of the left wrist while the countdown runs.
+## - The player walks on an invisible floor at the sandbox surface, so holes can't trap them.
 ## - Each trash find gets a taunt from the guide (trash_voices, in order).
 
 signal find_uncovered(find: Node3D, is_bomb: bool)
@@ -55,6 +56,9 @@ const BOMB_FLIGHT_TIME: float = 1.2
 ## Wrist timer: offset from the left controller (back of the hand is -X), last seconds blink
 const WRIST_TIMER_OFFSET := Vector3(-0.06, 0.02, 0.1)
 const WRIST_TIMER_BLINK_BELOW: float = 10.0
+## Physics layer 25: only the player body collides with it (the walk-over floor)
+const PLAYER_FLOOR_LAYER: int = 1 << 24
+const PLAYER_FLOOR_THICKNESS: float = 0.1
 
 var time_left: float = 0.0
 var is_counting_down: bool = false
@@ -101,6 +105,7 @@ func _ready() -> void:
 func _bury() -> void:
 	if sandbox == null:
 		return
+	_make_player_floor()
 	for spot in sandbox.find_children("*", "", true, false):
 		if spot is MetalObject:
 			var trash_box := MeshInstance3D.new()
@@ -359,6 +364,9 @@ func _find_player() -> bool:
 			return false
 		_hands.append({controller = controller, pickup = controller.get_node("FunctionPickup"), laser = _make_laser(), trigger_was_pressed = false})
 	_make_wrist_timer(_hands[0].controller)
+	var player_body := XRToolsPlayerBody.find_instance(_camera)
+	if player_body:
+		player_body.collision_mask |= PLAYER_FLOOR_LAYER # walks on the invisible floor
 	return true
 
 
@@ -397,3 +405,19 @@ func _make_wrist_timer(left_controller: XRController3D) -> void:
 	left_controller.add_child(_wrist_timer)
 	if is_counting_down:
 		_show_wrist_timer()
+
+
+## Invisible floor at the sandbox surface for the player only (tools, flags and the shovel ignore it).
+func _make_player_floor() -> void:
+	var floor_body := StaticBody3D.new()
+	floor_body.name = "PlayerFloor"
+	floor_body.collision_layer = PLAYER_FLOOR_LAYER
+	floor_body.collision_mask = 0
+	var floor_shape := CollisionShape3D.new()
+	var box := BoxShape3D.new()
+	box.size = Vector3(sandbox.size.x, PLAYER_FLOOR_THICKNESS, sandbox.size.y)
+	floor_shape.shape = box
+	floor_shape.position = Vector3.DOWN * PLAYER_FLOOR_THICKNESS * 0.5 # top at the surface (y = 0)
+	floor_body.add_child(floor_shape)
+	add_child(floor_body)
+	floor_body.global_transform = sandbox.global_transform

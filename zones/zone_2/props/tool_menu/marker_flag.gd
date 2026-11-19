@@ -3,6 +3,7 @@ extends XRToolsPickable
 ## Small flag to mark finds (origin = tip of the stick).
 ## - While held: a ring on the ground shows where it will land.
 ## - Let go above the ground: it sticks upright in the earth. Let go in the air: it disappears.
+## - No collision with the player (no pushing, no getting stuck).
 
 ## How far below the flag the ground may be (m)
 const MAX_DROP_HEIGHT: float = 1.5
@@ -33,6 +34,7 @@ func _ready() -> void:
 	_landing_ring.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 	_landing_ring.visible = false
 	add_child(_landing_ring)
+	_ignore_player_body.call_deferred()
 
 
 func _process(_delta: float) -> void:
@@ -60,3 +62,11 @@ func _landing_spot() -> Variant:
 	var ray := PhysicsRayQueryParameters3D.create(global_position + Vector3.UP * RAY_START_ABOVE, global_position + Vector3.DOWN * MAX_DROP_HEIGHT, GROUND_MASK, [get_rid()])
 	var ray_hit: Dictionary = get_world_3d().direct_space_state.intersect_ray(ray)
 	return ray_hit.position if ray_hit else null
+
+
+func _ignore_player_body() -> void:
+	var camera := get_viewport().get_camera_3d()
+	var player_body := XRToolsPlayerBody.find_instance(camera) if camera else null
+	if player_body:
+		add_collision_exception_with(player_body)
+		player_body.add_collision_exception_with(self)
