@@ -272,7 +272,6 @@ func _turn_into_bomb(find: Dictionary) -> void:
 	var tilted_bounds := Transform3D(tilt, Vector3.ZERO) * _local_bounds(bomb)
 	bomb.transform = Transform3D(tilt, Vector3.UP * (box_top - tilted_bounds.end.y))
 	trash_box.queue_free()
-	find.spot.strength = 1.0
 	find.model = bomb
 	find.bounds = bomb.transform * _local_bounds(bomb)
 	find.is_bomb = true
