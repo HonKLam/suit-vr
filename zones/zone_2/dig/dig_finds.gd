@@ -6,11 +6,14 @@ extends Node3D
 ##   remaining spot, the other spots are cleared.
 ## - Uncovered = the upper part (UNCOVER_DEPTH of its height) is mostly free of earth.
 ## - Select: point the laser of an empty hand at it and pull the trigger.
-##   Trash disappears, the bomb flies up in front of you (countdown is started later).
+##   Trash disappears, the bomb flies up in front of you.
+## - Countdown: starts after the intro text (start_countdown()), shown on the wrist and, once it is
+##   in the ground, on the bomb. At 00:00 the bomb goes off = Game Over.
 
 signal find_uncovered(find: Node3D, is_bomb: bool)
 signal trash_selected(trash_count: int)
 signal bomb_selected(bomb: Bomb)
+signal time_up
 
 @export var sandbox: Sandbox
 @export var bomb_scene: PackedScene
@@ -19,6 +22,11 @@ signal bomb_selected(bomb: Bomb)
 ## Which uncovered find is the bomb (1 = first)
 @export var bomb_number: int = 3
 @export var trash_size: Vector3 = Vector3(0.28, 0.16, 0.2)
+## Bomb countdown (s)
+@export var countdown_seconds: float = 60.0
+## Until the intro text exists: countdown starts this many seconds after "GO!".
+## -1 = only through start_countdown() (call it when the intro text is over).
+@export var start_after_go_seconds: float = 0.0
 
 ## Uncovered when at least this share of the top samples is free of earth
 const UNCOVERED_FREE_SHARE: float = 0.65
@@ -39,6 +47,8 @@ const BOMB_DISTANCE: float = 0.55
 const BOMB_DROP: float = 0.55
 const BOMB_FLIGHT_TIME: float = 1.2
 
+var time_left: float = 0.0
+var is_counting_down: bool = false
 var uncovered_count: int = 0
 var trash_count: int = 0
 var _finds: Array[Dictionary] = [] # {spot, model, bounds (AABB in spot space), uncovered, is_bomb, selectable}
@@ -47,9 +57,15 @@ var _camera: XRCamera3D
 var _hands: Array[Dictionary] = [] # {controller, pickup, laser, trigger_was_pressed}
 var _select_hint: Label3D
 var _trash_material: StandardMaterial3D
+var _game: GameScene
+var _bomb: Bomb
+var _countdown_started: bool = false
+var _time_since_go: float = 0.0
 
 
 func _ready() -> void:
+	_game = get_parent() as GameScene
+	time_left = countdown_seconds
 	_trash_material = StandardMaterial3D.new()
 	_trash_material.albedo_color = Color(0.42, 0.4, 0.36)
 	_trash_material.roughness = 0.9
@@ -84,6 +100,7 @@ func _bury() -> void:
 
 
 func _process(delta: float) -> void:
+	_update_countdown(delta)
 	_time_to_next_check -= delta
 	if _time_to_next_check <= 0.0:
 		_time_to_next_check = CHECK_INTERVAL
@@ -93,6 +110,41 @@ func _process(delta: float) -> void:
 	_select_hint.visible = false
 	for hand in _hands:
 		_update_hand(hand)
+
+
+## Call this when the intro text is over.
+func start_countdown() -> void:
+	if _countdown_started:
+		return
+	_countdown_started = true
+	is_counting_down = true
+	time_left = countdown_seconds
+
+
+func _update_countdown(delta: float) -> void:
+	if _game == null or _game.state != GameScene.State.PLAYING:
+		return # paused, game over or not started yet
+	if not _countdown_started and start_after_go_seconds >= 0.0:
+		_time_since_go += delta
+		if _time_since_go >= start_after_go_seconds:
+			start_countdown()
+	if not is_counting_down:
+		return
+	time_left = maxf(time_left - delta, 0.0)
+	_game.wrist_menu.show_time(time_left)
+	if is_instance_valid(_bomb):
+		_bomb.show_time(time_left)
+	if time_left <= 0.0:
+		is_counting_down = false
+		_explode()
+
+
+## Simple version for now: the bomb disappears and the round is lost (Game Over on the wrist).
+func _explode() -> void:
+	if is_instance_valid(_bomb):
+		_bomb.visible = false
+	time_up.emit()
+	_game.map.lost.emit()
 
 
 func _check_uncovered() -> void:
@@ -155,6 +207,8 @@ func _turn_into_bomb(find: Dictionary) -> void:
 	find.model = bomb
 	find.bounds = bomb.transform * _local_bounds(bomb)
 	find.is_bomb = true
+	_bomb = bomb
+	bomb.show_time(time_left, is_counting_down) # takes over the running countdown
 
 
 func _update_hand(hand: Dictionary) -> void:
