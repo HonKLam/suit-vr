@@ -10,6 +10,7 @@ var _queue: Array[AudioStream] = []
 
 
 func _ready() -> void:
+	bus = &"Funk" # walkie-talkie filter (Audio panel, default_bus_layout.tres)
 	finished.connect(_on_finished)
 
 
