@@ -1,0 +1,40 @@
+[gd_resource type="AudioBusLayout" format=3 uid="uid://dndw8jv6lb1al"]
+
+[sub_resource type="AudioEffectHighPassFilter" id="AudioEffectHighPassFilter_j3pel"]
+resource_name = "HighPassFilter"
+cutoff_hz = 1304.0
+resonance = 0.19
+
+[sub_resource type="AudioEffectLowPassFilter" id="AudioEffectLowPassFilter_funk"]
+resource_name = "LowPassFilter"
+cutoff_hz = 11924.0
+resonance = 0.75
+
+[sub_resource type="AudioEffectDistortion" id="AudioEffectDistortion_funk"]
+resource_name = "Distortion"
+mode = 3
+pre_gain = 6.26
+keep_hf_hz = 16194.0
+drive = 0.73
+post_gain = -1.56
+
+[sub_resource type="AudioEffectCompressor" id="AudioEffectCompressor_funk"]
+resource_name = "Compressor"
+threshold = -12.3
+ratio = 17.6
+
+[resource]
+bus/1/name = &"Funk"
+bus/1/solo = false
+bus/1/mute = false
+bus/1/bypass_fx = false
+bus/1/volume_db = 0.0
+bus/1/send = &"Master"
+bus/1/effect/0/effect = SubResource("AudioEffectHighPassFilter_j3pel")
+bus/1/effect/0/enabled = true
+bus/1/effect/1/effect = SubResource("AudioEffectLowPassFilter_funk")
+bus/1/effect/1/enabled = true
+bus/1/effect/2/effect = SubResource("AudioEffectDistortion_funk")
+bus/1/effect/2/enabled = true
+bus/1/effect/3/effect = SubResource("AudioEffectCompressor_funk")
+bus/1/effect/3/enabled = true

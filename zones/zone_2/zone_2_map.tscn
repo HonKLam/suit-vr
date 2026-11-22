@@ -84,17 +84,14 @@ script = ExtResource("92_metal")
 [node name="Can" type="Node3D" parent="Sandbox/MetalTestPlaceholder" unique_id=887402717]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.8, -0.25, 0.5)
 script = ExtResource("92_metal")
-strength = 0.8
 
 [node name="Coin1" type="Node3D" parent="Sandbox/MetalTestPlaceholder" unique_id=1893665757]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.9, -0.15, 0.9)
 script = ExtResource("92_metal")
-strength = 0.5
 
 [node name="Coin2" type="Node3D" parent="Sandbox/MetalTestPlaceholder" unique_id=1094815136]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, -0.4, -0.9)
 script = ExtResource("92_metal")
-strength = 0.5
 
 [node name="MetalDetector" parent="." unique_id=1538982907 instance=ExtResource("91_detector")]
 transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 1.4, 0, 9)
@@ -153,7 +150,10 @@ transform = Transform3D(0.0667, 0, -0.5539, 0, 0.5579, 0, 0.5539, 0, 0.0667, -0.
 transform = Transform3D(0.4651, 0, 0.3092, 0, 0.5585, 0, -0.3092, 0, 0.4651, -0.141, 0, 2.34)
 
 [node name="RockPath_Round_Small_3_5" parent="Path" unique_id=1148031382 instance=ExtResource("25_r")]
-transform = Transform3D(-0.3682, 0, 0.3691, 0, 0.5213, 0, -0.3691, 0, -0.3682, -0.014, 0, 1.72)
+transform = Transform3D(0.050983325, 0, 0.51885146, 0, 0.5213001, 0, -0.51885146, 0, 0.050983325, -0.5955312, 0, 1.9072982)
+
+[node name="RockPath_Round_Small_3_6" parent="Path" unique_id=941771346 instance=ExtResource("25_r")]
+transform = Transform3D(-0.45805424, 0, -0.24898274, 0, 0.5213, 0, 0.24898274, 0, -0.45805424, 0.28319395, 0, 1.9079088)
 
 [node name="Nature" type="Node3D" parent="." unique_id=1171048139]
 script = ExtResource("5_r")
@@ -531,7 +531,7 @@ transform = Transform3D(0.0044, 0, -0.3102, 0, 0.3103, 0, 0.3102, 0, 0.0044, 2.0
 transform = Transform3D(0.0286, 0, 0.2201, 0, 0.2219, 0, -0.2201, 0, 0.0286, -0.642, 0, -2.371)
 
 [node name="Flower_4_Group_5" parent="Nature" unique_id=1279257888 instance=ExtResource("15_r")]
-transform = Transform3D(0.1444, 0, 0.1646, 0, 0.2189, 0, -0.1646, 0, 0.1444, -1.557, 0, 2.333)
+transform = Transform3D(0.1444, 0, 0.1646, 0, 0.2189, 0, -0.1646, 0, 0.1444, -1.635857, 0, 2.333)
 
 [node name="Clover_1_5" parent="Nature" unique_id=863861855 instance=ExtResource("9_r")]
 transform = Transform3D(-0.2136, 0, 0.0958, 0, 0.2341, 0, -0.0958, 0, -0.2136, -4.928, 0, -3.146)
@@ -570,7 +570,7 @@ transform = Transform3D(-0.0546, 0, 0.2114, 0, 0.2183, 0, -0.2114, 0, -0.0546, 2
 transform = Transform3D(0.1058, 0, 0.4502, 0, 0.4625, 0, -0.4502, 0, 0.1058, -1.844, 0, 4.528)
 
 [node name="Pebble_Round_1_1" parent="Nature" unique_id=243128048 instance=ExtResource("17_r")]
-transform = Transform3D(0.1912, 0, 0.5227, 0, 0.5565, 0, -0.5227, 0, 0.1912, -0.397, 0, 6.376)
+transform = Transform3D(0.1912, 0, 0.5227, 0, 0.5565, 0, -0.5227, 0, 0.1912, -0.4235807, 0, 5.9065957)
 
 [node name="Pebble_Round_2_1" parent="Nature" unique_id=564595767 instance=ExtResource("18_r")]
 transform = Transform3D(-0.2406, 0, 0.3201, 0, 0.4004, 0, -0.3201, 0, -0.2406, 1.48, 0, 9.024)
@@ -585,7 +585,7 @@ transform = Transform3D(-0.4644, 0, -0.1711, 0, 0.495, 0, 0.1711, 0, -0.4644, 0.
 transform = Transform3D(0.4159, 0, -0.1882, 0, 0.4565, 0, 0.1882, 0, 0.4159, 1.547, 0, 8.231)
 
 [node name="Pebble_Round_2_3" parent="Nature" unique_id=676594864 instance=ExtResource("18_r")]
-transform = Transform3D(-0.2813, 0, 0.4019, 0, 0.4905, 0, -0.4019, 0, -0.2813, -0.368, 0, 7.014)
+transform = Transform3D(-0.2813, 0, 0.4019, 0, 0.4905, 0, -0.4019, 0, -0.2813, -0.0061129034, 0, 6.9909353)
 
 [node name="Pebble_Round_1_4" parent="Nature" unique_id=2038285262 instance=ExtResource("17_r")]
 transform = Transform3D(-0.2642, 0, 0.5117, 0, 0.5759, 0, -0.5117, 0, -0.2642, 0.056, 0, 7.674)

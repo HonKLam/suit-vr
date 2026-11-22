@@ -1,0 +1,15 @@
+[gd_resource type="StandardMaterial3D" format=3]
+
+[ext_resource type="Texture2D" path="res://zones/zone_2/props/bomb/textures/bomb_flap_basecolor.png" id="1_base"]
+[ext_resource type="Texture2D" path="res://zones/zone_2/props/bomb/textures/bomb_flap_metallic.png" id="2_metal"]
+[ext_resource type="Texture2D" path="res://zones/zone_2/props/bomb/textures/bomb_flap_roughness.png" id="3_rough"]
+[ext_resource type="Texture2D" path="res://zones/zone_2/props/bomb/textures/bomb_flap_normal.png" id="4_normal"]
+
+[resource]
+resource_name = "bomb_flap"
+albedo_texture = ExtResource("1_base")
+metallic = 1.0
+metallic_texture = ExtResource("2_metal")
+roughness_texture = ExtResource("3_rough")
+normal_enabled = true
+normal_texture = ExtResource("4_normal")

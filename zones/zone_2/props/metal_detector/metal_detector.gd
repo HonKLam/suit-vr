@@ -98,7 +98,7 @@ func measure() -> float:
 	var best := 0.0
 	for m in get_tree().get_nodes_in_group(MetalObject.GROUP):
 		var f := clampf(1.0 - p.distance_to(m.global_position) / detect_range, 0.0, 1.0)
-		best = maxf(best, m.strength * f * f)
+		best = maxf(best, f * f)
 	return best
 
 

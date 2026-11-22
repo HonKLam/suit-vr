@@ -1,0 +1,133 @@
+[remap]
+
+importer="scene"
+importer_version=1
+type="PackedScene"
+uid="uid://cm5ycyo0jixh3"
+path="res://.godot/imported/bomb.glb-855a0f1baaae9a6830db693e52439b52.scn"
+
+[deps]
+
+source_file="res://zones/zone_2/props/bomb/model/bomb.glb"
+dest_files=["res://.godot/imported/bomb.glb-855a0f1baaae9a6830db693e52439b52.scn"]
+
+[params]
+
+nodes/root_type=""
+nodes/root_name=""
+nodes/root_script=null
+mesh_library/use_node_names_as_mesh_names=false
+array_mesh/deduplicate_surfaces=true
+nodes/apply_root_scale=true
+nodes/root_scale=1.0
+nodes/import_as_skeleton_bones=false
+nodes/use_name_suffixes=true
+nodes/use_node_type_suffixes=true
+meshes/ensure_tangents=true
+meshes/generate_lods=true
+meshes/create_shadow_meshes=true
+meshes/light_baking=1
+meshes/lightmap_texel_size=0.2
+meshes/force_disable_compression=false
+skins/use_named_skins=true
+animation/import=true
+animation/fps=30
+animation/trimming=false
+animation/remove_immutable_tracks=true
+animation/import_rest_as_RESET=false
+import_script/path=""
+materials/extract=0
+materials/extract_format=0
+materials/extract_path=""
+_subresources={
+"materials": {
+"BombBody": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://zones/zone_2/props/bomb/materials/bomb_body.tres",
+"use_external/path": "res://zones/zone_2/props/bomb/materials/bomb_body.tres"
+},
+"BombBody_2": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://zones/zone_2/props/bomb/materials/bomb_body_2.tres",
+"use_external/path": "res://zones/zone_2/props/bomb/materials/bomb_body_2.tres"
+},
+"BombBody_3": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://zones/zone_2/props/bomb/materials/bomb_body_3.tres",
+"use_external/path": "res://zones/zone_2/props/bomb/materials/bomb_body_3.tres"
+},
+"BombBody_4": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://zones/zone_2/props/bomb/materials/bomb_body_4.tres",
+"use_external/path": "res://zones/zone_2/props/bomb/materials/bomb_body_4.tres"
+},
+"BombBody_5": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://zones/zone_2/props/bomb/materials/bomb_body_5.tres",
+"use_external/path": "res://zones/zone_2/props/bomb/materials/bomb_body_5.tres"
+},
+"Chip": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://zones/zone_2/props/bomb/materials/bomb_chip.tres",
+"use_external/path": "res://zones/zone_2/props/bomb/materials/bomb_chip.tres"
+},
+"Clamp": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://zones/zone_2/props/bomb/materials/bomb_clamp.tres",
+"use_external/path": "res://zones/zone_2/props/bomb/materials/bomb_clamp.tres"
+},
+"Knob": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://zones/zone_2/props/bomb/materials/bomb_knob.tres",
+"use_external/path": "res://zones/zone_2/props/bomb/materials/bomb_knob.tres"
+},
+"Material 2": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://zones/zone_2/props/bomb/materials/bomb_frame.tres",
+"use_external/path": "res://zones/zone_2/props/bomb/materials/bomb_frame.tres"
+},
+"Material 3": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://zones/zone_2/props/bomb/materials/bomb_flap.tres",
+"use_external/path": "res://zones/zone_2/props/bomb/materials/bomb_flap.tres"
+},
+"PCB": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://zones/zone_2/props/bomb/materials/bomb_pcb.tres",
+"use_external/path": "res://zones/zone_2/props/bomb/materials/bomb_pcb.tres"
+},
+"Switch": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://zones/zone_2/props/bomb/materials/bomb_switch.tres",
+"use_external/path": "res://zones/zone_2/props/bomb/materials/bomb_switch.tres"
+},
+"Timer_Display": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://zones/zone_2/props/bomb/materials/bomb_timer_display.tres",
+"use_external/path": "res://zones/zone_2/props/bomb/materials/bomb_timer_display.tres"
+},
+"Timer_Housing": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://zones/zone_2/props/bomb/materials/bomb_timer_housing.tres",
+"use_external/path": "res://zones/zone_2/props/bomb/materials/bomb_timer_housing.tres"
+},
+"Wire_Blue": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://zones/zone_2/props/bomb/materials/bomb_wire_blue.tres",
+"use_external/path": "res://zones/zone_2/props/bomb/materials/bomb_wire_blue.tres"
+},
+"Wire_Red": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://zones/zone_2/props/bomb/materials/bomb_wire_red.tres",
+"use_external/path": "res://zones/zone_2/props/bomb/materials/bomb_wire_red.tres"
+},
+"Wire_Yellow": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://zones/zone_2/props/bomb/materials/bomb_wire_yellow.tres",
+"use_external/path": "res://zones/zone_2/props/bomb/materials/bomb_wire_yellow.tres"
+}
+}
+}
+gltf/naming_version=2
+gltf/embedded_image_handling=1
+gltf/texture_map_mode=1
