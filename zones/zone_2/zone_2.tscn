@@ -1,17 +1,17 @@
 [gd_scene format=3 uid="uid://dh7h8extmccup"]
 
-[ext_resource type="PackedScene" uid="uid://chjrlgbxu2o51" path="res://shared/game/game_scene.tscn" id="game_scene"]
-[ext_resource type="PackedScene" uid="uid://dnih82iesuh5h" path="res://zones/zone_2/zone_2_map.tscn" id="map_scene"]
-[ext_resource type="Script" path="res://zones/zone_2/props/tool_menu/tool_menu.gd" id="tool_menu"]
-[ext_resource type="PackedScene" path="res://zones/zone_2/props/tool_menu/marker_flag.tscn" id="marker_flag"]
-[ext_resource type="Script" path="res://zones/zone_2/dig/dig_finds.gd" id="dig_finds"]
+[ext_resource type="AudioStream" uid="uid://dgs32pysetu3m" path="res://zones/zone_2/voice/stage_2_bomb_found.mp3" id="bomb_found_voice"]
 [ext_resource type="PackedScene" path="res://zones/zone_2/props/bomb/bomb.tscn" id="bomb_scene"]
-[ext_resource type="AudioStream" path="res://zones/zone_2/voice/stage_2_intro.mp3" id="intro_voice"]
-[ext_resource type="AudioStream" path="res://zones/zone_2/voice/stage_2_bomb_found.mp3" id="bomb_found_voice"]
-[ext_resource type="PackedScene" uid="uid://dcqjd7q20f5en" path="res://zones/zone_2/props/finds/coin/model/coin.glb" id="coin_scene"]
 [ext_resource type="PackedScene" uid="uid://by73tu3cuwoxm" path="res://zones/zone_2/props/finds/can/model/can.glb" id="can_scene"]
-[ext_resource type="AudioStream" path="res://zones/zone_2/voice/stage_2_trash_1.mp3" id="trash_voice_1"]
-[ext_resource type="AudioStream" path="res://zones/zone_2/voice/stage_2_trash_2.mp3" id="trash_voice_2"]
+[ext_resource type="PackedScene" uid="uid://dcqjd7q20f5en" path="res://zones/zone_2/props/finds/coin/model/coin.glb" id="coin_scene"]
+[ext_resource type="Script" uid="uid://mowsiim22bsa" path="res://zones/zone_2/dig/dig_finds.gd" id="dig_finds"]
+[ext_resource type="PackedScene" uid="uid://chjrlgbxu2o51" path="res://shared/game/game_scene.tscn" id="game_scene"]
+[ext_resource type="AudioStream" uid="uid://gsaswoxfcsm5" path="res://zones/zone_2/voice/stage_2_intro.mp3" id="intro_voice"]
+[ext_resource type="PackedScene" uid="uid://dnih82iesuh5h" path="res://zones/zone_2/zone_2_map.tscn" id="map_scene"]
+[ext_resource type="PackedScene" path="res://zones/zone_2/props/tool_menu/marker_flag.tscn" id="marker_flag"]
+[ext_resource type="Script" uid="uid://vaek16jg7veu" path="res://zones/zone_2/props/tool_menu/tool_menu.gd" id="tool_menu"]
+[ext_resource type="AudioStream" uid="uid://ydmsssbbgtv4" path="res://zones/zone_2/voice/stage_2_trash_1.mp3" id="trash_voice_1"]
+[ext_resource type="AudioStream" uid="uid://bvte4eyssnv7y" path="res://zones/zone_2/voice/stage_2_trash_2.mp3" id="trash_voice_2"]
 
 [sub_resource type="ProceduralSkyMaterial" id="Sky_mat"]
 sky_top_color = Color(0.3, 0.55, 0.92, 1)
@@ -56,18 +56,18 @@ directional_shadow_max_distance = 25.0
 
 [node name="Map" parent="." index="4" unique_id=2042539260 instance=ExtResource("map_scene")]
 
-[node name="ToolMenu" type="Node3D" parent="." unique_id=1590347282 node_paths=PackedStringArray("shovel", "metal_detector")]
+[node name="ToolMenu" type="Node3D" parent="." index="5" unique_id=1590347282 node_paths=PackedStringArray("shovel", "metal_detector")]
 script = ExtResource("tool_menu")
 shovel = NodePath("../Map/Shovel")
 metal_detector = NodePath("../Map/MetalDetector")
 flag_scene = ExtResource("marker_flag")
 
-[node name="DigFinds" type="Node3D" parent="." unique_id=1093384712 node_paths=PackedStringArray("sandbox", "tool_menu")]
+[node name="DigFinds" type="Node3D" parent="." index="6" unique_id=1093384712 node_paths=PackedStringArray("sandbox", "tool_menu")]
 script = ExtResource("dig_finds")
 sandbox = NodePath("../Map/Sandbox")
 bomb_scene = ExtResource("bomb_scene")
-bomb_found_voice = ExtResource("bomb_found_voice")
+tool_menu = NodePath("../ToolMenu")
 coin_scene = ExtResource("coin_scene")
 can_scene = ExtResource("can_scene")
+bomb_found_voice = ExtResource("bomb_found_voice")
 trash_voices = Array[AudioStream]([ExtResource("trash_voice_1"), ExtResource("trash_voice_2")])
-tool_menu = NodePath("../ToolMenu")

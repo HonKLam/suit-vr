@@ -11,6 +11,7 @@ shared/          Used by every zone: game flow, player, wrist menu, vibration
 zones/
   zone_1/        Climbing with crumbling holds and rising lava
   zone_2/        Forest clearing with digging and a metal detector
+  zone_3/        Hot wire: carry a ring you size with your hands along a wire
   debug/         Small test level
 addons/          Third-party addons
 ```
@@ -37,7 +38,7 @@ To play a different zone, change `Main Scene` on the root node of `main.tscn`.
 - **Pull requests:** `PR check` loads every zone and fails on script or loading errors.
   Locally: `.github/scripts/check-zones.sh`
 - **Releases:** run the `godot-ci export` workflow by hand with a version like `v1.0.0`. It builds
-  every demo for Quest, Windows and Linux (`SUIT-VR-S3-Demo-1`, `-2`, ...), uploads each as an
+  every demo for Quest (`SUIT-VR-S3-Demo-1`, `-2`, ...), uploads each as an
   artifact and creates a draft release.
 
 To add a demo, add a line to `demo` in `.github/workflows/godot-ci.yml`.

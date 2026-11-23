@@ -55,9 +55,8 @@ jobs:
         demo:
           - { number: 1, zone: zone_1 }
           - { number: 2, zone: zone_2 }
+          - { number: 3, zone: zone_3 }
         platform:
-          - { name: Windows, id: windows, preset: "Windows Desktop", args: "--export-release", file_suffix: ".exe" }
-          - { name: Linux, id: linux, preset: "Linux", args: "--export-release", file_suffix: ".x86_64" }
           # Debug export, signed with the image's debug keystore (sideload only).
           - { name: Quest, id: quest, preset: "Android", args: "--install-android-build-template --export-debug", file_suffix: "_quest-debug.apk" }
     env:
@@ -117,9 +116,6 @@ jobs:
       - name: Prepare Release Files
         run: |
           cd build
-          for dir in *_windows *_linux; do
-            (cd "$dir" && zip -r "../$dir.zip" .)
-          done
           for dir in *_quest; do
             cp "$dir"/*.apk "$dir-debug.apk"
           done
@@ -130,5 +126,4 @@ jobs:
           tag_name: ${{ github.event.inputs.version }}
           name: "${{ env.EXPORT_NAME }} ${{ github.event.inputs.version }}"
           files: |
-            build/*.zip
             build/*.apk

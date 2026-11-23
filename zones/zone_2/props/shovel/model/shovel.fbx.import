@@ -44,17 +44,17 @@ _subresources={
 "Shovel_Grip": {
 "use_external/enabled": true,
 "use_external/fallback_path": "res://zones/zone_2/props/shovel/materials/shovel_grip.tres",
-"use_external/path": "res://zones/zone_2/props/shovel/materials/shovel_grip.tres"
+"use_external/path": "uid://c3bhn3lbduso1"
 },
 "Shovel_Metal": {
 "use_external/enabled": true,
 "use_external/fallback_path": "res://zones/zone_2/props/shovel/materials/shovel_metal.tres",
-"use_external/path": "res://zones/zone_2/props/shovel/materials/shovel_metal.tres"
+"use_external/path": "uid://cmcalasj6fwd5"
 },
 "Shovel_Wood": {
 "use_external/enabled": true,
 "use_external/fallback_path": "res://zones/zone_2/props/shovel/materials/shovel_wood.tres",
-"use_external/path": "res://zones/zone_2/props/shovel/materials/shovel_wood.tres"
+"use_external/path": "uid://5538fpoa7krm"
 }
 }
 }

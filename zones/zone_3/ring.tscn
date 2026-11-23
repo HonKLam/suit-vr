@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://dsdsryfkln7g7"]
+
+[ext_resource type="Script" uid="uid://hltwa01vn4wu" path="res://zones/zone_3/ring.gd" id="1_ring"]
+
+[sub_resource type="TorusMesh" id="TorusMesh_ring"]
+inner_radius = 0.138
+outer_radius = 0.162
+rings = 48
+ring_segments = 12
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ring"]
+albedo_color = Color(0.9, 0.9, 0.9, 1)
+
+[node name="Ring" type="Node3D" unique_id=1443742973]
+script = ExtResource("1_ring")
+
+[node name="Mesh" type="MeshInstance3D" parent="."]
+mesh = SubResource("TorusMesh_ring")
+material_override = SubResource("StandardMaterial3D_ring")
