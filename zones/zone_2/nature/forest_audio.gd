@@ -6,6 +6,7 @@ extends Node3D
 ## - Birds / distant forest: long recordings played at random places around the player.
 ##   Now and then a voice fades out, jumps elsewhere and fades back in.
 ## - Calls: single bird songs at random places around the player.
+## Silent after the explosion (round lost) until the restart.
 
 const SILENT_DB := -60.0
 const WIND_CROSSFADE := 4.0
@@ -64,6 +65,7 @@ class Roamer:
 	var timer := 0.0
 
 var _started := false
+var _silenced := false
 var _wind: Array[AudioStreamPlayer] = []
 var _wind_fade: Array[float] = [0.0, 0.0] # 0..1 per player
 var _wind_cur := 0
@@ -78,6 +80,9 @@ var _call_timer := 0.0
 
 
 func _ready() -> void:
+	var map := get_parent() as ZoneMap
+	if map:
+		map.lost.connect(_silence)
 	if wind:
 		for i in 2:
 			var p := AudioStreamPlayer.new()
@@ -124,6 +129,14 @@ func _start(head: Vector3) -> void:
 		create_tween().tween_property(r.player, "volume_db", r.volume_db, r.fade)
 
 
+func _silence() -> void:
+	_silenced = true
+	set_process(false)
+	for child in get_children():
+		if child is AudioStreamPlayer or child is AudioStreamPlayer3D:
+			child.stop()
+
+
 func _next_call_pause() -> float:
 	return call_pause * randf_range(0.5, 1.5)
 
@@ -162,6 +175,8 @@ func _hop(r: Roamer) -> void:
 
 
 func _relocate(r: Roamer) -> void:
+	if _silenced:
+		return
 	var cam := get_viewport().get_camera_3d()
 	if cam:
 		_place(r, cam.global_position)

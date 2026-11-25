@@ -11,6 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://by73tu3cuwoxm" path="res://zones/zone_2/props/finds/can/model/can.glb" id="can_scene"]
 [ext_resource type="PackedScene" uid="uid://dcqjd7q20f5en" path="res://zones/zone_2/props/finds/coin/model/coin.glb" id="coin_scene"]
 [ext_resource type="Script" uid="uid://mowsiim22bsa" path="res://zones/zone_2/dig/dig_finds.gd" id="dig_finds"]
+[ext_resource type="Script" uid="uid://qp2hub7m1bg6" path="res://zones/zone_2/dig/explosion_fade.gd" id="explosion_fade"]
 [ext_resource type="Script" uid="uid://c2p451355en6g" path="res://zones/zone_2/dig/finds_audio.gd" id="finds_audio"]
 [ext_resource type="PackedScene" uid="uid://chjrlgbxu2o51" path="res://shared/game/game_scene.tscn" id="game_scene"]
 [ext_resource type="AudioStream" uid="uid://gsaswoxfcsm5" path="res://zones/zone_2/voice/stage_2_intro.mp3" id="intro_voice"]
@@ -88,3 +89,6 @@ pickup = ExtResource("item_pickup")
 time_bonus = ExtResource("bomb_time_bonus")
 bomb_found = ExtResource("bomb_found")
 bomb_off = ExtResource("bomb_off")
+
+[node name="ExplosionFade" type="Node" parent="DigFinds" index="1" unique_id=1179416813]
+script = ExtResource("explosion_fade")
