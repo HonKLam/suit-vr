@@ -1,12 +1,20 @@
 [gd_scene format=3 uid="uid://dh7h8extmccup"]
 
+[ext_resource type="AudioStream" uid="uid://cq8yg5dufvtx5" path="res://zones/zone_2/dig/sounds/bomb_explosion.wav" id="bomb_explosion"]
+[ext_resource type="AudioStream" uid="uid://cgn0mc7d8bu61" path="res://zones/zone_2/dig/sounds/bomb_found.wav" id="bomb_found"]
 [ext_resource type="AudioStream" uid="uid://dgs32pysetu3m" path="res://zones/zone_2/voice/stage_2_bomb_found.mp3" id="bomb_found_voice"]
+[ext_resource type="AudioStream" uid="uid://dssfhf2l08swh" path="res://zones/zone_2/dig/sounds/bomb_off.wav" id="bomb_off"]
 [ext_resource type="PackedScene" path="res://zones/zone_2/props/bomb/bomb.tscn" id="bomb_scene"]
+[ext_resource type="AudioStream" uid="uid://c1skdrq3voxtg" path="res://zones/zone_2/dig/sounds/bomb_tick_1.wav" id="bomb_tick_1"]
+[ext_resource type="AudioStream" uid="uid://6fybgehawrtx" path="res://zones/zone_2/dig/sounds/bomb_tick_2.wav" id="bomb_tick_2"]
+[ext_resource type="AudioStream" uid="uid://doiewef0yhotr" path="res://zones/zone_2/dig/sounds/bomb_time_bonus.wav" id="bomb_time_bonus"]
 [ext_resource type="PackedScene" uid="uid://by73tu3cuwoxm" path="res://zones/zone_2/props/finds/can/model/can.glb" id="can_scene"]
 [ext_resource type="PackedScene" uid="uid://dcqjd7q20f5en" path="res://zones/zone_2/props/finds/coin/model/coin.glb" id="coin_scene"]
 [ext_resource type="Script" uid="uid://mowsiim22bsa" path="res://zones/zone_2/dig/dig_finds.gd" id="dig_finds"]
+[ext_resource type="Script" uid="uid://c2p451355en6g" path="res://zones/zone_2/dig/finds_audio.gd" id="finds_audio"]
 [ext_resource type="PackedScene" uid="uid://chjrlgbxu2o51" path="res://shared/game/game_scene.tscn" id="game_scene"]
 [ext_resource type="AudioStream" uid="uid://gsaswoxfcsm5" path="res://zones/zone_2/voice/stage_2_intro.mp3" id="intro_voice"]
+[ext_resource type="AudioStream" uid="uid://c4mpg2n2y0y4h" path="res://zones/zone_2/props/sounds/item_pickup.wav" id="item_pickup"]
 [ext_resource type="PackedScene" uid="uid://dnih82iesuh5h" path="res://zones/zone_2/zone_2_map.tscn" id="map_scene"]
 [ext_resource type="PackedScene" path="res://zones/zone_2/props/tool_menu/marker_flag.tscn" id="marker_flag"]
 [ext_resource type="Script" uid="uid://vaek16jg7veu" path="res://zones/zone_2/props/tool_menu/tool_menu.gd" id="tool_menu"]
@@ -71,3 +79,12 @@ coin_scene = ExtResource("coin_scene")
 can_scene = ExtResource("can_scene")
 bomb_found_voice = ExtResource("bomb_found_voice")
 trash_voices = Array[AudioStream]([ExtResource("trash_voice_1"), ExtResource("trash_voice_2")])
+
+[node name="FindsAudio" type="Node" parent="DigFinds" index="0" unique_id=155041546]
+script = ExtResource("finds_audio")
+ticks = Array[AudioStream]([ExtResource("bomb_tick_1"), ExtResource("bomb_tick_2")])
+explosion = ExtResource("bomb_explosion")
+pickup = ExtResource("item_pickup")
+time_bonus = ExtResource("bomb_time_bonus")
+bomb_found = ExtResource("bomb_found")
+bomb_off = ExtResource("bomb_off")

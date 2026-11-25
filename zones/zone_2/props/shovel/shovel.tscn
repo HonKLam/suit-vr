@@ -4,7 +4,10 @@
 [ext_resource type="PackedScene" uid="uid://c25yxb0vt53vc" path="res://addons/godot-xr-tools/objects/grab_points/grab_point_hand_left.tscn" id="2_cjici"]
 [ext_resource type="PackedScene" uid="uid://ctw7nbntd5pcj" path="res://addons/godot-xr-tools/objects/grab_points/grab_point_hand_right.tscn" id="3_04cyy"]
 [ext_resource type="PackedScene" uid="uid://ckqwe48adb3lp" path="res://zones/zone_2/props/shovel/model/shovel.fbx" id="4_model"]
-[ext_resource type="AudioStream" uid="uid://cs2gyadyvscgb" path="res://zones/zone_2/props/sounds/tool_pickup_1.wav" id="audio_1"]
+[ext_resource type="AudioStream" path="res://zones/zone_2/props/sounds/item_pickup.wav" id="audio_1"]
+[ext_resource type="AudioStream" path="res://zones/zone_2/props/sounds/item_unselect_1.wav" id="item_unselect_1"]
+[ext_resource type="AudioStream" path="res://zones/zone_2/props/sounds/item_unselect_2.wav" id="item_unselect_2"]
+[ext_resource type="AudioStream" path="res://zones/zone_2/props/sounds/item_unselect_3.wav" id="item_unselect_3"]
 [ext_resource type="AudioStream" uid="uid://cb7w05v6v4i8m" path="res://zones/zone_2/props/sounds/tool_drop_1.wav" id="audio_2"]
 [ext_resource type="AudioStream" uid="uid://d4hlfj7toeydh" path="res://zones/zone_2/props/sounds/tool_drop_2.wav" id="audio_3"]
 [ext_resource type="AudioStream" uid="uid://dce6j6rhwtfsx" path="res://zones/zone_2/props/sounds/tool_drop_3.wav" id="audio_4"]
@@ -26,6 +29,12 @@
 [ext_resource type="Script" uid="uid://bsjlb2faa4pac" path="res://zones/zone_2/props/shovel/shovel_audio.gd" id="audio_20"]
 [ext_resource type="Script" uid="uid://bls76n0384tgt" path="res://zones/zone_2/props/shovel/pull_ring.gd" id="pull_ring"]
 [ext_resource type="Script" uid="uid://ckw0vws0448af" path="res://zones/zone_2/props/shovel/stab_marker.gd" id="stab_marker"]
+[ext_resource type="AudioStream" path="res://zones/zone_2/props/shovel/sounds/shovel_hit_1.wav" id="hit_1"]
+[ext_resource type="AudioStream" path="res://zones/zone_2/props/shovel/sounds/shovel_hit_2.wav" id="hit_2"]
+[ext_resource type="AudioStream" path="res://zones/zone_2/props/shovel/sounds/shovel_hit_3.wav" id="hit_3"]
+[ext_resource type="AudioStream" path="res://zones/zone_2/props/shovel/sounds/shovel_hit_4.wav" id="hit_4"]
+[ext_resource type="AudioStream" path="res://zones/zone_2/props/shovel/sounds/shovel_hit_5.wav" id="hit_5"]
+[ext_resource type="AudioStream" path="res://zones/zone_2/props/shovel/sounds/shovel_hit_6.wav" id="hit_6"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_04ca8"]
 size = Vector3(0.164, 0.205, 0.045)
@@ -84,13 +93,15 @@ drive_aim = 1.0
 [node name="ToolAudio" type="Node3D" parent="." unique_id=1846616679]
 script = ExtResource("audio_6")
 pickup_sounds = Array[AudioStream]([ExtResource("audio_1")])
-drop_sounds = Array[AudioStream]([ExtResource("audio_2"), ExtResource("audio_3"), ExtResource("audio_4"), ExtResource("audio_5")])
+appear_sounds = Array[AudioStream]([ExtResource("audio_2"), ExtResource("audio_3"), ExtResource("audio_4"), ExtResource("audio_5")])
+menu_sounds = Array[AudioStream]([ExtResource("item_unselect_1"), ExtResource("item_unselect_2"), ExtResource("item_unselect_3")])
 
 [node name="ShovelAudio" type="Node3D" parent="." unique_id=990508786]
 script = ExtResource("audio_20")
 stab_light = Array[AudioStream]([ExtResource("audio_7"), ExtResource("audio_8"), ExtResource("audio_9")])
 stab_normal = Array[AudioStream]([ExtResource("audio_10"), ExtResource("audio_11"), ExtResource("audio_12")])
 stab_strong = Array[AudioStream]([ExtResource("audio_13"), ExtResource("audio_14")])
+hits = Array[AudioStream]([ExtResource("hit_1"), ExtResource("hit_2"), ExtResource("hit_3"), ExtResource("hit_4"), ExtResource("hit_5"), ExtResource("hit_6")])
 scoops = Array[AudioStream]([ExtResource("audio_15"), ExtResource("audio_16"), ExtResource("audio_17"), ExtResource("audio_18"), ExtResource("audio_19")])
 
 [node name="PullRing" type="MeshInstance3D" parent="." unique_id=1418273645]
