@@ -6,7 +6,7 @@ extends ZoneMap
 ## - Obstacles: the spheres and boxes under Obstacles, so a huge ring doesn't just pass. Move,
 ##   rotate, scale or duplicate them in the editor (sphere: keep the scale uniform).
 ## - Closer than warn_distance to the wire or an obstacle: both controllers vibrate, the closer the
-##   stronger. Closer than danger_distance: fast pulses at full strength.
+##   stronger. Closer than danger_distance: clear on/off pulses at full strength.
 ## - Halfway along the wire the guide says halfway_voice.
 
 const IDLE_COLOR: Color = Color(0.9, 0.9, 0.9)
@@ -19,12 +19,15 @@ const RING_SAMPLES: int = 64
 @export var safe_length: float = 0.3
 ## Must match the polygon of Wire/Mesh.
 @export var wire_radius: float = 0.01
-## Gap between ring and wire or obstacle (m) where the vibration starts, at warn_strength
+## Gap between ring and wire or obstacle (m) where the vibration starts
 @export var warn_distance: float = 0.07
-@export_range(0.0, 1.0) var warn_strength: float = 0.2
+## Steady vibration grows from min to max strength while getting closer
+@export_range(0.0, 1.0) var warn_strength_min: float = 0.15
+@export_range(0.0, 1.0) var warn_strength_max: float = 0.5
 ## Gap (m) below which it pulses at full strength
-@export var danger_distance: float = 0.025
-@export var danger_pulse_rate: float = 20.0
+@export var danger_distance: float = 0.03
+## Pulses per second; slow enough that on and off are felt apart
+@export var danger_pulse_rate: float = 7.0
 ## Guide's line when the ring is halfway
 @export var halfway_voice: AudioStream
 
@@ -75,19 +78,19 @@ func _process(delta: float) -> void:
 			_say(halfway_voice)
 
 
-## Near: steady vibration getting stronger. Too close: fast full-strength pulses.
+## Near: steady vibration getting stronger. Too close: full-strength pulses with pauses.
 func _warn_if_too_close(gap: float, delta: float) -> void:
 	if gap >= warn_distance:
 		_pulse_clock = 0.0
 		return
 	if gap > danger_distance:
 		_pulse_clock = 0.0
-		var strength := lerpf(warn_strength, 1.0, inverse_lerp(warn_distance, danger_distance, gap))
-		_vibrate(strength, delta * 2.0) # until the next frame
+		var closeness := inverse_lerp(warn_distance, danger_distance, gap)
+		_vibrate(lerpf(warn_strength_min, warn_strength_max, closeness), delta * 2.0) # until the next frame
 		return
+	if _pulse_clock == 0.0 or floorf(_pulse_clock + delta * danger_pulse_rate) > floorf(_pulse_clock):
+		_vibrate(1.0, 0.5 / danger_pulse_rate) # one pulse per cycle: on for half, then a felt pause
 	_pulse_clock += delta * danger_pulse_rate
-	if fmod(_pulse_clock, 1.0) < 0.5: # on half of each pulse
-		_vibrate(1.0, 0.5 / danger_pulse_rate)
 
 
 func _vibrate(strength: float, duration: float) -> void:
