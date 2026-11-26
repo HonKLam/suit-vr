@@ -4,7 +4,8 @@ extends ZoneMap
 ## Touching the wire or an obstacle, slipping off the wire or letting go of the ring loses.
 ## - Obstacles: the spheres and boxes under Obstacles, so a huge ring doesn't just pass. Move,
 ##   rotate, scale or duplicate them in the editor (sphere: keep the scale uniform).
-## - Too close to the wire or an obstacle: both controllers pulse fast at full strength.
+## - Parking sensor: closer than warn_distance to the wire or an obstacle, both controllers pulse
+##   lightly and slowly, getting stronger and faster until full-strength fast pulses at danger_distance.
 ## - Halfway along the wire the guide says halfway_voice.
 
 const IDLE_COLOR: Color = Color(0.9, 0.9, 0.9)
@@ -17,9 +18,12 @@ const RING_SAMPLES: int = 64
 @export var safe_length: float = 0.3
 ## Must match the polygon of Wire/Mesh.
 @export var wire_radius: float = 0.01
-## Gap between ring and wire (m) below which the controllers pulse
+## Gap between ring and wire or obstacle (m) where the light pulsing starts
+@export var warn_distance: float = 0.07
+@export var warn_pulse_rate: float = 3.0
+@export_range(0.0, 1.0) var warn_strength: float = 0.25
+## Gap (m) from which on the pulsing is at full strength and danger_pulse_rate
 @export var danger_distance: float = 0.025
-## Pulses per second when too close
 @export var danger_pulse_rate: float = 20.0
 ## Guide's line when the ring is halfway
 @export var halfway_voice: AudioStream
@@ -73,16 +77,18 @@ func _process(delta: float) -> void:
 			_say(halfway_voice)
 
 
-## Full-strength fast pulses on both controllers while the ring is closer than danger_distance.
+## Pulses on both controllers like a parking sensor: the closer, the stronger and faster.
 func _warn_if_too_close(gap: float, delta: float) -> void:
-	if gap >= danger_distance:
+	if gap >= warn_distance:
 		_pulse_clock = 0.0
 		return
-	_pulse_clock += delta * danger_pulse_rate
+	var closeness := clampf(inverse_lerp(warn_distance, danger_distance, gap), 0.0, 1.0) # 0 at warn, 1 at danger
+	var rate := lerpf(warn_pulse_rate, danger_pulse_rate, closeness)
+	_pulse_clock += delta * rate
 	if fmod(_pulse_clock, 1.0) < 0.5: # on half of each pulse
-		var pulse_length := 0.5 / danger_pulse_rate
-		Haptics.pulse(ring.left, 1.0, pulse_length)
-		Haptics.pulse(ring.right, 1.0, pulse_length)
+		var strength := lerpf(warn_strength, 1.0, closeness)
+		Haptics.pulse(ring.left, strength, 0.5 / rate)
+		Haptics.pulse(ring.right, strength, 0.5 / rate)
 
 
 ## Smallest gap between the ring's tube and the wire or an obstacle (negative = touching).
