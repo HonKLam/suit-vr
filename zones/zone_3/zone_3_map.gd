@@ -175,8 +175,11 @@ func set_paused(paused: bool) -> void:
 	ring.held = false
 
 
+## The ring freezes where it touched, so you can see where it went wrong.
 func _lose() -> void:
 	_running = false
+	ring.held = false
+	ring.set_process(false) # runs after the map this frame: stops before following the hands again
 	ring.set_color(LOST_COLOR)
 	Haptics.pulse(ring.left, 1.0, 0.4)
 	Haptics.pulse(ring.right, 1.0, 0.4)
