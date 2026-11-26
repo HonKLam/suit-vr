@@ -42,16 +42,6 @@ func set_color(color: Color) -> void:
 	_material.albedo_color = color
 
 
-## True if a wire point (global) is closer to the ring's tube than wire_radius.
-func touches(points: PackedVector3Array, wire_radius: float) -> bool:
-	var to_local: Transform3D = global_transform.affine_inverse()
-	for point: Vector3 in points:
-		var p: Vector3 = to_local * point
-		if Vector2(Vector2(p.x, p.z).length() - radius, p.y).length() < tube_radius + wire_radius:
-			return true
-	return false
-
-
 ## Index of the wire segment that passes through the ring's hole, -1 if none does
 ## (ring slipped off the wire, or was pulled through it between two frames).
 func threaded_segment(points: PackedVector3Array) -> int:
