@@ -1,7 +1,8 @@
 @tool
 extends ZoneMap
 ## Hot wire: thread the ring onto the green start of the wire and carry it to the red end.
-## Touching the wire or an obstacle, slipping off the wire or letting go of the ring loses.
+## The ring waits at the green start; the round starts when you grab it. Letting go is allowed:
+## the ring stays where it is. Touching the wire or an obstacle or slipping off the wire loses.
 ## - Obstacles: the spheres and boxes under Obstacles, so a huge ring doesn't just pass. Move,
 ##   rotate, scale or duplicate them in the editor (sphere: keep the scale uniform).
 ## - Parking sensor: closer than warn_distance to the wire or an obstacle, both controllers pulse
@@ -47,19 +48,17 @@ func _ready() -> void:
 		wire.curve_changed.connect(_place_markers) # markers follow live while editing the route
 		return
 	ring.set_process(false) # controllers are only known in start()
-	ring.visible = false
 	_points = wire.global_transform * wire.curve.get_baked_points()
 	_safe_count = int(safe_length / wire.curve.get_baked_length() * _points.size())
 	_hot_points = _points.slice(_safe_count, _points.size() - _safe_count)
+	ring.place(_start_transform())
 
 
 func _process(delta: float) -> void:
 	if Engine.is_editor_hint() or not _running:
 		return
 	if not ring.held:
-		if _armed:
-			_lose()
-		return
+		return # resting: nothing moves, nothing to check
 	var segment: int = ring.threaded_segment(_points)
 	if not _armed:
 		_armed = segment >= 0 and segment < _safe_count
@@ -136,6 +135,14 @@ func _say(line: AudioStream) -> void:
 		game.narrator.say(line)
 
 
+## On the wire in the middle of the green start, wire through the ring's hole.
+func _start_transform() -> Transform3D:
+	var index := _safe_count / 2
+	var along: Vector3 = (_points[index + 5] - _points[maxi(index - 5, 0)]).normalized()
+	var side: Vector3 = along.cross(Vector3.UP).normalized()
+	return Transform3D(Basis(side, along, side.cross(along)), _points[index])
+
+
 ## Middle of the safe section at each end of the wire.
 func _place_markers() -> void:
 	var length: float = wire.curve.get_baked_length()
@@ -154,11 +161,10 @@ func stop() -> void:
 	_running = false
 
 
-## Pausing drops the ring: after resuming, start again at the green end.
+## Pausing drops the ring where it is.
 func set_paused(paused: bool) -> void:
 	_running = not paused
-	_armed = false
-	ring.set_color(IDLE_COLOR)
+	ring.held = false
 
 
 func _lose() -> void:
