@@ -11,7 +11,7 @@ extends Node3D
 const GRIP_PRESSED: float = 0.7
 
 @export var min_radius: float = 0.05
-@export var max_radius: float = 0.4
+@export var max_radius: float = 0.15
 ## Thickness of the ring's tube.
 @export var tube_radius: float = 0.012
 ## Size at the start
