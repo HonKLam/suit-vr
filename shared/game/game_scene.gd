@@ -2,9 +2,13 @@
 class_name GameScene
 extends XRToolsSceneBase
 ## Base of every playable scene: player, countdown, pause menu, round end and the guide's voice.
+## The intro can be skipped with A/X or B/Y (hint below the view while it plays).
 ## A zone inherits game_scene.tscn and adds its sky, sun and a ZoneMap child named "Map".
 
 enum State { COUNTDOWN, PLAYING, PAUSED, WON, LOST }
+
+const SKIP_BUTTONS: Array[String] = ["ax_button", "by_button"]
+const SKIP_HINT_TEXT := "A / X: Tutorial überspringen"
 
 ## The intro text is over (also fires right away when there is no intro).
 signal intro_finished
@@ -20,6 +24,7 @@ var state: State = State.COUNTDOWN
 var time_left: float
 var wrist_menu: WristMenu
 var narrator: Narrator
+var _intro_playing: bool = false
 
 @onready var map: ZoneMap = get_node_or_null("Map")
 @onready var player: Player = $XROrigin3D
@@ -55,7 +60,7 @@ func _process(delta: float) -> void:
 func scene_visible(user_data = null) -> void:
 	super(user_data)
 	if intro_before_start:
-		await narrator.say_and_wait(intro_voice)
+		await _play_intro()
 		intro_finished.emit()
 	_run_countdown()
 
@@ -78,8 +83,26 @@ func _start_round() -> void:
 	status_label.text = ""
 
 func _play_intro_after_start() -> void:
-	await narrator.say_and_wait(intro_voice)
+	await _play_intro()
 	intro_finished.emit()
+
+## Plays the intro with the skip hint below the view.
+func _play_intro() -> void:
+	if intro_voice == null:
+		return
+	var skip_hint := Label3D.new()
+	skip_hint.text = SKIP_HINT_TEXT
+	skip_hint.pixel_size = 0.0008
+	skip_hint.font_size = 32
+	skip_hint.outline_size = 8
+	skip_hint.modulate = Color(1.0, 1.0, 1.0, 0.8)
+	skip_hint.no_depth_test = true
+	skip_hint.position = Vector3(0.0, -0.22, -0.7) # below the middle of the view
+	$XROrigin3D/XRCamera3D.add_child(skip_hint)
+	_intro_playing = true
+	await narrator.say_and_wait(intro_voice)
+	_intro_playing = false
+	skip_hint.queue_free()
 
 func _set_paused(paused: bool) -> void:
 	state = State.PAUSED if paused else State.PLAYING
@@ -115,6 +138,9 @@ func _on_map_won() -> void:
 		_end_round(State.WON, "You win!")
 
 func _on_button_pressed(button: String) -> void:
+	if _intro_playing and button in SKIP_BUTTONS:
+		narrator.skip()
+		return
 	if button != "menu_button":
 		return
 	if state == State.PLAYING:

@@ -31,6 +31,17 @@ func say_and_wait(line: AudioStream) -> void:
 		pass
 
 
+## Ends the current line right away (counts as finished), the next queued line follows.
+func skip() -> void:
+	if not playing and not stream_paused:
+		return
+	var line := stream
+	stop()
+	stream_paused = false
+	line_finished.emit(line)
+	_play_next()
+
+
 func stop_all() -> void:
 	_queue.clear()
 	stop()
