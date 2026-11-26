@@ -2,6 +2,8 @@
 extends ZoneMap
 ## Hot wire: thread the ring onto the green start of the wire and carry it to the red end.
 ## Touching the wire, slipping off it or letting go of the ring loses.
+## - Too close to the wire: both controllers pulse fast at full strength.
+## - Halfway along the wire the guide says halfway_voice.
 
 const IDLE_COLOR: Color = Color(0.9, 0.9, 0.9)
 const ARMED_COLOR: Color = Color(0.2, 0.9, 0.3)
@@ -11,12 +13,20 @@ const LOST_COLOR: Color = Color(0.9, 0.15, 0.1)
 @export var safe_length: float = 0.3
 ## Must match the polygon of Wire/Mesh.
 @export var wire_radius: float = 0.01
+## Gap between ring and wire (m) below which the controllers pulse
+@export var danger_distance: float = 0.025
+## Pulses per second when too close
+@export var danger_pulse_rate: float = 20.0
+## Guide's line when the ring is halfway
+@export var halfway_voice: AudioStream
 
 var _points: PackedVector3Array # whole wire, global
 var _hot_points: PackedVector3Array # without the safe ends
 var _safe_count: int
 var _running: bool = false
 var _armed: bool = false
+var _halfway_said: bool = false
+var _pulse_clock: float = 0.0
 
 @onready var ring: HotRing = $Ring
 @onready var wire: Path3D = $Wire
@@ -34,7 +44,7 @@ func _ready() -> void:
 	_hot_points = _points.slice(_safe_count, _points.size() - _safe_count)
 
 
-func _process(_delta: float) -> void:
+func _process(delta: float) -> void:
 	if Engine.is_editor_hint() or not _running:
 		return
 	if not ring.held:
@@ -49,6 +59,39 @@ func _process(_delta: float) -> void:
 		_lose()
 	elif segment >= _points.size() - 1 - _safe_count:
 		won.emit()
+	else:
+		_warn_if_too_close(delta)
+		if not _halfway_said and segment >= _points.size() / 2:
+			_halfway_said = true
+			_say(halfway_voice)
+
+
+## Full-strength fast pulses on both controllers while the ring is closer than danger_distance.
+func _warn_if_too_close(delta: float) -> void:
+	if _closest_gap() >= danger_distance:
+		_pulse_clock = 0.0
+		return
+	_pulse_clock += delta * danger_pulse_rate
+	if fmod(_pulse_clock, 1.0) < 0.5: # on half of each pulse
+		var pulse_length := 0.5 / danger_pulse_rate
+		Haptics.pulse(ring.left, 1.0, pulse_length)
+		Haptics.pulse(ring.right, 1.0, pulse_length)
+
+
+## Smallest gap between the ring's tube and the wire surface.
+func _closest_gap() -> float:
+	var to_local: Transform3D = ring.global_transform.affine_inverse()
+	var best := INF
+	for point: Vector3 in _hot_points:
+		var p: Vector3 = to_local * point
+		best = minf(best, Vector2(Vector2(p.x, p.z).length() - ring.radius, p.y).length())
+	return best - ring.tube_radius - wire_radius
+
+
+func _say(line: AudioStream) -> void:
+	var game := get_parent() as GameScene
+	if game and line:
+		game.narrator.say(line)
 
 
 ## Middle of the safe section at each end of the wire.
