@@ -2,17 +2,14 @@
 extends ZoneMap
 ## Hot wire: thread the ring onto the green start of the wire and carry it to the red end.
 ## Touching the wire or an obstacle, slipping off the wire or letting go of the ring loses.
-## - Obstacles: random rods along the wire, 10-17 cm from it, so a huge ring doesn't just pass.
-##   New layout every round (or a fixed one with obstacle_seed).
+## - Obstacles: the rods under Obstacles, so a huge ring doesn't just pass. Move, rotate or
+##   duplicate them in the editor; a rod's length is its y scale.
 ## - Too close to the wire or an obstacle: both controllers pulse fast at full strength.
 ## - Halfway along the wire the guide says halfway_voice.
 
 const IDLE_COLOR: Color = Color(0.9, 0.9, 0.9)
 const ARMED_COLOR: Color = Color(0.2, 0.9, 0.3)
 const LOST_COLOR: Color = Color(0.9, 0.15, 0.1)
-const OBSTACLE_ATTEMPTS: int = 4
-## A rod keeps at least this gap to other parts of the wire and to other rods (m)
-const OBSTACLE_CLEARANCE: float = 0.09
 
 ## Length at both ends of the wire where touching doesn't count.
 @export var safe_length: float = 0.3
@@ -24,17 +21,8 @@ const OBSTACLE_CLEARANCE: float = 0.09
 @export var danger_pulse_rate: float = 20.0
 ## Guide's line when the ring is halfway
 @export var halfway_voice: AudioStream
-@export_group("Obstacles")
-## One obstacle about every ... m along the wire (0 = none)
-@export var obstacle_spacing: float = 0.25
-## Distance of an obstacle from the wire axis (m): the ring must stay smaller than this
-@export var obstacle_distance_min: float = 0.10
-@export var obstacle_distance_max: float = 0.17
-@export var obstacle_length_min: float = 0.15
-@export var obstacle_length_max: float = 0.3
+## Must match the radius of the rod mesh.
 @export var obstacle_radius: float = 0.012
-## 0 = new random layout every round
-@export var obstacle_seed: int = 0
 
 var _points: PackedVector3Array # whole wire, global
 var _hot_points: PackedVector3Array # without the safe ends
@@ -47,6 +35,7 @@ var _obstacle_points: PackedVector3Array # sampled every cm along each rod, glob
 
 @onready var ring: HotRing = $Ring
 @onready var wire: Path3D = $Wire
+@onready var obstacles: Node3D = $Obstacles
 
 
 func _ready() -> void:
@@ -59,7 +48,7 @@ func _ready() -> void:
 	_points = wire.global_transform * wire.curve.get_baked_points()
 	_safe_count = int(safe_length / wire.curve.get_baked_length() * _points.size())
 	_hot_points = _points.slice(_safe_count, _points.size() - _safe_count)
-	_place_obstacles()
+	_sample_obstacles()
 
 
 func _process(delta: float) -> void:
@@ -112,69 +101,14 @@ func _gap_to(points: PackedVector3Array, to_local: Transform3D) -> float:
 	return best - ring.tube_radius
 
 
-## Rods next to the wire, roughly parallel to it, at a random angle around it. A rod is skipped if
-## it would come close to another part of the wire (corkscrew windings) or another rod.
-func _place_obstacles() -> void:
-	if obstacle_spacing <= 0.0:
-		return
-	var rng := RandomNumberGenerator.new()
-	if obstacle_seed != 0:
-		rng.seed = obstacle_seed
-	var colors: Array[Color] = [Color(0.8, 0.1, 0.08), Color(0.1, 0.6, 0.15), Color(0.95, 0.72, 0.05), Color(0.1, 0.3, 0.9)]
-	var step := maxi(1, int(obstacle_spacing / wire.curve.bake_interval))
-	var floor_y: float = $Floor.global_position.y + $Floor.size.y * 0.5
-	for index in range(_safe_count + step / 2, _points.size() - _safe_count, step):
-		var along: Vector3 = (_points[mini(index + 3, _points.size() - 1)] - _points[index - 3]).normalized()
-		var side: Vector3 = along.cross(Vector3.UP)
-		if side.length() < 0.1:
-			side = along.cross(Vector3.RIGHT)
-		for attempt in OBSTACLE_ATTEMPTS: # a few random tries per spot
-			var around: Vector3 = side.normalized().rotated(along, rng.randf() * TAU)
-			var centre: Vector3 = _points[index] + around * rng.randf_range(obstacle_distance_min, obstacle_distance_max)
-			var direction: Vector3 = along.rotated(around, rng.randf_range(-0.35, 0.35))
-			var half_length := rng.randf_range(obstacle_length_min, obstacle_length_max) * 0.5
-			var a := centre - direction * half_length
-			var b := centre + direction * half_length
-			if minf(a.y, b.y) < floor_y + 0.05 or not _rod_is_free(a, b, index):
-				continue
-			for k in range(int(half_length * 2.0 / 0.01) + 1):
-				_obstacle_points.append(a.lerp(b, k * 0.01 / (half_length * 2.0)))
-			_add_rod_mesh(a, b, colors[rng.randi() % colors.size()])
-			break
-
-
-## Far enough from the wire (except the part it belongs to) and from the other rods.
-func _rod_is_free(a: Vector3, b: Vector3, index: int) -> bool:
-	var near_range := int(0.3 / wire.curve.bake_interval)
-	for k in range(0, 11):
-		var p := a.lerp(b, k / 10.0)
-		for i in range(0, _points.size(), 2):
-			var too_close_to_own_part := absi(i - index) <= near_range and p.distance_to(_points[i]) < obstacle_distance_min - 0.01
-			var too_close_elsewhere := absi(i - index) > near_range and p.distance_to(_points[i]) < OBSTACLE_CLEARANCE
-			if too_close_to_own_part or too_close_elsewhere:
-				return false
-		for q: Vector3 in _obstacle_points:
-			if p.distance_to(q) < OBSTACLE_CLEARANCE:
-				return false
-	return true
-
-
-func _add_rod_mesh(a: Vector3, b: Vector3, color: Color) -> void:
-	var rod := MeshInstance3D.new()
-	var mesh := CylinderMesh.new()
-	mesh.top_radius = obstacle_radius
-	mesh.bottom_radius = obstacle_radius
-	mesh.height = a.distance_to(b)
-	mesh.radial_segments = 10
-	var material := StandardMaterial3D.new()
-	material.albedo_color = color
-	material.roughness = 0.5
-	mesh.material = material
-	rod.mesh = mesh
-	add_child(rod)
-	var up := (b - a).normalized()
-	var any_side := up.cross(Vector3.RIGHT) if absf(up.x) < 0.9 else up.cross(Vector3.FORWARD)
-	rod.global_transform = Transform3D(Basis(any_side.normalized(), up, any_side.cross(up).normalized()).orthonormalized(), (a + b) * 0.5)
+## Points every cm along each rod: a unit cylinder from y -0.5 to 0.5, stretched by the rod's scale.
+func _sample_obstacles() -> void:
+	for rod: Node3D in obstacles.get_children():
+		var a: Vector3 = rod.global_transform * Vector3(0, -0.5, 0)
+		var b: Vector3 = rod.global_transform * Vector3(0, 0.5, 0)
+		var steps := int(a.distance_to(b) / 0.01)
+		for k in range(steps + 1):
+			_obstacle_points.append(a.lerp(b, float(k) / maxi(steps, 1)))
 
 
 func _say(line: AudioStream) -> void:
