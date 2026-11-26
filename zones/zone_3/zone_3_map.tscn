@@ -30,11 +30,9 @@ albedo_color = Color(0.2, 0.9, 0.3, 0.5)
 transparency = 1
 albedo_color = Color(0.9, 0.15, 0.1, 0.5)
 
-[sub_resource type="CylinderMesh" id="CylinderMesh_rod"]
-top_radius = 0.012
-bottom_radius = 0.012
-height = 1.0
-radial_segments = 10
+[sub_resource type="SphereMesh" id="SphereMesh_obstacle"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_obstacle"]
 
 [node name="Map" type="Node3D" unique_id=1903719407]
 script = ExtResource("1_r7ntv")
@@ -75,216 +73,68 @@ material = SubResource("StandardMaterial3D_end")
 
 [node name="Ring" parent="." unique_id=1417843035 instance=ExtResource("3_ring")]
 
-[node name="Obstacles" type="Node3D" parent="." unique_id=795425564]
+[node name="Obstacles" type="Node3D" parent="." unique_id=1094300727]
 
-[node name="Rod01" type="MeshInstance3D" parent="Obstacles" unique_id=423946139]
-transform = Transform3D(0, 0.090527, 0.80645, 0.78442, 0.076576, -0.36675, -0.62023, 0.096848, -0.46383, 0.29046, 0.30809, -0.48759)
-mesh = SubResource("CylinderMesh_rod")
+[node name="Gate1Sphere" type="MeshInstance3D" parent="Obstacles" unique_id=1416869687]
+transform = Transform3D(0.09, 0, 0, 0, 0.09, 0, 0, 0, 0.09, -0.33446, 0.47656, 0.10863)
+mesh = SubResource("SphereMesh_obstacle")
 
-[node name="Rod02" type="MeshInstance3D" parent="Obstacles" unique_id=947876999]
-transform = Transform3D(0, 0.091607, 0.86933, 0.83016, -0.089836, 0.27555, 0.55753, 0.13376, -0.41029, 0.51736, 0.34046, -0.3421)
-mesh = SubResource("CylinderMesh_rod")
+[node name="Gate1Box" type="MeshInstance3D" parent="Obstacles" unique_id=901681272]
+transform = Transform3D(-0.013917, 0.06622, 0.042676, -0.076058, 0, -0.024803, -0.020531, -0.044888, 0.062957, -0.57037, 0.47656, 0.26854)
+mesh = SubResource("BoxMesh_obstacle")
 
-[node name="Rod03" type="MeshInstance3D" parent="Obstacles" unique_id=1497871144]
-transform = Transform3D(0, 0.10021, 0.93392, 0.80214, -0.15633, 0.21347, 0.59714, 0.20999, -0.28675, 0.65887, 0.15309, -0.33652)
-mesh = SubResource("CylinderMesh_rod")
+[node name="Gate2Sphere" type="MeshInstance3D" parent="Obstacles" unique_id=673666814]
+transform = Transform3D(0.09, 0, 0, 0, 0.09, 0, 0, 0, 0.09, 0.53771, -0.61633, 0.58575)
+mesh = SubResource("SphereMesh_obstacle")
 
-[node name="Rod04" type="MeshInstance3D" parent="Obstacles" unique_id=203694312]
-transform = Transform3D(0, 0.052959, 0.93822, 0.9883, 0.021896, -0.052768, -0.15249, 0.14191, -0.34199, 0.48152, 0.11561, -0.15246)
-mesh = SubResource("CylinderMesh_rod")
+[node name="Gate2Box" type="MeshInstance3D" parent="Obstacles" unique_id=397511125]
+transform = Transform3D(-0.063641, 0.0039083, -0.048317, 0.0049037, 0.07985, -1.4901e-10, 0.048226, -0.0029616, -0.063761, 0.55163, -0.33187, 0.5752)
+mesh = SubResource("BoxMesh_obstacle")
 
-[node name="Rod05" type="MeshInstance3D" parent="Obstacles" unique_id=255555737]
-transform = Transform3D(0, -0.02437, 0.99126, 0.62102, 0.14356, 0.10338, -0.7838, 0.11375, 0.081907, 0.51913, 0.029726, 0.027306)
-mesh = SubResource("CylinderMesh_rod")
+[node name="Gate3Sphere" type="MeshInstance3D" parent="Obstacles" unique_id=499743235]
+transform = Transform3D(0.09, 0, 0, 0, 0.09, 0, 0, 0, 0.09, 0.53743, -0.25744, -0.48381)
+mesh = SubResource("SphereMesh_obstacle")
 
-[node name="Rod06" type="MeshInstance3D" parent="Obstacles" unique_id=1863673106]
-transform = Transform3D(0, -0.040912, 0.98442, 0.93972, 0.078314, 0.060131, -0.34194, 0.21522, 0.16525, 0.49934, 0.25674, -3.0249e-06)
-mesh = SubResource("CylinderMesh_rod")
+[node name="Gate3Box" type="MeshInstance3D" parent="Obstacles" unique_id=1960927402]
+transform = Transform3D(0.065726, -0.045604, -0.00066493, -0.0008093, 0, -0.079996, 0.045601, 0.065729, -0.00046134, 0.69989, -0.25744, -0.71797)
+mesh = SubResource("BoxMesh_obstacle")
 
-[node name="Rod07" type="MeshInstance3D" parent="Obstacles" unique_id=1250797845]
-transform = Transform3D(0, -0.079154, 0.88316, 0.79391, -0.090614, -0.28522, 0.60804, 0.11831, 0.3724, 0.62491, 0.17852, 0.39446)
-mesh = SubResource("CylinderMesh_rod")
+[node name="Gate4Sphere" type="MeshInstance3D" parent="Obstacles" unique_id=1553081007]
+transform = Transform3D(0.09, 0, 0, 0, 0.09, 0, 0, 0, 0.09, 0.058615, 0.27779, 0.63064)
+mesh = SubResource("SphereMesh_obstacle")
 
-[node name="Rod08" type="MeshInstance3D" parent="Obstacles" unique_id=302142728]
-transform = Transform3D(0, -0.15399, 0.78331, 0.857, 0.099997, 0.32034, -0.51532, 0.1663, 0.53273, 0.56024, 0.044395, 0.53933)
-mesh = SubResource("CylinderMesh_rod")
+[node name="Gate4Box" type="MeshInstance3D" parent="Obstacles" unique_id=113819176]
+transform = Transform3D(-0.045346, 0.061438, -0.023858, 0.064367, 0.047507, 1.1921e-09, 0.014168, -0.019196, -0.07636, 0.27749, 0.44703, 0.56226)
+mesh = SubResource("BoxMesh_obstacle")
 
-[node name="Rod09" type="MeshInstance3D" parent="Obstacles" unique_id=885310972]
-transform = Transform3D(0, -0.17956, 0.47212, 0.51862, 0.08222, 0.75372, -0.85501, 0.049872, 0.45718, 0.31124, 0.11077, 0.59054)
-mesh = SubResource("CylinderMesh_rod")
+[node name="Gate5Sphere" type="MeshInstance3D" parent="Obstacles" unique_id=826548507]
+transform = Transform3D(0.09, 0, 0, 0, 0.09, 0, 0, 0, 0.09, -0.4273, 0.006047, -0.4919)
+mesh = SubResource("SphereMesh_obstacle")
 
-[node name="Rod10" type="MeshInstance3D" parent="Obstacles" unique_id=1351527726]
-transform = Transform3D(0, -0.12102, 0.87125, 0.24326, 0.20835, 0.4761, -0.96996, 0.052253, 0.1194, 0.24242, 0.27225, 0.73203)
-mesh = SubResource("CylinderMesh_rod")
+[node name="Gate5Box" type="MeshInstance3D" parent="Obstacles" unique_id=1179716291]
+transform = Transform3D(0.059028, 0.051823, -0.015168, -0.01991, 0, -0.077483, -0.050193, 0.060946, 0.012897, -0.61192, 0.006047, -0.70902)
+mesh = SubResource("BoxMesh_obstacle")
 
-[node name="Rod11" type="MeshInstance3D" parent="Obstacles" unique_id=224551738]
-transform = Transform3D(0, -0.13902, 0.85977, 0.32368, 0.22145, 0.4832, -0.94617, 0.075757, 0.1653, 0.23769, 0.52002, 0.60934)
-mesh = SubResource("CylinderMesh_rod")
+[node name="Gate6Sphere" type="MeshInstance3D" parent="Obstacles" unique_id=1095834408]
+transform = Transform3D(0.09, 0, 0, 0, 0.09, 0, 0, 0, 0.09, 0.62816, 0.045053, 0.053172)
+mesh = SubResource("SphereMesh_obstacle")
 
-[node name="Rod12" type="MeshInstance3D" parent="Obstacles" unique_id=1189709946]
-transform = Transform3D(0, -0.065712, 0.95665, -0.18596, 0.21207, 0.28617, -0.98256, -0.040136, -0.05416, -0.072811, 0.53596, 0.54605)
-mesh = SubResource("CylinderMesh_rod")
+[node name="Gate6Box" type="MeshInstance3D" parent="Obstacles" unique_id=1398580838]
+transform = Transform3D(0.0041767, -0.0036903, -0.079806, 0.05297, 0.059952, 2.9802e-10, 0.059806, -0.052841, 0.0055735, 0.61501, 0.25863, -0.13507)
+mesh = SubResource("BoxMesh_obstacle")
 
-[node name="Rod13" type="MeshInstance3D" parent="Obstacles" unique_id=561060838]
-transform = Transform3D(0, 0.040608, 0.97292, -0.29098, 0.16355, -0.22112, -0.95673, -0.049742, 0.067253, 0.042285, 0.68558, 0.48879)
-mesh = SubResource("CylinderMesh_rod")
+[node name="Gate7Sphere" type="MeshInstance3D" parent="Obstacles" unique_id=273548139]
+transform = Transform3D(0.09, 0, 0, 0, 0.09, 0, 0, 0, 0.09, 0.88207, -0.47258, 0.074789)
+mesh = SubResource("SphereMesh_obstacle")
 
-[node name="Rod14" type="MeshInstance3D" parent="Obstacles" unique_id=180521324]
-transform = Transform3D(0, -0.021179, 0.99446, -0.46265, 0.17761, 0.093202, -0.88654, -0.092688, -0.048638, -0.087938, 0.87186, 0.58405)
-mesh = SubResource("CylinderMesh_rod")
+[node name="Gate7Box" type="MeshInstance3D" parent="Obstacles" unique_id=817311089]
+transform = Transform3D(0.052204, -0.037431, 0.047684, 0.053954, 0, -0.059068, 0.027637, 0.070703, 0.025244, 1.0154, -0.47258, -0.17709)
+mesh = SubResource("BoxMesh_obstacle")
 
-[node name="Rod15" type="MeshInstance3D" parent="Obstacles" unique_id=284570285]
-transform = Transform3D(-0.21429, -0.26841, 0.24626, -0.97677, 0.058885, -0.054026, 0, -0.071594, -0.9677, -0.049647, 1.0344, 0.36238)
-mesh = SubResource("CylinderMesh_rod")
+[node name="Gate8Sphere" type="MeshInstance3D" parent="Obstacles" unique_id=1290286755]
+transform = Transform3D(0.09, 0, 0, 0, 0.09, 0, 0, 0, 0.09, -0.85661, 0.14147, -0.21189)
+mesh = SubResource("SphereMesh_obstacle")
 
-[node name="Rod16" type="MeshInstance3D" parent="Obstacles" unique_id=1031247021]
-transform = Transform3D(0, -0.17794, 0.52607, -0.79911, -0.066172, -0.51127, 0.60118, -0.087957, -0.6796, -0.18993, 0.8852, 0.23432)
-mesh = SubResource("CylinderMesh_rod")
-
-[node name="Rod17" type="MeshInstance3D" parent="Obstacles" unique_id=998017869]
-transform = Transform3D(0, -0.10224, 0.89565, -0.34018, -0.1936, -0.41824, 0.94036, -0.070037, -0.1513, -0.47808, 0.8027, 0.38495)
-mesh = SubResource("CylinderMesh_rod")
-
-[node name="Rod18" type="MeshInstance3D" parent="Obstacles" unique_id=250013383]
-transform = Transform3D(0, -0.07524, 0.90056, -0.31711, -0.14781, -0.4123, 0.94839, -0.049424, -0.13786, -0.43884, 0.59519, 0.3319)
-mesh = SubResource("CylinderMesh_rod")
-
-[node name="Rod19" type="MeshInstance3D" parent="Obstacles" unique_id=616819858]
-transform = Transform3D(0, -0.04481, 0.98858, -0.18905, -0.28869, -0.14796, 0.98197, -0.05558, -0.028486, -0.32061, 0.44293, 0.14923)
-mesh = SubResource("CylinderMesh_rod")
-
-[node name="Rod20" type="MeshInstance3D" parent="Obstacles" unique_id=294804716]
-transform = Transform3D(0, -0.034619, 0.98247, -0.22608, -0.17771, -0.18161, 0.97411, -0.041243, -0.04215, -0.42557, 0.33603, 0.00035584)
-mesh = SubResource("CylinderMesh_rod")
-
-[node name="Rod21" type="MeshInstance3D" parent="Obstacles" unique_id=1283364967]
-transform = Transform3D(0.17338, -0.27004, 0.21479, -0.98486, -0.047538, 0.037813, 0, -0.061275, -0.97593, -0.63862, 0.27942, 0.21127)
-mesh = SubResource("CylinderMesh_rod")
-
-[node name="Rod22" type="MeshInstance3D" parent="Obstacles" unique_id=1011648019]
-transform = Transform3D(0, -0.012429, 0.99896, -0.18582, 0.26791, 0.044745, -0.98258, -0.050666, -0.0084621, -0.90478, 0.34005, -0.058808)
-mesh = SubResource("CylinderMesh_rod")
-
-[node name="Rod23" type="MeshInstance3D" parent="Obstacles" unique_id=226938843]
-transform = Transform3D(-0.21712, 0.23099, -0.23537, 0.97615, 0.051378, -0.052353, 0, -0.058794, -0.97049, -0.72792, 0.52886, -0.16558)
-mesh = SubResource("CylinderMesh_rod")
-
-[node name="Rod24" type="MeshInstance3D" parent="Obstacles" unique_id=1875651415]
-transform = Transform3D(0, 0.10557, 0.90712, -0.3555, -0.21266, 0.39339, 0.93468, -0.080885, 0.14962, -0.45043, 0.46913, -0.1345)
-mesh = SubResource("CylinderMesh_rod")
-
-[node name="Rod25" type="MeshInstance3D" parent="Obstacles" unique_id=1314302567]
-transform = Transform3D(-0.22255, -0.26238, 0.17316, -0.97492, 0.059894, -0.039529, 0, -0.048574, -0.9841, -0.7271, 0.042687, -0.10899)
-mesh = SubResource("CylinderMesh_rod")
-
-[node name="Rod26" type="MeshInstance3D" parent="Obstacles" unique_id=365862673]
-transform = Transform3D(0, -0.0043828, 0.99978, -0.48545, 0.18439, 0.018165, -0.87427, -0.10238, -0.010086, -0.84032, 0.19478, -0.31017)
-mesh = SubResource("CylinderMesh_rod")
-
-[node name="Rod27" type="MeshInstance3D" parent="Obstacles" unique_id=579402028]
-transform = Transform3D(0, 0.20425, 0.6429, -0.5976, 0.13745, -0.61414, -0.80179, -0.10245, 0.45774, -0.80677, 0.41557, -0.32418)
-mesh = SubResource("CylinderMesh_rod")
-
-[node name="Rod28" type="MeshInstance3D" parent="Obstacles" unique_id=1454258844]
-transform = Transform3D(0, 0.050951, 0.95214, -0.066895, -0.15836, 0.30497, 0.99776, -0.010617, 0.020447, -0.49246, 0.3587, -0.44126)
-mesh = SubResource("CylinderMesh_rod")
-
-[node name="Rod29" type="MeshInstance3D" parent="Obstacles" unique_id=1447402586]
-transform = Transform3D(0, -0.14424, 0.66185, -0.51617, -0.10907, -0.64205, 0.85649, -0.065734, -0.38694, -0.48983, 0.052811, -0.28266)
-mesh = SubResource("CylinderMesh_rod")
-
-[node name="Rod30" type="MeshInstance3D" parent="Obstacles" unique_id=1351976312]
-transform = Transform3D(0, 0.1076, 0.90207, -0.87168, -0.11022, 0.21151, 0.49007, -0.19604, 0.37621, -0.72717, -0.043319, -0.36431)
-mesh = SubResource("CylinderMesh_rod")
-
-[node name="Rod31" type="MeshInstance3D" parent="Obstacles" unique_id=232847736]
-transform = Transform3D(0, 0.22051, 0.65766, -0.90483, -0.081967, 0.32074, 0.42577, -0.1742, 0.68162, -0.58338, 0.1411, -0.58432)
-mesh = SubResource("CylinderMesh_rod")
-
-[node name="Rod32" type="MeshInstance3D" parent="Obstacles" unique_id=1339319143]
-transform = Transform3D(0, 0.19106, 0.66214, -0.99834, 0.00971, -0.043101, -0.057516, -0.16854, 0.74814, -0.55294, -0.054991, -0.78035)
-mesh = SubResource("CylinderMesh_rod")
-
-[node name="Rod33" type="MeshInstance3D" parent="Obstacles" unique_id=1357440634]
-transform = Transform3D(0, 0.18299, 0.6474, -0.7705, 0.099082, -0.48582, -0.63743, -0.11977, 0.58724, -0.2174, -0.041175, -0.65064)
-mesh = SubResource("CylinderMesh_rod")
-
-[node name="Rod34" type="MeshInstance3D" parent="Obstacles" unique_id=951864842]
-transform = Transform3D(0, 0.23717, 0.58679, -0.37483, -0.15934, 0.7507, 0.92709, -0.064422, 0.30351, -0.056173, 0.12698, -0.77179)
-mesh = SubResource("CylinderMesh_rod")
-
-[node name="Rod35" type="MeshInstance3D" parent="Obstacles" unique_id=206492238]
-transform = Transform3D(-0.13317, 0.17012, -0.075317, 0.99109, 0.02286, -0.01012, 0, -0.013082, -0.99711, 0.038874, -0.054752, -0.73283)
-mesh = SubResource("CylinderMesh_rod")
-
-[node name="Rod36" type="MeshInstance3D" parent="Obstacles" unique_id=574769608]
-transform = Transform3D(0.13152, 0.17838, 0.20679, 0.99131, -0.023666, -0.027435, 0, 0.038381, -0.978, 0.25138, 0.055102, -0.88727)
-mesh = SubResource("CylinderMesh_rod")
-
-[node name="Rod37" type="MeshInstance3D" parent="Obstacles" unique_id=200035544]
-transform = Transform3D(0, 0.096124, 0.78614, 0.47051, -0.10789, 0.54536, 0.88239, 0.057528, -0.2908, 0.3801, -0.11418, -0.68144)
-mesh = SubResource("CylinderMesh_rod")
-
-[node name="Rod38" type="MeshInstance3D" parent="Obstacles" unique_id=1295428767]
-transform = Transform3D(0, 0.19996, 0.60709, 0.88092, -0.0723, 0.37607, 0.47326, 0.13458, -0.70001, 0.41407, -0.27204, -0.58577)
-mesh = SubResource("CylinderMesh_rod")
-
-[node name="Rod39" type="MeshInstance3D" parent="Obstacles" unique_id=1943546981]
-transform = Transform3D(0, 0.14046, 0.52779, 0.97055, -0.021025, 0.2046, 0.24089, 0.084711, -0.82436, 0.69066, -0.21315, -0.66827)
-mesh = SubResource("CylinderMesh_rod")
-
-[node name="Rod40" type="MeshInstance3D" parent="Obstacles" unique_id=385990742]
-transform = Transform3D(0, 0.15414, 0.64169, 0.99985, 0.0022525, -0.013396, -0.017466, 0.12895, -0.76685, 0.8338, -0.10788, -0.54162)
-mesh = SubResource("CylinderMesh_rod")
-
-[node name="Rod41" type="MeshInstance3D" parent="Obstacles" unique_id=721931211]
-transform = Transform3D(0, -0.0024693, 0.99995, 0.9947, -0.026074, -0.0010005, 0.10279, 0.25233, 0.0096822, 1.0236, -0.23265, -0.33774)
-mesh = SubResource("CylinderMesh_rod")
-
-[node name="Rod42" type="MeshInstance3D" parent="Obstacles" unique_id=1000094241]
-transform = Transform3D(0, -0.12892, 0.52043, 0.63757, -0.060532, -0.65784, 0.77039, 0.050096, 0.54443, 0.72284, -0.12149, -0.23611)
-mesh = SubResource("CylinderMesh_rod")
-
-[node name="Rod43" type="MeshInstance3D" parent="Obstacles" unique_id=409785426]
-transform = Transform3D(0, -0.061876, 0.95969, 0.57878, -0.17229, -0.22921, 0.81548, 0.12228, 0.16268, 0.82823, -0.32354, -0.05221)
-mesh = SubResource("CylinderMesh_rod")
-
-[node name="Rod44" type="MeshInstance3D" parent="Obstacles" unique_id=1261114102]
-transform = Transform3D(0, 0.23495, 0.50186, 0.83941, -0.074092, 0.47011, 0.54351, 0.11443, -0.72604, 0.84022, -0.6399, -0.20635)
-mesh = SubResource("CylinderMesh_rod")
-
-[node name="Rod45" type="MeshInstance3D" parent="Obstacles" unique_id=352956896]
-transform = Transform3D(0, 0.097478, 0.78199, 0.31122, 0.11622, -0.59234, -0.95034, 0.038061, -0.19398, 1.039, -0.51598, -0.19058)
-mesh = SubResource("CylinderMesh_rod")
-
-[node name="Rod46" type="MeshInstance3D" parent="Obstacles" unique_id=1326027820]
-transform = Transform3D(0, -0.0099235, 0.99877, 0.34578, 0.18751, 0.046537, -0.93831, 0.069101, 0.01715, 1.1283, -0.36735, -0.0049224)
-mesh = SubResource("CylinderMesh_rod")
-
-[node name="Rod47" type="MeshInstance3D" parent="Obstacles" unique_id=762459676]
-transform = Transform3D(0, 0.068774, 0.96002, 0.66353, -0.17645, 0.20944, 0.74815, 0.15649, -0.18575, 0.76588, -0.49321, 0.15705)
-mesh = SubResource("CylinderMesh_rod")
-
-[node name="Rod48" type="MeshInstance3D" parent="Obstacles" unique_id=1303143340]
-transform = Transform3D(0, -0.067043, 0.89604, 0.79097, -0.082789, -0.27165, 0.61186, 0.10702, 0.35117, 0.66182, -0.49151, 0.2714)
-mesh = SubResource("CylinderMesh_rod")
-
-[node name="Rod49" type="MeshInstance3D" parent="Obstacles" unique_id=1852618007]
-transform = Transform3D(0, -0.20353, 0.49518, 0.95269, -0.035261, -0.26407, 0.30395, 0.11052, 0.82768, 0.61119, -0.4081, 0.43641)
-mesh = SubResource("CylinderMesh_rod")
-
-[node name="Rod50" type="MeshInstance3D" parent="Obstacles" unique_id=1564589642]
-transform = Transform3D(0, -0.18364, 0.71566, 0.99997, -0.0015638, -0.0058045, 0.0083106, 0.18816, 0.69842, 0.44545, -0.60526, 0.5685)
-mesh = SubResource("CylinderMesh_rod")
-
-[node name="Rod51" type="MeshInstance3D" parent="Obstacles" unique_id=488106949]
-transform = Transform3D(0, -0.12061, 0.89493, 0.96712, -0.061526, -0.11348, 0.25433, 0.23396, 0.43152, 0.44102, -0.38584, 0.78283)
-mesh = SubResource("CylinderMesh_rod")
-
-[node name="Rod52" type="MeshInstance3D" parent="Obstacles" unique_id=321310449]
-transform = Transform3D(0, -0.183, 0.58288, 0.9937, 0.014712, 0.091067, -0.11207, 0.13044, 0.80744, 0.27743, -0.57453, 0.85925)
-mesh = SubResource("CylinderMesh_rod")
-
-[node name="Rod53" type="MeshInstance3D" parent="Obstacles" unique_id=1348976840]
-transform = Transform3D(0.075233, -0.20371, 0.30746, -0.99717, -0.015369, 0.023196, 0, -0.066214, -0.95128, 0.073532, -0.44583, 0.92863)
-mesh = SubResource("CylinderMesh_rod")
+[node name="Gate8Box" type="MeshInstance3D" parent="Obstacles" unique_id=1424245884]
+transform = Transform3D(-0.043495, 0.048771, 0.046148, 0.059705, 0.053247, 1.1921e-09, -0.030715, 0.034441, -0.065348, -0.68287, 0.33116, -0.089195)
+mesh = SubResource("BoxMesh_obstacle")

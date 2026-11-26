@@ -2,14 +2,16 @@
 extends ZoneMap
 ## Hot wire: thread the ring onto the green start of the wire and carry it to the red end.
 ## Touching the wire or an obstacle, slipping off the wire or letting go of the ring loses.
-## - Obstacles: the rods under Obstacles, so a huge ring doesn't just pass. Move, rotate or
-##   duplicate them in the editor; a rod's length is its y scale.
+## - Obstacles: the spheres and boxes under Obstacles, so a huge ring doesn't just pass. Move,
+##   rotate, scale or duplicate them in the editor (sphere: keep the scale uniform).
 ## - Too close to the wire or an obstacle: both controllers pulse fast at full strength.
 ## - Halfway along the wire the guide says halfway_voice.
 
 const IDLE_COLOR: Color = Color(0.9, 0.9, 0.9)
 const ARMED_COLOR: Color = Color(0.2, 0.9, 0.3)
 const LOST_COLOR: Color = Color(0.9, 0.15, 0.1)
+## Points on the ring checked against box obstacles
+const RING_SAMPLES: int = 64
 
 ## Length at both ends of the wire where touching doesn't count.
 @export var safe_length: float = 0.3
@@ -21,8 +23,6 @@ const LOST_COLOR: Color = Color(0.9, 0.15, 0.1)
 @export var danger_pulse_rate: float = 20.0
 ## Guide's line when the ring is halfway
 @export var halfway_voice: AudioStream
-## Must match the radius of the rod mesh.
-@export var obstacle_radius: float = 0.012
 
 var _points: PackedVector3Array # whole wire, global
 var _hot_points: PackedVector3Array # without the safe ends
@@ -31,7 +31,6 @@ var _running: bool = false
 var _armed: bool = false
 var _halfway_said: bool = false
 var _pulse_clock: float = 0.0
-var _obstacle_points: PackedVector3Array # sampled every cm along each rod, global
 
 @onready var ring: HotRing = $Ring
 @onready var wire: Path3D = $Wire
@@ -48,7 +47,6 @@ func _ready() -> void:
 	_points = wire.global_transform * wire.curve.get_baked_points()
 	_safe_count = int(safe_length / wire.curve.get_baked_length() * _points.size())
 	_hot_points = _points.slice(_safe_count, _points.size() - _safe_count)
-	_sample_obstacles()
 
 
 func _process(delta: float) -> void:
@@ -90,7 +88,7 @@ func _warn_if_too_close(gap: float, delta: float) -> void:
 ## Smallest gap between the ring's tube and the wire or an obstacle (negative = touching).
 func _closest_gap() -> float:
 	var to_local: Transform3D = ring.global_transform.affine_inverse()
-	return minf(_gap_to(_hot_points, to_local) - wire_radius, _gap_to(_obstacle_points, to_local) - obstacle_radius)
+	return minf(_gap_to(_hot_points, to_local) - wire_radius, _obstacle_gap(to_local))
 
 
 func _gap_to(points: PackedVector3Array, to_local: Transform3D) -> float:
@@ -101,14 +99,29 @@ func _gap_to(points: PackedVector3Array, to_local: Transform3D) -> float:
 	return best - ring.tube_radius
 
 
-## Points every cm along each rod: a unit cylinder from y -0.5 to 0.5, stretched by the rod's scale.
-func _sample_obstacles() -> void:
-	for rod: Node3D in obstacles.get_children():
-		var a: Vector3 = rod.global_transform * Vector3(0, -0.5, 0)
-		var b: Vector3 = rod.global_transform * Vector3(0, 0.5, 0)
-		var steps := int(a.distance_to(b) / 0.01)
-		for k in range(steps + 1):
-			_obstacle_points.append(a.lerp(b, float(k) / maxi(steps, 1)))
+## Gap between the ring's tube and the obstacles: SphereMesh or BoxMesh of size 1, sized by scale.
+func _obstacle_gap(to_local: Transform3D) -> float:
+	var circle := PackedVector3Array() # the ring's centre line, global
+	for k in RING_SAMPLES:
+		var angle := TAU * k / RING_SAMPLES
+		circle.append(ring.global_transform * (Vector3(cos(angle), 0, sin(angle)) * ring.radius))
+	var best := INF
+	for obstacle: MeshInstance3D in obstacles.get_children():
+		var half_size: Vector3 = obstacle.global_transform.basis.get_scale() * 0.5
+		if obstacle.mesh is SphereMesh:
+			var p: Vector3 = to_local * obstacle.global_position
+			best = minf(best, Vector2(Vector2(p.x, p.z).length() - ring.radius, p.y).length() - half_size.x)
+			continue
+		var to_box := Transform3D(obstacle.global_transform.basis.orthonormalized(), obstacle.global_position).affine_inverse()
+		for point: Vector3 in circle:
+			best = minf(best, _box_distance(to_box * point, half_size))
+	return best - ring.tube_radius
+
+
+## Distance from a point to a box centred at the origin (negative inside).
+func _box_distance(p: Vector3, half_size: Vector3) -> float:
+	var outside: Vector3 = p.abs() - half_size
+	return outside.max(Vector3.ZERO).length() + minf(maxf(outside.x, maxf(outside.y, outside.z)), 0.0)
 
 
 func _say(line: AudioStream) -> void:
