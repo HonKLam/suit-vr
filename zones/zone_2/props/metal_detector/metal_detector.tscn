@@ -13,7 +13,10 @@
 [ext_resource type="Material" uid="uid://bba32vcr7pr2c" path="res://zones/zone_2/props/metal_detector/assets/md_ring.tres" id="12_m"]
 [ext_resource type="Material" uid="uid://b6uitj51i0w5d" path="res://zones/zone_2/props/metal_detector/assets/md_box.tres" id="13_m"]
 [ext_resource type="Material" uid="uid://d3wycdn6lpc82" path="res://zones/zone_2/props/metal_detector/assets/md_arm_grip.tres" id="14_m"]
-[ext_resource type="AudioStream" uid="uid://cs2gyadyvscgb" path="res://zones/zone_2/props/sounds/tool_pickup_1.wav" id="audio_1"]
+[ext_resource type="AudioStream" path="res://zones/zone_2/props/sounds/item_pickup.wav" id="audio_1"]
+[ext_resource type="AudioStream" path="res://zones/zone_2/props/sounds/item_unselect_1.wav" id="item_unselect_1"]
+[ext_resource type="AudioStream" path="res://zones/zone_2/props/sounds/item_unselect_2.wav" id="item_unselect_2"]
+[ext_resource type="AudioStream" path="res://zones/zone_2/props/sounds/item_unselect_3.wav" id="item_unselect_3"]
 [ext_resource type="AudioStream" uid="uid://cb7w05v6v4i8m" path="res://zones/zone_2/props/sounds/tool_drop_1.wav" id="audio_2"]
 [ext_resource type="AudioStream" uid="uid://d4hlfj7toeydh" path="res://zones/zone_2/props/sounds/tool_drop_2.wav" id="audio_3"]
 [ext_resource type="AudioStream" uid="uid://dce6j6rhwtfsx" path="res://zones/zone_2/props/sounds/tool_drop_3.wav" id="audio_4"]
@@ -127,4 +130,5 @@ probes = [NodePath("../GroundProbes/Front"), NodePath("../GroundProbes/Back"), N
 [node name="ToolAudio" type="Node3D" parent="."]
 script = ExtResource("audio_6")
 pickup_sounds = Array[AudioStream]([ExtResource("audio_1")])
-drop_sounds = Array[AudioStream]([ExtResource("audio_2"), ExtResource("audio_3"), ExtResource("audio_4"), ExtResource("audio_5")])
+appear_sounds = Array[AudioStream]([ExtResource("audio_2"), ExtResource("audio_3"), ExtResource("audio_4"), ExtResource("audio_5")])
+menu_sounds = Array[AudioStream]([ExtResource("item_unselect_1"), ExtResource("item_unselect_2"), ExtResource("item_unselect_3")])

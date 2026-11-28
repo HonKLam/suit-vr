@@ -331,6 +331,7 @@ func _select(find: Dictionary) -> void:
 			time_left += bonus_seconds
 			bonus_text = "+%d s" % roundi(bonus_seconds)
 		_throw_away(find.model, bonus_text)
+		find.spot.remove_from_group(MetalObject.GROUP) # detector stays quiet there
 		if _game and trash_count <= trash_voices.size():
 			_game.narrator.say(trash_voices[trash_count - 1])
 		trash_selected.emit(trash_count)
