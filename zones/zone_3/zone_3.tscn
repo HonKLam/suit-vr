@@ -2,6 +2,8 @@
 
 [ext_resource type="PackedScene" uid="uid://chjrlgbxu2o51" path="res://shared/game/game_scene.tscn" id="1_k63i4"]
 [ext_resource type="PackedScene" uid="uid://c546qdjyhpquk" path="res://zones/zone_3/zone_3_map.tscn" id="2_5qqda"]
+[ext_resource type="AudioStream" path="res://zones/zone_3/voice/stage_3_intro.mp3" id="3_intro"]
+[ext_resource type="AudioStream" uid="uid://cgm734tgybggi" path="res://zones/zone_3/voice/stage_3_halfway.mp3" id="4_halfway"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_v34ji"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -16,6 +18,7 @@ sky = SubResource("Sky_klu13")
 glow_enabled = true
 
 [node name="GameScene" unique_id=933885685 instance=ExtResource("1_k63i4")]
+intro_voice = ExtResource("3_intro")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." index="0" unique_id=1190250491]
 environment = SubResource("Environment_4oqwf")
@@ -31,3 +34,4 @@ show_wrist_screen = false
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6128392, 0)
 safe_length = 0.3
 wire_radius = 0.01
+halfway_voice = ExtResource("4_halfway")

@@ -12,10 +12,10 @@ uv1_world_triplanar = true
 [sub_resource type="Curve3D" id="Curve3D_wire"]
 bake_interval = 0.01
 _data = {
-"points": PackedVector3Array(0, 0, 0, 0, 0, -0.3, 0, 0.100000024, -1.0834949, -0.2, 0, 0.3, 0.2, 0, -0.3, 2.6726966, 0.4, -1.4, 0.4, 0.1, 0.2, -0.4, -0.1, -0.2, -0.2, 0, -2.2, 0, -0.3, 0.2, 0, 0.3, -0.2, -0.6, 0.45, -2.8, -0.3, 0.1, 0.1, 0.3, -0.1, -0.1, 0.3, 0.2, -3.4, 0, 0, 0.3, 0, 0, 0, 0.5, -0.1, -4.2, 0, 0, 0, 0, 0, 0, 1.5275508, 0.69732285, -2.713186, 0, 0, 0, 0, 0, 0, 0.637748, 0.7154577, -1.3819234, 0, 0, 0, 0, 0, 0, 0.100538015, -0.2526558, -1.6827091),
-"tilts": PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, -0.37497184, -0.124373615)
+"points": PackedVector3Array(0, 0, 0, 0.0841, -0.0015, 0.022, 0, 1.2, -0.62, -0.0777, -0.0176, -0.0269, 0.0654, 0.0148, 0.0226, 0.2894, 1.2004, -0.5423, -0.0529, 0.0064, -0.0529, 0.0846, -0.0103, 0.0846, 0.4395, 1.2873, -0.4368, -0.0352, -0.0176, -0.1228, 0.0309, 0.0155, 0.108, 0.5964, 1.1126, -0.1689, 0.0234, 0.0034, -0.1166, -0.0261, -0.0038, 0.1305, 0.6077, 1.2886, 0.1218, 0.1209, -0.1093, -0.1131, -0.0266, 0.024, 0.0249, 0.4218, 1.1411, 0.4543, 0.0288, -0.0257, -0.0197, -0.0242, 0.0216, 0.0165, 0.3438, 1.2247, 0.5158, 0.0249, -0.0241, -0.0108, -0.0618, 0.0598, 0.0269, 0.2639, 1.2847, 0.5611, 0.0321, -0.0838, 0.011, -0.0395, 0.1033, -0.0136, 0.0405, 1.6196, 0.6197, 0.0392, -0.0782, 0.0603, -0.0197, 0.0393, -0.0303, 0.0008, 1.9475, 0.4876, 0.0459, 0.0037, 0.0208, -0.006, -0.0005, -0.0027, -0.1102, 1.9931, 0.41, 0.006, 0.0009, 0.0026, -0.0091, -0.0014, -0.0039, -0.1284, 1.9908, 0.4021, 0.009, 0.0022, 0.0038, -0.015, -0.0036, -0.0063, -0.1556, 1.9855, 0.3905, 0.0145, 0.0056, 0.006, -0.3033, -0.1172, -0.1253, -0.1999, 1.9714, 0.3723, 0.1219, 0.12, 0.0545, -0.0702, -0.0691, -0.0314, -0.5337, 1.2825, 0.1189, -0.0073, -0.1306, 0.0592, 0.0019, 0.0335, -0.0152, -0.7979, 1.3966, 0.008, -0.0264, -0.0222, 0.013, 0.135, 0.1136, -0.0663, -0.7536, 1.4846, -0.0347, 0.1402, 0.1263, 0.018, -0.0124, -0.0112, -0.0016, -0.5702, 1.2626, -0.0935, 0.0153, 0.0063, 0.0026, -0.1432, -0.0587, -0.0241, -0.612, 1.2363, -0.0997, -0.1196, -0.0858, 0.0535, 0.0995, 0.0714, -0.0445, -0.7456, 1.4513, -0.2345, 0.0349, 0.1281, 0.0058, -0.0281, -0.1033, -0.0047, -0.5285, 1.2979, -0.2844, -0.0169, 0.0519, 0.1093, 0.0124, -0.0381, -0.0803, -0.6881, 1.1411, -0.4101, -0.0726, 0.001, 0.0582, 0.0326, -0.0004, -0.0262, -0.4021, 1.0245, -0.6978, -0.0311, -0.0191, 0.0193, 0.0324, 0.0199, -0.0201, -0.3099, 1.0553, -0.7654, -0.0425, 0.0036, 0.0159, 0.0906, -0.0078, -0.0339, -0.2011, 1.0976, -0.8171, -0.0909, 0.0227, -0.0017, 0.0847, -0.0212, 0.0016, 0.0269, 0.9515, -0.8579, -0.0801, 0.0408, -0.0277, 0.1077, -0.0549, 0.0373, 0.2654, 0.959, -0.8108, -0.1683, 0.0184, -0.1194, 0.0764, -0.0083, 0.0542, 0.5436, 0.7916, -0.6552, -0.0311, -0.0018, -0.0807, 0.0614, 0.0036, 0.1594, 0.8548, 0.7945, -0.3945, -0.0359, 0.1594, -0.0655, 0.0104, -0.046, 0.0189, 0.7206, 0.6361, -0.155, -0.046, 0.0147, -0.016, 0.1141, -0.0364, 0.0398, 0.812, 0.537, -0.1044, 0.0559, -0.1002, -0.0531, -0.0242, 0.0434, 0.023, 0.9732, 0.7261, 0.0144, 0.0442, 0.0034, -0.0315, -0.1348, -0.0103, 0.096, 0.8555, 0.7905, 0.0886, 0.0653, 0.0447, -0.1092, -0.0618, -0.0423, 0.1033, 0.7977, 0.5834, 0.3542, 0.0968, -0.0045, -0.0855, -0.0497, 0.0023, 0.0439, 0.4369, 0.5778, 0.6649, 0.0538, 0, -0.0389, -0.0244, -0, 0.0176, 0.2975, 0.58, 0.8078, 0.0298, 0, -0.0042, -0.1532, 0, 0.0217, 0.2149, 0.58, 0.8411, 0.1814, 0, -0.0041, 0, 0, 0, -0.2228, 0.58, 0.7094),
+"tilts": PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
 }
-point_count = 9
+point_count = 38
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wire"]
 albedo_color = Color(0.85, 0.55, 0.25, 1)
@@ -30,6 +30,10 @@ albedo_color = Color(0.2, 0.9, 0.3, 0.5)
 transparency = 1
 albedo_color = Color(0.9, 0.15, 0.1, 0.5)
 
+[sub_resource type="SphereMesh" id="SphereMesh_obstacle"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_obstacle"]
+
 [node name="Map" type="Node3D" unique_id=1903719407]
 script = ExtResource("1_r7ntv")
 
@@ -40,7 +44,7 @@ size = Vector3(10, 1, 10)
 material = SubResource("StandardMaterial3D_ppwoc")
 
 [node name="Wire" type="Path3D" parent="." unique_id=1684391816]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5816257, -0.43486106, -0.17255116)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.0457395, 0)
 curve = SubResource("Curve3D_wire")
 
 [node name="Mesh" type="CSGPolygon3D" parent="Wire" unique_id=1781617951]
@@ -68,3 +72,69 @@ radius = 0.04
 material = SubResource("StandardMaterial3D_end")
 
 [node name="Ring" parent="." unique_id=1417843035 instance=ExtResource("3_ring")]
+
+[node name="Obstacles" type="Node3D" parent="." unique_id=1094300727]
+
+[node name="Gate1Sphere" type="MeshInstance3D" parent="Obstacles" unique_id=1416869687]
+transform = Transform3D(0.09, 0, 0, 0, 0.09, 0, 0, 0, 0.09, -0.33446, 0.47656, 0.10863)
+mesh = SubResource("SphereMesh_obstacle")
+
+[node name="Gate1Box" type="MeshInstance3D" parent="Obstacles" unique_id=901681272]
+transform = Transform3D(-0.013917, 0.06622, 0.042676, -0.076058, 0, -0.024803, -0.020531, -0.044888, 0.062957, -0.57037, 0.47656, 0.26854)
+mesh = SubResource("BoxMesh_obstacle")
+
+[node name="Gate2Sphere" type="MeshInstance3D" parent="Obstacles" unique_id=673666814]
+transform = Transform3D(0.09, 0, 0, 0, 0.09, 0, 0, 0, 0.09, 0.53771, -0.61633, 0.58575)
+mesh = SubResource("SphereMesh_obstacle")
+
+[node name="Gate2Box" type="MeshInstance3D" parent="Obstacles" unique_id=397511125]
+transform = Transform3D(-0.063641, 0.0039083, -0.048317, 0.0049037, 0.07985, -1.4901e-10, 0.048226, -0.0029616, -0.063761, 0.55163, -0.33187, 0.5752)
+mesh = SubResource("BoxMesh_obstacle")
+
+[node name="Gate3Sphere" type="MeshInstance3D" parent="Obstacles" unique_id=499743235]
+transform = Transform3D(0.09, 0, 0, 0, 0.09, 0, 0, 0, 0.09, 0.53743, -0.25744, -0.48381)
+mesh = SubResource("SphereMesh_obstacle")
+
+[node name="Gate3Box" type="MeshInstance3D" parent="Obstacles" unique_id=1960927402]
+transform = Transform3D(0.065726, -0.045604, -0.00066493, -0.0008093, 0, -0.079996, 0.045601, 0.065729, -0.00046134, 0.69989, -0.25744, -0.71797)
+mesh = SubResource("BoxMesh_obstacle")
+
+[node name="Gate4Sphere" type="MeshInstance3D" parent="Obstacles" unique_id=1553081007]
+transform = Transform3D(0.09, 0, 0, 0, 0.09, 0, 0, 0, 0.09, 0.058615, 0.27779, 0.63064)
+mesh = SubResource("SphereMesh_obstacle")
+
+[node name="Gate4Box" type="MeshInstance3D" parent="Obstacles" unique_id=113819176]
+transform = Transform3D(-0.045346, 0.061438, -0.023858, 0.064367, 0.047507, 1.1921e-09, 0.014168, -0.019196, -0.07636, 0.27749, 0.44703, 0.56226)
+mesh = SubResource("BoxMesh_obstacle")
+
+[node name="Gate5Sphere" type="MeshInstance3D" parent="Obstacles" unique_id=826548507]
+transform = Transform3D(0.09, 0, 0, 0, 0.09, 0, 0, 0, 0.09, -0.4273, 0.006047, -0.4919)
+mesh = SubResource("SphereMesh_obstacle")
+
+[node name="Gate5Box" type="MeshInstance3D" parent="Obstacles" unique_id=1179716291]
+transform = Transform3D(0.059028, 0.051823, -0.015168, -0.01991, 0, -0.077483, -0.050193, 0.060946, 0.012897, -0.61192, 0.006047, -0.70902)
+mesh = SubResource("BoxMesh_obstacle")
+
+[node name="Gate6Sphere" type="MeshInstance3D" parent="Obstacles" unique_id=1095834408]
+transform = Transform3D(0.09, 0, 0, 0, 0.09, 0, 0, 0, 0.09, 0.62816, 0.045053, 0.053172)
+mesh = SubResource("SphereMesh_obstacle")
+
+[node name="Gate6Box" type="MeshInstance3D" parent="Obstacles" unique_id=1398580838]
+transform = Transform3D(0.0041767, -0.0036903, -0.079806, 0.05297, 0.059952, 2.9802e-10, 0.059806, -0.052841, 0.0055735, 0.61501, 0.25863, -0.13507)
+mesh = SubResource("BoxMesh_obstacle")
+
+[node name="Gate7Sphere" type="MeshInstance3D" parent="Obstacles" unique_id=273548139]
+transform = Transform3D(0.09, 0, 0, 0, 0.09, 0, 0, 0, 0.09, 0.88207, -0.47258, 0.074789)
+mesh = SubResource("SphereMesh_obstacle")
+
+[node name="Gate7Box" type="MeshInstance3D" parent="Obstacles" unique_id=817311089]
+transform = Transform3D(0.052204, -0.037431, 0.047684, 0.053954, 0, -0.059068, 0.027637, 0.070703, 0.025244, 1.0154, -0.47258, -0.17709)
+mesh = SubResource("BoxMesh_obstacle")
+
+[node name="Gate8Sphere" type="MeshInstance3D" parent="Obstacles" unique_id=1290286755]
+transform = Transform3D(0.09, 0, 0, 0, 0.09, 0, 0, 0, 0.09, -0.85661, 0.14147, -0.21189)
+mesh = SubResource("SphereMesh_obstacle")
+
+[node name="Gate8Box" type="MeshInstance3D" parent="Obstacles" unique_id=1424245884]
+transform = Transform3D(-0.043495, 0.048771, 0.046148, 0.059705, 0.053247, 1.1921e-09, -0.030715, 0.034441, -0.065348, -0.68287, 0.33116, -0.089195)
+mesh = SubResource("BoxMesh_obstacle")
