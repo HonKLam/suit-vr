@@ -7,7 +7,7 @@ extends Node3D
 ##   remaining spot, the other spots are cleared.
 ## - Uncovered = enough of the top is free of earth (uncovered_free_share at uncover_depth).
 ## - Select: point the laser of an empty hand at it and pull the trigger.
-##   Coin/can fly up and vanish ("+10 s"), the bomb flies up in front of you.
+##   Coin/can fly up and vanish ("+20 s"), the bomb flies up in front of you.
 ## - Countdown: starts when the intro text is over (GameScene.intro_finished), shown on the wrist
 ##   and, once it is in the ground, on the bomb. At 00:00 the bomb goes off = Game Over.
 ##   Selecting the bomb stops the time.
@@ -34,7 +34,7 @@ signal time_up
 ## Fallback grey box when no model is set
 @export var trash_size: Vector3 = Vector3(0.28, 0.16, 0.2)
 ## Time bonus for each coin/can found (s)
-@export var bonus_seconds: float = 10.0
+@export var bonus_seconds: float = 20.0
 ## Bomb countdown (s)
 @export var countdown_seconds: float = 60.0
 ## Uncovered when this share of the sample points around the top is free of earth
